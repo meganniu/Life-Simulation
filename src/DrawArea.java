@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
@@ -49,9 +50,9 @@ public class DrawArea extends JPanel{
     			
     			System.out.println("X:" + posX + " Y: " + posY + " Angle:" + angle);
     			
-    			int[] nextPos = nextPos(posX, posY, angle);
+    			Point nextPos = nextPos(posX, posY, angle);
     			
-    			if(nextPos[0] >= width){
+    			if(nextPos.getX() >= width){
     				System.out.println("border encountered X");
     				//nextPos = nextPos(posX, posY, 270 - angle);
     				//angle = 270 - angle;
@@ -64,7 +65,7 @@ public class DrawArea extends JPanel{
     					angle = 360 - angle;
     				}
     			}
-    			if(nextPos[0] <= 0){
+    			if(nextPos.getX() <= 0){
     				System.out.println("border encountered X");
     				if(angle >= 180 && angle <= 270){
     					nextPos = nextPos(posX, posY, 540 - angle);
@@ -76,23 +77,23 @@ public class DrawArea extends JPanel{
     				}
     			}
     			
-    			if(nextPos[1] >= height){
-    				System.out.println("border encountered Y, rejX:" + nextPos[0] + " rejY:" + nextPos[1]);
+    			if(nextPos.getY() >= height){
+    				System.out.println("border encountered Y, rejX:" + nextPos.getX() + " rejY:" + nextPos.getY());
     				//if(angle >= 0 && angle <= 90){
     					nextPos = nextPos(posX, posY, 360 - angle);
         				angle = 360 - angle;
         				
-        				nextPos[1] = posY + (nextPos[1] - posY) * -1;//disregarding cast rule in this case messes up the path of org Restore the cast rule
+        				nextPos.setLocation(nextPos.getX(), posY + (nextPos.getY() - posY) * -1);//disregarding cast rule in this case messes up the path of org Restore the cast rule
     				//}
 
     			}
-    			else if(nextPos[1] <= 0){
-    				System.out.println("border encountered Y, rejX:" + nextPos[0] + " rejY:" + nextPos[1]);
+    			else if(nextPos.getY() <= 0){
+    				System.out.println("border encountered Y, rejX:" + nextPos.getX() + " rejY:" + nextPos.getY());
     				nextPos = nextPos(posX, posY, 360 - angle);
     				angle = 360 - angle;
     			}
-    			posX = nextPos[0];
-    			posY = nextPos[1];
+    			posX = (int) nextPos.getX();
+    			posY = (int) nextPos.getY();
     			//System.out.println("nextPosXAL:" + nextPos[0] + " nextPosYAL:" + nextPos[1]);
     			repaint();
     		}
@@ -125,7 +126,7 @@ public class DrawArea extends JPanel{
     	
     }
     
-    public int[] nextPos(int pastX, int pastY, double angle){
+    public Point nextPos(int pastX, int pastY, double angle){
     	/**
     	 * using tan(x) = rise/run
     	 * assuming run is always 2 (i.e. moving 2 pixels horizontally each time), rise (change in vertical movement) can 
@@ -148,20 +149,21 @@ public class DrawArea extends JPanel{
     	}
     	
     	
-    	int[] nextPos = new int[2]; //{nextX, nextY}  
-    	
+    	Point nextPos = new Point(); //{nextX, nextY}  
+    	int x, y;
     	if(angle == 90.0 || angle == 270.0){
-    		nextPos[0] = pastX;//traveling vertically, no change in x
+    		x = pastX;//traveling vertically, no change in x
     	}
     	else if((angle >= 0 && angle < 90.0) || (angle >270.0 && angle <= 360.0)){
-        	nextPos[0] = pastX + 2; //moving 2 pixels horizontally to the right
+        	x = pastX + 2; //moving 2 pixels horizontally to the right
     	}
     	else{
-    		nextPos[0] = pastX - 2; //moving 2 pixels horizontally to the left
+    		x = pastX - 2; //moving 2 pixels horizontally to the left
     	}
     	
-    	nextPos[1] = pastY - nextY;//moving the organism vertically (direction dep on earlier calcs)
+    	y = pastY - nextY;//moving the organism vertically (direction dep on earlier calcs)
     	
+    	nextPos.setLocation(x, y);
     	return nextPos;
     }
 
