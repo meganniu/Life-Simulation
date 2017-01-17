@@ -37,14 +37,15 @@ public class DrawArea extends JPanel{
 		this.setVisible(true);
 		this.setOpaque(true);
         this.setPreferredSize (new Dimension (this.width, this.height)); // size
-        //this.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
 
         this.img = img;
     	
-    	Herbivore org = new Herbivore(new Point(200, 200), 45);
+        //FOR TESTING
+    	Herbivore org = new Herbivore(new Point(200, 200), 45, 25);
     	herbivores.add(org);
+    	//END
     	
-        timer = new Timer(50, new ActionListener(){
+        timer = new Timer(10, new ActionListener(){
     		public void actionPerformed(ActionEvent ev){
     			for(int i = 0; i < carnivores.size(); i++){
     				carnivores.get(i).move(width, height);
