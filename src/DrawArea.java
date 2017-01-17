@@ -41,10 +41,10 @@ public class DrawArea extends JPanel{
 
         this.img = img;
     	
-    	Herbivore org = new Herbivore(new Point(200, 200), 45);
+    	Herbivore org = new Herbivore(new Point(200, 200), 170);
     	herbivores.add(org);
     	
-        timer = new Timer(50, new ActionListener(){
+        timer = new Timer(25, new ActionListener(){
     		public void actionPerformed(ActionEvent ev){
     			for(int i = 0; i < carnivores.size(); i++){
     				carnivores.get(i).move(width, height);
