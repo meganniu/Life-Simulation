@@ -56,8 +56,6 @@ public abstract class Organism {
 		}
 		pos.x = nextPos.x;
 		pos.y = nextPos.y;
-		
-		System.out.println("X: " + pos.x + " Y: " + pos.y + " angle: " + angle);
 	}
 	
 	public Point nextPos(Point past, double angle){
@@ -71,30 +69,16 @@ public abstract class Organism {
     	double nextYDouble = Math.tan(Math.toRadians(angle)) * 2;//expression of rise in terms of angle
     	int nextY = (int) nextYDouble;
     	
-    	if(nextY < 0 && (angle > 0 && angle < 180)){//meaning bug will go down
-    		System.out.println("nextY: " + nextY);
-    		nextY = nextY * -1;
-    		System.out.println("nextY: " + nextY);
+    	if(angle > 180 && angle < 270){//disregard cast rule
+    		nextY = nextY * (-1);
     	}
-    	if(nextY > 0 && (angle > 180 && angle < 360)){//meaning bug will go down
-    		System.out.println("nextY: " + nextY);
-    		nextY = nextY * -1;
-    		System.out.println("nextY: " + nextY);
-    	}
-    	
-    	//if(angle > 180 && angle < 270){//disregard cast rule
-    		//nextY = nextY * (-1);
-    	//}
-    	
-    	//nextY = nextYDouble;
-    	
+
     	if(angle == 270.0){
     		nextY = -2;//if angle is 270 move vertically down by 2
     	}
     	else if(angle == 90.0){ //for tan(x), 90 and 270 are asymptotes
     		nextY = 2;//if angle is 90, move vertically up 2
     	}
-    	
     	
     	
     	Point nextPos = new Point(); //{nextX, nextY}  
