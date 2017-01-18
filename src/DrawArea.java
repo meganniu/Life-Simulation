@@ -61,15 +61,16 @@ public class DrawArea extends JPanel{
     				double newAngle = carnivores.get(i).detectHerbivore();
     				if(newAngle != -1){
     					carnivores.get(i).setAngle(newAngle);
+
     				}
     				System.out.println(newAngle);
     				System.out.println(carnivores.get(i).angle);
     				carnivores.get(i).move(width, height);
     			}
+
     			for(int i = 0; i < herbivores.size(); i++){
     				herbivores.get(i).move(width, height);
     			}
-    			
     			repaint();
     		}
     	});
@@ -89,6 +90,7 @@ public class DrawArea extends JPanel{
     	/**
     	 * Rotates image of organism. Only works if image is a SQUARE. Otherwise, image will be cropped when rotated
     	 */
+
     	double locX = cImg.getWidth()/2;
     	double locY = cImg.getHeight()/2;
     	for(int i = 0; i < carnivores.size(); i++){
@@ -101,9 +103,6 @@ public class DrawArea extends JPanel{
         	AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
         	g.drawImage(op.filter(hImg, null), herbivores.get(i).getPoint().x-(hImg.getWidth()/2), herbivores.get(i).getPoint().y-(hImg.getHeight()/2), null);
 		}
-	
-
-    	
     }
     
     
