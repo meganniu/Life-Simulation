@@ -10,7 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 public class Main extends JFrame{
-	static BufferedImage img = null;
+	static BufferedImage hImg = null;
+	static BufferedImage cImg = null;
 	
 	boolean startSim; //true to start sim, false to pause sim
 	
@@ -34,7 +35,7 @@ public class Main extends JFrame{
 		gbc.gridy = 0;
 		main.add(go, gbc);
 		
-		DrawArea drawArea = new DrawArea(500, 300, img);
+		DrawArea drawArea = new DrawArea(500, 300, hImg, cImg);
 		
 		gbc.gridx = 1;
 		gbc.gridy = 0;
@@ -66,7 +67,8 @@ public class Main extends JFrame{
 	}
 	public static void main(String[] args){
 		try {
-		    img = ImageIO.read(new File("images/organism.png"));
+		    hImg = ImageIO.read(new File("images/herbivore.png"));
+		    cImg = ImageIO.read(new File("images/carnivore.png"));
 		} catch (IOException e) {
 			System.out.println("organism.png not found.");
 		}
