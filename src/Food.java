@@ -13,8 +13,7 @@ public class Food
     public Point getPos(){
         return pos;
     }
-    
-    public void remove (int i){
-        drawArea.food.remove(i);
+    public int getNutrition(){
+        return nutrition;
     }
 }
