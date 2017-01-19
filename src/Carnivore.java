@@ -26,7 +26,7 @@ public class Carnivore extends Organism {
 		this.img = img;
 	}
 
-	public double detect() {
+	public double detectHerbivore() {
 
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
