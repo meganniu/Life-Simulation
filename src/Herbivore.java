@@ -68,6 +68,8 @@ public class Herbivore extends Organism {
 			Point hPoint = DrawArea.food.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 10) {
+				energy += food.get(i).getNutrition();
+				eggCycles++;
 				DrawArea.food.remove(i);
 				i--;
 			}
