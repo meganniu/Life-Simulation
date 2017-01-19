@@ -4,10 +4,11 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Carnivore extends Organism {
-
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycles, int evoCycles, int energy) {
-		super(pos, angle, speed, detectRadius, eggCycles, evoCycles, energy);
+	private Hitbox box;
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycles, int gen, int energy) {
+		super(pos, angle, speed, detectRadius, eggCycles, gen, energy);
 		img = DrawArea.cImg;
+		box = new Hitbox(pos.x - 8, pos.y - 8, 16, 16);
 	}
 
 	public void setSelected(boolean b) {
