@@ -5,7 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public abstract class Organism {
-	Rectangle hitbox;
+	Hitbox hitbox;
 	boolean selected = false;
 
 	BufferedImage img;
@@ -23,7 +23,7 @@ public abstract class Organism {
 		this.pos = pos;
 		this.speed = speed;
 		this.detectRadius = detectRadius;
-		hitbox = new Rectangle(pos.x-8, pos.y-8, 16,16);
+		hitbox = new Hitbox(pos.x-8, pos.y-8, 16,16);
 	}
 
 
