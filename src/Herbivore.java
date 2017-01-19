@@ -25,4 +25,16 @@ public class Herbivore extends Organism {
 		}
 		this.img = img;
 	}
+	
+	public boolean eat() {
+		for (int i = 0; i < DrawArea.food.size(); i++) {
+			Point hPoint = DrawArea.food.get(i).getPoint();
+			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
+			if (distance <= 10) {
+				DrawArea.food.remove(i);
+				i--;
+			}
+		}
+		return false;
+	}
 }
