@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 
 public class Carnivore extends Organism {
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius) {
-		super(pos, angle, speed, detectRadius);
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycles, int evoCycles) {
+		super(pos, angle, speed, detectRadius, eggCycles, evoCycles);
 		img = DrawArea.cImg;
 	}
 
@@ -72,6 +72,10 @@ public class Carnivore extends Organism {
 			}
 		}
 		return false;
+	}
+	
+	public Egg egg() {
+		
 	}
 
 }
