@@ -18,11 +18,14 @@ public abstract class Organism {
 
 	protected int detectRadius;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius) {
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycles, int gen, int energy) {
 		this.angle = angle;
 		this.pos = pos;
 		this.speed = speed;
 		this.detectRadius = detectRadius;
+		this.eggCycles = eggCycles;
+		this.gen = gen;
+		this.energy = energy;
 		hitbox = new Hitbox(pos.x-8, pos.y-8, 16,16);
 	}
 
