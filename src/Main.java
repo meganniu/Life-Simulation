@@ -22,6 +22,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
 	JButton left = new JButton("<");
+	
+	static StatsPanel statsPanel = new StatsPanel();
 
 	public Main() {
 
@@ -35,17 +37,25 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		go.addActionListener(this);
 		startSim = false;
 
-		System.out.println("here2");
-
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		add(go, gbc);
-
 		up.addActionListener(this);
 		down.addActionListener(this);
 		right.addActionListener(this);
 		left.addActionListener(this);
+		
+		System.out.println("here2");
 
+		gbc.gridheight = 2;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		add(statsPanel, gbc);
+		
+		gbc.gridx=1;
+		add(drawPane, gbc);
+		
+		gbc.gridheight=1;
+		gbc.gridx=2;
+		add(go, gbc);
+		
 		JPanel controlPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
 		c2.fill = GridBagConstraints.BOTH;
@@ -61,14 +71,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		controlPanel.add(down, c2);
 
 		gbc.gridy = 1;
-		add(controlPanel, gbc);
-
-		gbc.gridx = 1;
-		gbc.gridy = 0;
-		gbc.gridheight = 2;
-		// gbc.weighty = 0.8;
-
-		add(drawPane, gbc);
+		add(controlPanel, gbc);		
 
 		setSize(1000, 800);
 		pack();
@@ -91,11 +94,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				yShift -= 50;
 		}
 		if (e.getSource() == right) {
-			if (xShift + 50 + drawWidth < DrawArea.width)
+			if (xShift + 50 + drawWidth <= DrawArea.width)
 				xShift += 50;
 		}
 		if (e.getSource() == down) {
-			if (yShift + 50 + drawHeight < DrawArea.height)
+			if (yShift + 50 + drawHeight <= DrawArea.height)
 				yShift += 50;
 		}
 		if (e.getSource() == left) {
@@ -113,11 +116,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				yShift -= 50;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (xShift + 50 + drawWidth < DrawArea.width)
+			if (xShift + 50 + drawWidth <= DrawArea.width)
 				xShift += 50;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (yShift + 50 + drawHeight < DrawArea.height)
+			if (yShift + 50 + drawHeight <= DrawArea.height)
 				yShift += 50;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {

@@ -39,7 +39,7 @@ public class DrawPane extends JPanel implements MouseListener {
 		this.setOpaque(true);
 		this.setPreferredSize(new Dimension(width, height)); // size
 
-		timer = new Timer(50, new ActionListener() {
+		timer = new Timer(40, new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				drawArea.updatePositions();
 				repaint();
@@ -65,6 +65,7 @@ public class DrawPane extends JPanel implements MouseListener {
 			else if (DrawArea.carnivores.get(i).hitbox.contains(x, y) && !found) {
 				DrawArea.carnivores.get(i).setSelected(true);
 				found = true;
+				StatsPanel.selectedOrg = DrawArea.carnivores.get(i);
 			} else
 				DrawArea.carnivores.get(i).setSelected(false);
 		}
@@ -74,11 +75,18 @@ public class DrawPane extends JPanel implements MouseListener {
 			else if (DrawArea.herbivores.get(i).hitbox.contains(x, y) && !found) {
 				DrawArea.herbivores.get(i).setSelected(true);
 				found = true;
+				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
 			} else
 				DrawArea.herbivores.get(i).setSelected(false);
 			
 		}
+		
+		if(!found){
+			StatsPanel.selectedOrg = null;
+		}
+		
 		drawArea.updateImage();
+		Main.statsPanel.updateStats();
 		repaint();
 	}
 

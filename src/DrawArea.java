@@ -42,10 +42,10 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 15; i++) {
-			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*20+10),(int)(Math.random()*200+50)));
+			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*5+10),(int)(Math.random()*200+50)));
 		}
 		for (int i = 0; i < 10; i++) {
-			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*12+10),(int)(Math.random()*200+50)));
+			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*6+5),(int)(Math.random()*200+50)));
 		}
 
 		
@@ -75,7 +75,7 @@ public class DrawArea extends BufferedImage {
 		 * Draws and paints background
 		 */
 		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, width - 1, height - 1);
+		g.fillRect(0, 0, width , height );
 
 		/**
 		 * Rotates image of organism. Only works if image is a SQUARE.

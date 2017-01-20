@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Carnivore extends Organism {
 
@@ -72,6 +73,21 @@ public class Carnivore extends Organism {
 			}
 		}
 		return false;
+	}
+	
+	public ArrayList<String> getStats(){
+		ArrayList<String> stats = new ArrayList<String>();
+		
+		stats.add("Position		(" + pos.x + ", " + pos.y + ")");
+		stats.add("Angle		" + angle + " deg");
+		stats.add("Speed		" + speed + "");
+		stats.add("R. Detection	");
+		stats.add("Egg Counter	");
+		stats.add("Generation	");
+		stats.add("Energy		");
+		
+		return stats;
+		
 	}
 
 }

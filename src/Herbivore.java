@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Herbivore extends Organism {
 	public Herbivore(Point pos, double angle, int speed, int detectRadius) {
@@ -22,5 +23,20 @@ public class Herbivore extends Organism {
 			g.drawOval(0, 0, 24, 24);
 		}
 		this.img = img;
+	}
+	
+	public ArrayList<String> getStats(){
+		ArrayList<String> stats = new ArrayList<String>();
+		
+		stats.add("Position		(" + pos.x + ", " + pos.y + ")");
+		stats.add("Angle		" + angle + " deg");
+		stats.add("Speed		" + speed + "");
+		stats.add("R. Detection	");
+		stats.add("Egg Counter	");
+		stats.add("Generation	");
+		stats.add("Energy		");
+		
+		return stats;
+		
 	}
 }

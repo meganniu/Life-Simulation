@@ -3,6 +3,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public abstract class Organism {
 	Rectangle hitbox;
@@ -34,7 +35,7 @@ public abstract class Organism {
 	public void move(int width, int height) {
 		Point nextPos = nextPos(pos, angle);
 
-		if (nextPos.x + 32 >= width) {
+		if (nextPos.x + 8 >= width) {
 			// System.out.println("border encountered X");
 			if (angle >= 270 && angle <= 360) {
 				nextPos = nextPos(pos, 540 - angle);
@@ -45,7 +46,7 @@ public abstract class Organism {
 				angle = 180 - angle;
 			}
 		}
-		if (nextPos.x - 32 <= 0) {
+		if (nextPos.x - 8 <= 0) {
 			// System.out.println("border encountered X");
 			if (angle >= 180 && angle <= 270) {
 				nextPos = nextPos(pos, 540 - angle);
@@ -56,7 +57,7 @@ public abstract class Organism {
 			}
 		}
 
-		if (nextPos.y + 32 >= height) {
+		if (nextPos.y + 8 >= height) {
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 
@@ -67,7 +68,7 @@ public abstract class Organism {
 															// Restore the cast
 															// rule
 
-		} else if (nextPos.y - 32 <= 0) {
+		} else if (nextPos.y - 8 <= 0) {
 			// System.out.println("border encountered Y, rejX:" + nextPos.x + "
 			// rejY:" + nextPos.y);
 			nextPos = nextPos(pos, 360 - angle);
@@ -153,4 +154,6 @@ public abstract class Organism {
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
+	
+	public abstract ArrayList<String> getStats();
 }
