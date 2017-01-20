@@ -10,7 +10,7 @@ public class Food
         box = new Hitbox(pos.x - 1, pos.y - 1, 3, 3);
     }
 
-    public Point getPos(){
+    public Point getPoint(){
         return pos;
     }
     public int getNutrition(){
