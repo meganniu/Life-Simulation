@@ -63,7 +63,7 @@ public class Carnivore extends Organism {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
-			if (distance <= 12) {
+			if (distance <= 15) {
 				DrawArea.herbivores.remove(i);
 				i--;
 			}

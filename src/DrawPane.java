@@ -42,6 +42,7 @@ public class DrawPane extends JPanel implements MouseListener {
 		timer = new Timer(40, new ActionListener() {
 			public void actionPerformed(ActionEvent ev) {
 				drawArea.updatePositions();
+				Main.statsPanel.updateStats();
 				repaint();
 			}
 		});
