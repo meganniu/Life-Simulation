@@ -4,9 +4,11 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 
 public class Herbivore extends Organism {
-	public Herbivore(Point pos, double angle, int speed, int detectRadius) {
-		super(pos, angle, speed, detectRadius);
+	public Hitbox box;
+	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycles, int gen, int energy) {
+		super(pos, angle, speed, detectRadius, eggCycles, gen, energy);
 		img = DrawArea.hImg;
+		box = new Hitbox(pos.x - 8, pos.y - 8, 16, 16);
 	}
 
 	public void setSelected(boolean b) {
