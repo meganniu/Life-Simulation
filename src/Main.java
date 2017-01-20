@@ -16,7 +16,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	boolean startSim; // true to start sim, false to pause sim
 	static int xShift = 0, yShift = 0;
-	static int drawWidth = 800, drawHeight = 800;
+	static int drawWidth = 600, drawHeight = 600;
 	DrawPane drawPane = new DrawPane(drawWidth, drawHeight);
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
@@ -54,7 +54,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		
 		gbc.gridheight=1;
 		gbc.gridx=2;
-		add(go, gbc);
+		//add(go, gbc);
 		
 		JPanel controlPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
