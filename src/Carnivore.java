@@ -48,20 +48,29 @@ public class Carnivore extends Organism {
 			double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
 					pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
 			angle = Math.toDegrees(angle);
-
+			
 			if (angle >= 0 && angle <= 180) {
 				angle = 180 - angle;
 			} else if (angle >= -180 && angle <= 0) {
 				angle = 180 - angle;
 			}
-
+			
 			double smoother = 0;
 			
 			if(this.angle-angle<0)
 				smoother = angle - Math.sqrt(angle-this.angle);
 			else if(angle-this.angle<0)
 				smoother = this.angle - Math.sqrt(this.angle-angle);
-				return smoother;
+			
+			if (smoother >= 0 && smoother <= 180) {
+				smoother = 180 - smoother;
+			} else if (smoother >= -180 && smoother <= 0) {
+				smoother = 180 - smoother;
+			}
+			
+			return smoother;
+				
+				
 		}
 	}
 
@@ -80,13 +89,13 @@ public class Carnivore extends Organism {
 	public ArrayList<String> getStats(){
 		ArrayList<String> stats = new ArrayList<String>();
 		
-		stats.add("Position		(" + pos.x + ", " + pos.y + ")");
-		stats.add("Angle		" + angle + " deg");
-		stats.add("Speed		" + speed + "");
-		stats.add("R. Detection	");
-		stats.add("Egg Counter	");
-		stats.add("Generation	");
-		stats.add("Energy		");
+		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
+		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
+		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
+		stats.add("<html><pre>R. Detection\t</pre></html>");
+		stats.add("<html><pre>Egg Counter\t</pre></html>");
+		stats.add("<html><pre>Generation\t</pre></html>");
+		stats.add("<html><pre>Energy\t</pre></html>");
 		
 		return stats;
 		

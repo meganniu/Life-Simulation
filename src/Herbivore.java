@@ -28,14 +28,14 @@ public class Herbivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 
-		stats.add("Position		(" + pos.x + ", " + pos.y + ")");
-		stats.add("Angle		" + angle + " deg");
-		stats.add("Speed		" + speed + "");
-		stats.add("R. Detection	");
-		stats.add("Egg Counter	");
-		stats.add("Generation	");
-		stats.add("Energy		");
-
+		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
+		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
+		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
+		stats.add("<html><pre>R. Detection\t</pre></html>");
+		stats.add("<html><pre>Egg Counter\t</pre></html>");
+		stats.add("<html><pre>Generation\t</pre></html>");
+		stats.add("<html><pre>Energy\t</pre></html>");
+		
 		return stats;
 
 	}

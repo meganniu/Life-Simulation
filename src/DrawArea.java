@@ -25,6 +25,10 @@ public class DrawArea extends BufferedImage {
 
 		width = getWidth();
 		height = getHeight();
+		
+		System.out.println("width: " + width);
+		System.out.println("height: " + height);
+		
 		g = (Graphics2D) createGraphics();
 		try {
 			hImg = ImageIO.read(new File("images/herbivore.png"));
