@@ -54,7 +54,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		
 		gbc.gridheight=1;
 		gbc.gridx=2;
-		//add(go, gbc);
+		add(go, gbc);
 		
 		JPanel controlPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
