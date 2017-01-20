@@ -24,10 +24,10 @@ public class Herbivore extends Organism {
 		}
 		this.img = img;
 	}
-	
-	public ArrayList<String> getStats(){
+
+	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-		
+
 		stats.add("Position		(" + pos.x + ", " + pos.y + ")");
 		stats.add("Angle		" + angle + " deg");
 		stats.add("Speed		" + speed + "");
@@ -35,11 +35,11 @@ public class Herbivore extends Organism {
 		stats.add("Egg Counter	");
 		stats.add("Generation	");
 		stats.add("Energy		");
-		
+
 		return stats;
-		
+
 	}
-	
+
 	public double detectCarnivore() {
 
 		double shortestDistance = -1;
@@ -65,10 +65,19 @@ public class Herbivore extends Organism {
 			} else if (angle >= -180 && angle <= 0) {
 				angle = 180 - angle;
 			}
-			
-			angle=(angle+180)%360;
-			
-			return angle;
+
+			if (shortestDistance < detectRadius / 2) {
+				angle = (angle + 180) % 360;
+				return angle;
+			} else {
+				if (angle < (this.angle + 90) % 360 && angle > (this.angle - 90) % 360) {
+					angle = (angle + 180) % 360;
+					return angle;
+				}
+				else
+					return this.angle;
+			}
+
 		}
 	}
 }

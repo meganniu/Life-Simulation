@@ -55,7 +55,13 @@ public class Carnivore extends Organism {
 				angle = 180 - angle;
 			}
 
-			return angle;
+			double smoother = 0;
+			
+			if(this.angle-angle<0)
+				smoother = angle - Math.sqrt(angle-this.angle);
+			else if(angle-this.angle<0)
+				smoother = this.angle - Math.sqrt(this.angle-angle);
+				return smoother;
 		}
 	}
 
@@ -63,7 +69,7 @@ public class Carnivore extends Organism {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
-			if (distance <= 15) {
+			if (distance <= 12) {
 				DrawArea.herbivores.remove(i);
 				i--;
 			}
