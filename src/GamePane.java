@@ -9,8 +9,10 @@ import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.util.ArrayList;
@@ -22,36 +24,98 @@ import javax.swing.JPanel;
 import com.sun.javafx.geom.Rectangle;
 import javax.swing.Timer;
 
-public class DrawPane extends JPanel implements MouseListener {
+public class GamePane extends Canvas implements MouseListener, Runnable {
 
-	static Timer timer;
+	private boolean running = false;
+	private Thread thread;
+	static int tickCount;
+	static int frameCount;
 
 	int width;
 	int height;
 	private DrawArea drawArea = new DrawArea();
 
-	public DrawPane(int width, int height) {
+	public GamePane(int width, int height) {
 		
 		this.width = width;
 		this.height = height;
 
 		this.addMouseListener(this);
-		this.setOpaque(true);
 		this.setPreferredSize(new Dimension(width, height)); // size
 
-		timer = new Timer(40, new ActionListener() {
-			public void actionPerformed(ActionEvent ev) {
-				drawArea.updatePositions();
-				Main.statsPanel.updateStats();
-				repaint();
-			}
-		});
-
 	}
-
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
+	
+	public synchronized void start(){
+		if(running)
+			return;
+		
+		running = true;
+		thread = new Thread(this);
+		thread.start();
+	}
+	
+	public synchronized void stop(){
+		if(!running)
+			return;
+		running = false;
+		try{
+			thread.join();
+		}catch(InterruptedException e){
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void run() {
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		double delta = 0.0;
+		double ns = 1000000000.0/25;
+		int frames = 0;
+		int ticks = 0;
+		while(running){
+			long now = System.nanoTime();
+			delta+=(now-lastTime)/ns;
+			lastTime = now;
+			while(delta>=1){
+				tick();
+				ticks++;
+				delta--;
+			}
+			render();
+			frames++;
+			if(System.currentTimeMillis()-timer>1000){
+				timer+=1000;
+				frameCount = frames;
+				tickCount = ticks;
+				frames = 0;
+				ticks = 0;
+			}
+		}
+	}
+	
+	public void tick(){ // Per tick
+		drawArea.updatePositions();
+		Main.statsPanel.updateStats();
+	}
+	
+	public void render(){
+		BufferStrategy bs = getBufferStrategy();
+		if(bs == null){
+			createBufferStrategy(3);
+			return;
+		}
+		drawArea.updateImage();
+		Graphics g = bs.getDrawGraphics();
 		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
+		g.drawString("FPS: "+frameCount+" | Ticks: "+ GamePane.tickCount, 5, 15);
+		g.dispose();
+		bs.show();
+	}
+	
+	public void paint(Graphics g){
+		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
+		g.drawString("FPS: "+frameCount+" | Ticks: "+ GamePane.tickCount, 5, 15);
 	}
 
 	@Override

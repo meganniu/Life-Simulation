@@ -17,7 +17,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	boolean startSim; // true to start sim, false to pause sim
 	static int xShift = 0, yShift = 0;
 	static int drawWidth = 600, drawHeight = 600;
-	DrawPane drawPane = new DrawPane(drawWidth, drawHeight);
+	GamePane gamePane = new GamePane(drawWidth, drawHeight);
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
@@ -50,7 +50,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		add(statsPanel, gbc);
 		
 		gbc.gridx=1;
-		add(drawPane, gbc);
+		add(gamePane, gbc);
 		
 		gbc.gridheight=1;
 		gbc.gridx=2;
@@ -78,14 +78,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gamePane.render();
+		gamePane.render();
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Go")) {
 			if (startSim == false) {
-				DrawPane.timer.start();
+				gamePane.start();
 			} else {
-				DrawPane.timer.stop();
+				gamePane.stop();
 			}
 			startSim = !startSim;
 		}
@@ -105,7 +107,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (xShift - 50 >= 0)
 				xShift -= 50;
 		}
-		drawPane.repaint();
+		gamePane.repaint();
 		requestFocus();
 	}
 
@@ -127,7 +129,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (xShift - 50 >= 0)
 				xShift -= 50;
 		}
-		drawPane.repaint();
+		gamePane.repaint();
 	}
 
 	@Override

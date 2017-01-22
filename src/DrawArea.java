@@ -51,9 +51,6 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < 5; i++) {
 			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*2+5),(int)(Math.random()*80+30)));
 		}
-
-		
-		updateImage();
 	}
 
 	public void updatePositions() {
@@ -68,7 +65,6 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).setAngle(herbivores.get(i).detectCarnivore());
 			herbivores.get(i).move(width, height);
 		}
-		updateImage();
 	}
 
 	public void updateImage() {
