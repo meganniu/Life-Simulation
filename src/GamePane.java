@@ -26,7 +26,7 @@ import javax.swing.Timer;
 
 public class GamePane extends Canvas implements MouseListener, Runnable {
 
-	private boolean running = false;
+	static boolean running = false;
 	private Thread thread;
 	static int tickCount;
 	static int frameCount;
@@ -36,7 +36,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	private DrawArea drawArea = new DrawArea();
 
 	public GamePane(int width, int height) {
-		
+
 		this.width = width;
 		this.height = height;
 
@@ -44,48 +44,49 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		this.setPreferredSize(new Dimension(width, height)); // size
 
 	}
-	
-	public synchronized void start(){
-		if(running)
+
+	public synchronized void start() {
+		if (running)
 			return;
-		
+
 		running = true;
 		thread = new Thread(this);
 		thread.start();
 	}
-	
-	public synchronized void stop(){
-		if(!running)
+
+	public synchronized void stop() {
+		if (!running)
 			return;
 		running = false;
-		try{
+		try {
 			thread.join();
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		double delta = 0.0;
-		double ns = 1000000000.0/25;
+		double ns = 1000000000.0 / 500;
 		int frames = 0;
 		int ticks = 0;
-		while(running){
+		while (running) {
 			long now = System.nanoTime();
-			delta+=(now-lastTime)/ns;
+			delta += (now - lastTime) / ns;
 			lastTime = now;
-			while(delta>=1){
-				tick();
+			while (delta >= 1) {
+				if (ticks % 5 == 0)
+					tick();
 				ticks++;
 				delta--;
 			}
 			render();
 			frames++;
-			if(System.currentTimeMillis()-timer>1000){
-				timer+=1000;
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
 				frameCount = frames;
 				tickCount = ticks;
 				frames = 0;
@@ -93,29 +94,29 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			}
 		}
 	}
-	
-	public void tick(){ // Per tick
+
+	public void tick() { // Per tick
 		drawArea.updatePositions();
 		Main.statsPanel.updateStats();
 	}
-	
-	public void render(){
+
+	public void render() {
 		BufferStrategy bs = getBufferStrategy();
-		if(bs == null){
-			createBufferStrategy(3);
+		if (bs == null) {
+			createBufferStrategy(2);
 			return;
 		}
 		drawArea.updateImage();
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
-		g.drawString("FPS: "+frameCount+" | Ticks: "+ GamePane.tickCount, 5, 15);
+		g.drawString("FPS: " + frameCount + " | Ticks: " + GamePane.tickCount, 5, 15);
 		g.dispose();
 		bs.show();
 	}
-	
-	public void paint(Graphics g){
+
+	public void paint(Graphics g) {
 		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
-		g.drawString("FPS: "+frameCount+" | Ticks: "+ GamePane.tickCount, 5, 15);
+		g.drawString("FPS: " + frameCount + " | Ticks: " + GamePane.tickCount, 5, 15);
 	}
 
 	@Override
@@ -123,9 +124,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		boolean found = false;
 		int x = e.getX() + Main.xShift;
 		int y = e.getY() + Main.yShift;
-		System.out.println(x + " "+ y);
+		System.out.println(x + " " + y);
 		for (int i = 0; i < DrawArea.carnivores.size(); i++) {
-			if(DrawArea.carnivores.get(i).selected)
+			if (DrawArea.carnivores.get(i).selected)
 				DrawArea.carnivores.get(i).setSelected(false);
 			else if (DrawArea.carnivores.get(i).hitbox.contains(x, y) && !found) {
 				DrawArea.carnivores.get(i).setSelected(true);
@@ -135,7 +136,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				DrawArea.carnivores.get(i).setSelected(false);
 		}
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
-			if(DrawArea.herbivores.get(i).selected)
+			if (DrawArea.herbivores.get(i).selected)
 				DrawArea.herbivores.get(i).setSelected(false);
 			else if (DrawArea.herbivores.get(i).hitbox.contains(x, y) && !found) {
 				DrawArea.herbivores.get(i).setSelected(true);
@@ -143,16 +144,16 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
 			} else
 				DrawArea.herbivores.get(i).setSelected(false);
-			
+
 		}
-		
-		if(!found){
+
+		if (!found) {
 			StatsPanel.selectedOrg = null;
 		}
-		
+
 		drawArea.updateImage();
 		Main.statsPanel.updateStats();
-		repaint();
+		render();
 	}
 
 	@Override
