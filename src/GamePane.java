@@ -78,8 +78,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			delta += (now - lastTime) / ns;
 			lastTime = now;
 			while (delta >= 1) {
-				if (ticks % 5 == 0)
-					tick();
+				tick();
 				ticks++;
 				delta--;
 			}
