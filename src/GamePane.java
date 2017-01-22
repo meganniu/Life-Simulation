@@ -70,7 +70,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		double delta = 0.0;
-		double ns = 1000000000.0 / 500;
+		int ticksPerSecond = 500;
+		double ns = 1000000000.0 / ticksPerSecond;
 		int frames = 0;
 		int ticks = 0;
 		while (running) {
