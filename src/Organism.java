@@ -74,6 +74,7 @@ public abstract class Organism {
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 		}
+		
 		pos.x = nextPos.x;
 		pos.y = nextPos.y;
 
