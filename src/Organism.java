@@ -15,24 +15,26 @@ public abstract class Organism {
 
 	double angle;
 
-	int speed;// per millisecond
+	int speed;// ticks/pixel
 
 	protected int detectRadius;
 
 	public Organism(Point pos, double angle, int speed, int detectRadius) {
+		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
-		this.speed = speed;
 		this.detectRadius = detectRadius;
-		hitbox = new Rectangle(pos.x-8, pos.y-8, 16,16);
+		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
-
 
 	public BufferedImage getImage() {
 		return img;
 	}
 
+	public abstract double detectItem();
+
 	public void move(int width, int height) {
+		angle = detectItem();
 		Point nextPos = nextPos(pos, angle);
 
 		if (nextPos.x + 8 >= width) {
@@ -45,8 +47,7 @@ public abstract class Organism {
 				nextPos = nextPos(pos, 180 - angle);
 				angle = 180 - angle;
 			}
-		}
-		if (nextPos.x - 8 <= 0) {
+		} else if (nextPos.x - 8 <= 0) {
 			// System.out.println("border encountered X");
 			if (angle >= 180 && angle <= 270) {
 				nextPos = nextPos(pos, 540 - angle);
@@ -57,33 +58,35 @@ public abstract class Organism {
 			}
 		}
 
-		if (nextPos.y + 8 >= height) {
+		else if (nextPos.y + 8 >= height) {
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 
-			nextPos.y = pos.y + (nextPos.y - pos.y) * -1;// disregarding cast
-															// rule in this case
-															// messes up the
-															// path of org
-															// Restore the cast
-															// rule
+			// nextPos.y = pos.y + (nextPos.y - pos.y) * -1;// disregarding cast
+			// rule in this case
+			// messes up the
+			// path of org
+			// Restore the cast
+			// rule
 
 		} else if (nextPos.y - 8 <= 0) {
 			// System.out.println("border encountered Y, rejX:" + nextPos.x + "
 			// rejY:" + nextPos.y);
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
+
 		}
 		pos.x = nextPos.x;
 		pos.y = nextPos.y;
 
-		hitbox.x=nextPos.x-8;
-		hitbox.y=nextPos.y-8;
+		hitbox.x = nextPos.x - 8;
+		hitbox.y = nextPos.y - 8;
 	}
 
 	public Point nextPos(Point past, double angle) {
 		// System.out.println("speed: " + speed);
 		double run = speed * Math.cos(Math.toRadians(angle));
+		// double run = speed * Math.cos(Math.toRadians(angle));
 		// System.out.println("run: " + run);
 
 		if (run < 0 && ((angle >= 0 && angle <= 90) || angle <= 360 && angle >= 270)) {
@@ -98,14 +101,16 @@ public abstract class Organism {
 		 * can be expressed as rise = 2tan(x) where x is the angle of movement
 		 */
 
-		double nextYDouble = Math.sin(Math.toRadians(angle)) * speed;// expression
-																		// of
-																		// rise
-																		// in
-																		// terms
-																		// of
-																		// angle
-		int nextY = (int) nextYDouble;
+		double nextYDouble = speed * Math.sin(Math.toRadians(angle));
+		// double nextYDouble = Math.sin(Math.toRadians(angle)) * speed;//
+		// expression
+		// of
+		// rise
+		// in
+		// terms
+		// of
+		// angle
+		int nextY = (int) Math.round(nextYDouble);
 
 		// System.out.println("nextY: " + nextY);
 
@@ -122,9 +127,9 @@ public abstract class Organism {
 		}
 
 		if (angle == 270.0) {
-			nextY = -2;// if angle is 270 move vertically down by 2
+			nextY = -speed;// if angle is 270 move vertically down by 2
 		} else if (angle == 90.0) { // for tan(x), 90 and 270 are asymptotes
-			nextY = 2;// if angle is 90, move vertically up 2
+			nextY = speed;// if angle is 90, move vertically up 2
 		}
 
 		Point nextPos = new Point(); // {nextX, nextY}
@@ -154,6 +159,6 @@ public abstract class Organism {
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
-	
+
 	public abstract ArrayList<String> getStats();
 }

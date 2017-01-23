@@ -15,6 +15,7 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -28,8 +29,12 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	static boolean running = false;
 	private Thread thread;
-	static int tickCount;
-	static int frameCount;
+	private int tickCount;
+	private int frameCount;
+	
+	static long timeElapsed = 0; // In milliseconds
+	private long timeToAdd = 0;
+	static long tickCounter = 0;
 
 	int width;
 	int height;
@@ -57,6 +62,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	public synchronized void stop() {
 		if (!running)
 			return;
+		timeToAdd = timeElapsed;
 		running = false;
 		try {
 			thread.join();
@@ -69,8 +75,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	public void run() {
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
+		long start = System.currentTimeMillis();
 		double delta = 0.0;
-		int ticksPerSecond = 500;
+		int ticksPerSecond = 30;
 		double ns = 1000000000.0 / ticksPerSecond;
 		int frames = 0;
 		int ticks = 0;
@@ -81,7 +88,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			while (delta >= 1) {
 				tick();
 				ticks++;
+				tickCounter++;
 				delta--;
+				timeElapsed = timeToAdd + System.currentTimeMillis() - start;
 			}
 			render();
 			frames++;
@@ -109,14 +118,14 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.updateImage();
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
-		g.drawString("FPS: " + frameCount + " | Ticks: " + GamePane.tickCount, 5, 15);
+		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
 		g.dispose();
 		bs.show();
 	}
 
 	public void paint(Graphics g) {
 		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
-		g.drawString("FPS: " + frameCount + " | Ticks: " + GamePane.tickCount, 5, 15);
+		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
 	}
 
 	@Override
