@@ -26,7 +26,7 @@ public class Carnivore extends Organism {
 		this.img = img;
 	}
 
-	public double detectHerbivore() {
+	public double detectItem() {
 
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
@@ -55,7 +55,7 @@ public class Carnivore extends Organism {
 				angle = 180 - angle;
 			}
 			
-			double smoother = 0;
+			/*double smoother = 0;
 			
 			if(this.angle-angle<0)
 				smoother = angle - Math.sqrt(angle-this.angle);
@@ -68,8 +68,9 @@ public class Carnivore extends Organism {
 				smoother = 180 - smoother;
 			}
 			
-			return smoother;
+			return smoother;*/
 				
+			return angle;
 				
 		}
 	}
@@ -91,7 +92,7 @@ public class Carnivore extends Organism {
 		
 		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
 		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
-		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
+		stats.add("<html><pre>Speed\t\t" +  speed + "</pre></html>");
 		stats.add("<html><pre>R. Detection\t</pre></html>");
 		stats.add("<html><pre>Egg Counter\t</pre></html>");
 		stats.add("<html><pre>Generation\t</pre></html>");

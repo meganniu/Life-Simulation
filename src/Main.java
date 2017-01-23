@@ -17,12 +17,12 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	boolean startSim; // true to start sim, false to pause sim
 	static int xShift = 0, yShift = 0;
 	static int drawWidth = 600, drawHeight = 600;
-	DrawPane drawPane = new DrawPane(drawWidth, drawHeight);
+	GamePane gamePane = new GamePane(drawWidth, drawHeight);
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
 	JButton left = new JButton("<");
-	
+
 	static StatsPanel statsPanel = new StatsPanel();
 
 	public Main() {
@@ -41,21 +41,21 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		down.addActionListener(this);
 		right.addActionListener(this);
 		left.addActionListener(this);
-		
+
 		System.out.println("here2");
 
 		gbc.gridheight = 2;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		add(statsPanel, gbc);
-		
-		gbc.gridx=1;
-		add(drawPane, gbc);
-		
-		gbc.gridheight=1;
-		gbc.gridx=2;
+
+		gbc.gridx = 1;
+		add(gamePane, gbc);
+
+		gbc.gridheight = 1;
+		gbc.gridx = 2;
 		add(go, gbc);
-		
+
 		JPanel controlPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
 		c2.fill = GridBagConstraints.BOTH;
@@ -71,21 +71,23 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		controlPanel.add(down, c2);
 
 		gbc.gridy = 1;
-		add(controlPanel, gbc);		
+		add(controlPanel, gbc);
 
 		setSize(1000, 800);
 		pack();
 		setVisible(true);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gamePane.render();
+		gamePane.render();
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Go")) {
 			if (startSim == false) {
-				DrawPane.timer.start();
+				gamePane.start();
 			} else {
-				DrawPane.timer.stop();
+				gamePane.stop();
 			}
 			startSim = !startSim;
 		}
@@ -105,7 +107,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (xShift - 50 >= 0)
 				xShift -= 50;
 		}
-		drawPane.repaint();
+		if (!GamePane.running)
+			gamePane.render();
 		requestFocus();
 	}
 
@@ -127,7 +130,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (xShift - 50 >= 0)
 				xShift -= 50;
 		}
-		drawPane.repaint();
+		if (!GamePane.running)
+			gamePane.render();
 	}
 
 	@Override

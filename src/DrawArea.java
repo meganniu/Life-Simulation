@@ -46,29 +46,22 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 50; i++) {
-			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*2+5),(int)(Math.random()*60+20)));
+			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),270,5,(int)(Math.random()*60+20)));
 		}
 		for (int i = 0; i < 5; i++) {
-			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*2+5),(int)(Math.random()*80+30)));
+			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,5,(int)(Math.random()*80+30)));
 		}
-
-		
-		updateImage();
 	}
 
 	public void updatePositions() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).eat();
-			carnivores.get(i).setAngle(carnivores.get(i).detectHerbivore());
-			
 			carnivores.get(i).move(width, height);
 		}
 
 		for (int i = 0; i < herbivores.size(); i++) {
-			herbivores.get(i).setAngle(herbivores.get(i).detectCarnivore());
 			herbivores.get(i).move(width, height);
 		}
-		updateImage();
 	}
 
 	public void updateImage() {

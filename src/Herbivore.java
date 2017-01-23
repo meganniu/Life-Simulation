@@ -40,7 +40,7 @@ public class Herbivore extends Organism {
 
 	}
 
-	public double detectCarnivore() {
+	public double detectItem() {
 
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
@@ -70,7 +70,7 @@ public class Herbivore extends Organism {
 				angle = (angle + 180) % 360;
 				return angle;
 			} else {
-				if (angle < (this.angle + 90) % 360 && angle > (this.angle - 90) % 360) {
+				if (angle < (this.angle + 45) % 360 && angle > (this.angle - 45) % 360) {
 					angle = (angle + 180) % 360;
 					return angle;
 				}
