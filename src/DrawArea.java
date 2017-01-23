@@ -63,6 +63,10 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).move(width, height);
 		}
 	}
+	
+	public void layEggs(){
+		
+	}
 
 	public void updateImage() {
 		/**
