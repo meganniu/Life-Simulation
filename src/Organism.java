@@ -18,12 +18,16 @@ public abstract class Organism {
 	int speed;// ticks/pixel
 
 	protected int detectRadius;
+	
+	long sinceLastEgg = System.currentTimeMillis();
+	int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius) {
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
 		this.detectRadius = detectRadius;
+		this.eggCycle = eggCycle;
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 
@@ -159,6 +163,14 @@ public abstract class Organism {
 
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
+	}
+	
+	public void layEgg(){
+		if(System.currentTimeMillis()>sinceLastEgg+eggCycle){
+			DrawArea.eggs.add(null);
+			sinceLastEgg=System.currentTimeMillis();
+			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
+		}
 	}
 
 	public abstract ArrayList<String> getStats();

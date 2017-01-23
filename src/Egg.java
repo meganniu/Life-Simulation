@@ -1,3 +1,5 @@
+import java.awt.Point;
+
 public class Egg
 {
     private double hatchTime;
@@ -6,7 +8,7 @@ public class Egg
     /**
      * Constructor for objects of class Egg
      */
-    public Egg(Point pos, int speed, int detectRadius, int gen, int hatchTime, boolean parent)
+    public Egg(Point pos, int speed, int detectRadius, int gen, int hatchTime)
     {
         this.pos = pos;
         this.speed = speed;
