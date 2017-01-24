@@ -16,12 +16,12 @@ public class DrawArea extends BufferedImage {
 	static ArrayList<Herbivore> herbivores = new ArrayList<Herbivore>();
 	static ArrayList<Food> food = new ArrayList<Food>();
 	static ArrayList<Egg> eggs = new ArrayList<Egg>();
-	static BufferedImage hImg = null, cImg = null;
+	static BufferedImage hImg = null, cImg = null, eImg = null;
 	private Graphics2D g = null;
 	static int width, height;
 
 	public DrawArea() {
-		super(1000, 1000, BufferedImage.TYPE_INT_ARGB);
+		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
 		width = getWidth();
 		height = getHeight();
@@ -33,6 +33,7 @@ public class DrawArea extends BufferedImage {
 		try {
 			hImg = ImageIO.read(new File("images/herbivore.png"));
 			cImg = ImageIO.read(new File("images/carnivore.png"));
+			eImg = ImageIO.read(new File("images/egg.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,10 +47,10 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 50; i++) {
-			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),270,5,(int)(Math.random()*60+20)));
+			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*10+5),(int)(Math.random()*60+20), 50000));
 		}
 		for (int i = 0; i < 5; i++) {
-			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,5,(int)(Math.random()*80+30)));
+			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*10+5),(int)(Math.random()*80+30), (int)(Math.random()*20000+15000)));
 		}
 	}
 
@@ -65,7 +66,13 @@ public class DrawArea extends BufferedImage {
 	}
 	
 	public void layEggs(){
-		
+		for (int i = 0; i < carnivores.size(); i++) {
+			carnivores.get(i).layEgg();
+		}
+
+		for (int i = 0; i < herbivores.size(); i++) {
+			herbivores.get(i).layEgg();
+		}
 	}
 
 	public void updateImage() {
@@ -82,6 +89,9 @@ public class DrawArea extends BufferedImage {
 
 		double locX = cImg.getWidth() / 2;
 		double locY = cImg.getHeight() / 2;
+		for (int i = 0; i < eggs.size(); i++) {
+			g.drawImage(eggs.get(i).getImage(), eggs.get(i).pos.x-8, eggs.get(i).pos.y-8, null);
+		}
 		for (int i = 0; i < carnivores.size(); i++) {
 			AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(360 - carnivores.get(i).getAngle()),
 					locX, locY);

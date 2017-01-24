@@ -92,20 +92,20 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			startSim = !startSim;
 		}
 		if (e.getSource() == up) {
-			if (yShift - 50 >= 0)
-				yShift -= 50;
+			if (yShift - 100 >= 0)
+				yShift -= 100;
 		}
 		if (e.getSource() == right) {
-			if (xShift + 50 + drawWidth <= DrawArea.width)
-				xShift += 50;
+			if (xShift + 100 + drawWidth*2 <= DrawArea.width)
+				xShift += 100;
 		}
 		if (e.getSource() == down) {
-			if (yShift + 50 + drawHeight <= DrawArea.height)
-				yShift += 50;
+			if (yShift + 100 + drawHeight*2 <= DrawArea.height)
+				yShift += 100;
 		}
 		if (e.getSource() == left) {
-			if (xShift - 50 >= 0)
-				xShift -= 50;
+			if (xShift - 100 >= 0)
+				xShift -= 100;
 		}
 		if (!GamePane.running)
 			gamePane.render();
@@ -115,20 +115,20 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if (yShift - 50 >= 0)
-				yShift -= 50;
+			if (yShift - 100 >= 0)
+				yShift -= 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (xShift + 50 + drawWidth <= DrawArea.width)
-				xShift += 50;
+			if (xShift + 100 + drawWidth*2 <= DrawArea.width)
+				xShift += 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (yShift + 50 + drawHeight <= DrawArea.height)
-				yShift += 50;
+			if (yShift + 100 + drawHeight*2 <= DrawArea.height)
+				yShift += 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (xShift - 50 >= 0)
-				xShift -= 50;
+			if (xShift - 100 >= 0)
+				xShift -= 100;
 		}
 		if (!GamePane.running)
 			gamePane.render();

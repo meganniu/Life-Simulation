@@ -1,33 +1,40 @@
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 public class Egg
 {
-    private double hatchTime;
-    private Point pos;
-    private boolean parent;
+	BufferedImage img;
+
+	Point pos;
+
+	double angle;
+
+	int speed;// ticks/pixel
+
+	protected int detectRadius;
+	
+	int eggCycle;
     /**
      * Constructor for objects of class Egg
      */
-    public Egg(Point pos, int speed, int detectRadius, int gen, int hatchTime)
-    {
-        this.pos = pos;
-        this.speed = speed;
-        this.detectRadius = detectRadius;
-        this.gen = gen;
-        this.hatchTime = hatchTime;
-        this.parent = parent;
+    public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle) {
+		this.speed = speed;
+		this.angle = angle;
+		this.pos = pos;
+		this.detectRadius = detectRadius;
+		this.eggCycle = eggCycle;
+		img = DrawArea.eImg;
     }
     
-    public void hatch(int i){
-        if (parent){
-            drawArea.eggs.remove(i);
-            //Carnivore baby = new Carnivore(pos, Math.floor(Math.random() * 359) + 0 ,  10, 80, 0, 0);
-            drawArea.carnivores.add(baby);
-        }
-        else{
-            drawArea.eggs.remove(i);
-            //Herbivore baby = new Herbivore(pos, Math.floor(Math.random() * 359) + 0 ,  10, 80, 0, 0);
-            drawArea.herbivores.add(baby);
-        }
-    }
+    public BufferedImage getImage() {
+		return img;
+	}
+    
+    public Point getPoint() {
+		return pos;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
 }

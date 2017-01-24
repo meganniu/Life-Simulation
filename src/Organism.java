@@ -19,7 +19,7 @@ public abstract class Organism {
 
 	protected int detectRadius;
 	
-	long sinceLastEgg = System.currentTimeMillis();
+	long sinceLastEgg = 0;
 	int eggCycle;
 
 	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle) {
@@ -34,14 +34,14 @@ public abstract class Organism {
 	public BufferedImage getImage() {
 		return img;
 	}
-
+	
 	public abstract double detectItem();
 
 	public void move(int width, int height) {
 		angle = detectItem();
 		Point nextPos = nextPos(pos, angle);
 
-		if (nextPos.x + 8 >= width) {
+		if (nextPos.x + 16 >= width) {
 			// System.out.println("border encountered X");
 			if (angle >= 270 && angle <= 360) {
 				nextPos = nextPos(pos, 540 - angle);
@@ -51,7 +51,7 @@ public abstract class Organism {
 				nextPos = nextPos(pos, 180 - angle);
 				angle = 180 - angle;
 			}
-		} else if (nextPos.x - 8 <= 0) {
+		} else if (nextPos.x - 16 <= 0) {
 			// System.out.println("border encountered X");
 			if (angle >= 180 && angle <= 270) {
 				nextPos = nextPos(pos, 540 - angle);
@@ -62,7 +62,7 @@ public abstract class Organism {
 			}
 		}
 
-		else if (nextPos.y + 8 >= height) {
+		else if (nextPos.y + 16 >= height) {
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 
@@ -73,7 +73,7 @@ public abstract class Organism {
 			// Restore the cast
 			// rule
 
-		} else if (nextPos.y - 8 <= 0) {
+		} else if (nextPos.y - 16 <= 0) {
 			// System.out.println("border encountered Y, rejX:" + nextPos.x + "
 			// rejY:" + nextPos.y);
 			nextPos = nextPos(pos, 360 - angle);
@@ -156,6 +156,14 @@ public abstract class Organism {
 	public Point getPoint() {
 		return pos;
 	}
+	
+	public int getSpeed(){
+		return speed;
+	}
+	
+	public int getDetectRadius(){
+		return detectRadius;
+	}
 
 	public double getAngle() {
 		return angle;
@@ -166,9 +174,9 @@ public abstract class Organism {
 	}
 	
 	public void layEgg(){
-		if(System.currentTimeMillis()>sinceLastEgg+eggCycle){
-			DrawArea.eggs.add(null);
-			sinceLastEgg=System.currentTimeMillis();
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle){
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, detectRadius, detectRadius, detectRadius));
+			sinceLastEgg=GamePane.timeElapsed;
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 		}
 	}
