@@ -15,15 +15,19 @@ public abstract class Organism {
 
 	double angle;
 
-	int speed;// ticks/pixel
+	double speed;// ticks/pixel
 
 	protected int detectRadius;
+	
+	int generation;//generation of organism
 
-	public Organism(Point pos, double angle, int speed, int detectRadius) {
+	public Organism(Point pos, double angle, double speed, int detectRadius, int gen) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
 		this.detectRadius = detectRadius;
+		this.generation = gen;
+		
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 
@@ -128,9 +132,9 @@ public abstract class Organism {
 		}
 
 		if (angle == 270.0) {
-			nextY = -speed;// if angle is 270 move vertically down by 2
+			nextY = (int) -speed;// if angle is 270 move vertically down by 2
 		} else if (angle == 90.0) { // for tan(x), 90 and 270 are asymptotes
-			nextY = speed;// if angle is 90, move vertically up 2
+			nextY = (int) speed;// if angle is 90, move vertically up 2
 		}
 
 		Point nextPos = new Point(); // {nextX, nextY}
@@ -159,6 +163,14 @@ public abstract class Organism {
 
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
+	}
+	
+	public int getGen(){
+		return generation;
+	}
+	
+	public double getSpeed(){
+		return speed;
 	}
 
 	public abstract ArrayList<String> getStats();

@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class Carnivore extends Organism {
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius) {
-		super(pos, angle, speed, detectRadius);
+	public Carnivore(Point pos, double angle, double speed, int detectRadius, int gen) {
+		super(pos, angle, speed, detectRadius, gen);
 		img = DrawArea.cImg;
 	}
 

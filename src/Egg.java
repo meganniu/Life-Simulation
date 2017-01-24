@@ -1,31 +1,97 @@
+import java.awt.Point;
+
 public class Egg
 {
     private double hatchTime;
     private Point pos;
-    private boolean parent;
+    
+    private double speed;
+    
+    private int detectRadius;
+    
+    private int gen;
+    
+    
+    /**
+     * organism to be born
+     */
+    private Organism organism;
+    
+    /**
+     * parent of the egg
+     */
+    private Organism parent;
+    
+    /**
+     * if organism hatched is a herbivore (if false, org is a carnivore)
+     */
+    private boolean herbivore;
+    
+    /**
+     * counting until timer = hatchtime
+     * (when the egg will hatch)
+     */
+    private int timer;
+      
     /**
      * Constructor for objects of class Egg
      */
-    public Egg(Point pos, int speed, int detectRadius, int gen, int hatchTime, boolean parent)
+    public Egg(Point pos, int hatchTime, Organism parent)
     {
-        this.pos = pos;
-        this.speed = speed;
-        this.detectRadius = detectRadius;
-        this.gen = gen;
-        this.hatchTime = hatchTime;
-        this.parent = parent;
-    }
-    
-    public void hatch(int i){
-        if (parent){
-            drawArea.eggs.remove(i);
-            //Carnivore baby = new Carnivore(pos, Math.floor(Math.random() * 359) + 0 ,  10, 80, 0, 0);
-            drawArea.carnivores.add(baby);
+    	double ran = Math.random();
+    	
+    	timer = 0;
+    	
+    	/**
+    	 * if parent is carnivore, offspring is automatically a carnivore
+    	 * 1/10 chance of herbivore offspring to be carnivores (evolution)
+    	 */
+    	herbivore = true;
+    	if(parent instanceof Carnivore || (int)(Math.random() * 10) + 1 > 9){ 
+    		herbivore = false;
+    	}
+    	
+    	/**
+    	 * for herbivores, the addition of speed due to genetic mutation ranges from -0.1 to 0.2
+    	 * for carnivores, the addition of speed due to genetic mutation ranges from -0.2 to 0.1
+    	 * this way, herbivores will become naturally faster and carnivores will become naturally faster
+    	 */
+        this.speed = parent.getSpeed();
+        
+        if(herbivore){
+        	this.speed += ran * 1.3 - 0.1;
         }
         else{
-            drawArea.eggs.remove(i);
-            //Herbivore baby = new Herbivore(pos, Math.floor(Math.random() * 359) + 0 ,  10, 80, 0, 0);
-            drawArea.herbivores.add(baby);
+        	this.speed += ran * 1.3 - 0.2;
         }
+        
+        this.detectRadius = parent.detectRadius;
+        this.hatchTime = hatchTime; //60 ticks is the hatchtime
+        this.pos = pos;
+        
+    }
+    
+    public boolean incrementTimer(){
+    	timer++;
+    	if(timer >= hatchTime){
+    		return true;
+    	}
+    	return false;
+    }
+    
+    public Herbivore getHerbivore(){
+    	return new Herbivore(pos, (int)(Math.random()*(1000-16)+8), speed, detectRadius, gen);
+    }
+    
+    public Carnivore getCarnivore(){
+    	return new Carnivore(pos, (int)(Math.random()*(1000-16)+8), speed, detectRadius, gen);
+    }
+    
+    public Point getPos(){
+    	return pos;
+    }
+    
+    public boolean isHerbivore(){
+    	return herbivore;
     }
 }
