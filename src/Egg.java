@@ -1,4 +1,5 @@
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 
 public class Egg
 {
@@ -11,6 +12,7 @@ public class Egg
     
     private int gen;
     
+    BufferedImage img;
     
     /**
      * organism to be born
@@ -94,4 +96,8 @@ public class Egg
     public boolean isHerbivore(){
     	return herbivore;
     }
+    
+    public BufferedImage getImage() {
+		return img;
+	}
 }

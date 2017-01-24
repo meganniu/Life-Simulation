@@ -107,6 +107,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	public void tick() { // Per tick
 		drawArea.updateEggs();
 		drawArea.updatePositions();
+		//drawArea.layEggs();
 		Main.statsPanel.updateStats();
 	}
 
@@ -118,22 +119,21 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		}
 		drawArea.updateImage();
 		Graphics g = bs.getDrawGraphics();
-		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
+		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth*2, Main.drawHeight*2), 0, 0, Main.drawWidth, Main.drawHeight, null);
 		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
 		g.dispose();
 		bs.show();
 	}
 
 	public void paint(Graphics g) {
-		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth, Main.drawHeight), 0, 0, this);
-		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
+		render();
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		boolean found = false;
-		int x = e.getX() + Main.xShift;
-		int y = e.getY() + Main.yShift;
+		int x = 2*(e.getX() + Main.xShift);
+		int y = 2*(e.getY() + Main.yShift);
 		System.out.println(x + " " + y);
 		for (int i = 0; i < DrawArea.carnivores.size(); i++) {
 			if (DrawArea.carnivores.get(i).selected)
@@ -161,9 +161,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			StatsPanel.selectedOrg = null;
 		}
 
-		drawArea.updateImage();
 		Main.statsPanel.updateStats();
-		render();
 	}
 
 	@Override

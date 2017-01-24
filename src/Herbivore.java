@@ -11,16 +11,16 @@ public class Herbivore extends Organism {
 	}
 
 	public void setSelected(boolean b) {
-		BufferedImage img = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = img.getGraphics();
 		g.drawImage(DrawArea.hImg, 0, 0, null);
 		selected = b;
 		if (b) {
 			Color green = new Color(0, 255, 0, 100);
 			g.setColor(green);
-			g.fillOval(0, 0, 24, 24);
+			g.fillOval(0, 0, 48, 48);
 			g.setColor(Color.green);
-			g.drawOval(0, 0, 24, 24);
+			g.drawOval(0, 0, 48, 48);
 		}
 		this.img = img;
 	}
