@@ -8,10 +8,11 @@ public class Carnivore extends Organism {
 
 	private boolean chasing = false;
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints);
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy);
 		img = DrawArea.cImg;
 	}
+
 
 	public void setSelected(boolean b) {
 		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
@@ -86,8 +87,10 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 12) {
+				energy = energy + DrawArea.herbivores.get(i).getEnergy()/5;
 				DrawArea.herbivores.remove(i);
 				i--;
+				
 			}
 		}
 		return false;

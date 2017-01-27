@@ -20,17 +20,18 @@ public abstract class Organism {
 	protected int detectRadius;
 	
 	int carnivorePoints;
-	
+	int energy;
 	long sinceLastEgg;
 	int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
 		this.carnivorePoints = carnivorePoints;
+		this.energy = energy;
 		sinceLastEgg = GamePane.timeElapsed;
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
@@ -173,10 +174,16 @@ public abstract class Organism {
 		return angle;
 	}
 
+	public int getEnergy(){
+		return energy;
+	}
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
 	
+	public void energyUse(){
+		energy = energy - speed * speed;
+	}
 	public void layEgg(){
 		int evoSpeed = speed; 
 		int evoRadius = detectRadius;
@@ -189,5 +196,6 @@ public abstract class Organism {
 		}
 	}
 
+	
 	public abstract ArrayList<String> getStats();
 }
