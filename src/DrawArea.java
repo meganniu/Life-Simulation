@@ -16,7 +16,7 @@ public class DrawArea extends BufferedImage {
 	static ArrayList<Herbivore> herbivores = new ArrayList<Herbivore>();
 	static ArrayList<Food> food = new ArrayList<Food>();
 	static ArrayList<Egg> eggs = new ArrayList<Egg>();
-	static BufferedImage hImg = null, cImg = null, eImg = null;
+	static BufferedImage hImg = null, cImg = null, eImg = null, fImg = null;
 	private Graphics2D g = null;
 	static int width, height;
 
@@ -34,6 +34,7 @@ public class DrawArea extends BufferedImage {
 			hImg = ImageIO.read(new File("images/herbivore.png"));
 			cImg = ImageIO.read(new File("images/carnivore.png"));
 			eImg = ImageIO.read(new File("images/egg.png"));
+			fImg = ImageIO.read(new File("images/food.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -47,10 +48,10 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 50; i++) {
-			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*10+5),(int)(Math.random()*60+20), 50000));
+			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360.0,(int)(Math.random()*10+5),(int)(Math.random()*60+20), (int)(Math.random()*1000+50000), 20, 20000));
 		}
-		for (int i = 0; i < 5; i++) {
-			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360,(int)(Math.random()*10+5),(int)(Math.random()*80+30), (int)(Math.random()*20000+15000)));
+		for (int i = 0; i < 1; i++) {
+			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360.0,(int)(Math.random()*10+5),(int)(Math.random()*80+100), (int)(Math.random()*1000+5000), 120, 20000));
 		}
 	}
 
@@ -74,6 +75,41 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).layEgg();
 		}
 	}
+	
+	public void hatchEggs(){
+		for (int i = 0; i < eggs.size(); i++){
+			if(eggs.get(i).hatch()){
+				eggs.remove(i);
+				i--;
+			}
+		}
+	}
+	
+	public void energyCheck(){
+		for (int i = 0; i < carnivores.size(); i++){
+			carnivores.get(i).energyUse();
+			if (carnivores.get(i).getEnergy() <= 0){
+				carnivores.remove(i);
+				i--;
+				System.out.println("Carnivore died");
+			}
+		}
+		for (int i = 0; i < herbivores.size(); i++){
+			herbivores.get(i).energyUse();
+			if (herbivores.get(i).getEnergy() <= 0){
+				herbivores.remove(i);
+				i--;
+				System.out.println("Herbivore died");
+			}
+		}
+	}
+	
+	public void spawnFood(){
+		if (Math.random()<0.2){
+			food.add(new Food(4000, new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8))));
+			System.out.println("Spawned a food");
+		}
+	}
 
 	public void updateImage() {
 		/**
@@ -90,7 +126,10 @@ public class DrawArea extends BufferedImage {
 		double locX = cImg.getWidth() / 2;
 		double locY = cImg.getHeight() / 2;
 		for (int i = 0; i < eggs.size(); i++) {
-			g.drawImage(eggs.get(i).getImage(), eggs.get(i).pos.x-8, eggs.get(i).pos.y-8, null);
+			g.drawImage(eggs.get(i).getImage(), eggs.get(i).getPoint().x-8, eggs.get(i).getPoint().y-8, null);
+		}
+		for (int i = 0; i < food.size(); i++) {
+			g.drawImage(food.get(i).getImage(), food.get(i).getPoint().x-8, food.get(i).getPoint().y-8, null);
 		}
 		for (int i = 0; i < carnivores.size(); i++) {
 			AffineTransform tx = AffineTransform.getRotateInstance(Math.toRadians(360 - carnivores.get(i).getAngle()),
@@ -108,3 +147,4 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 }
+

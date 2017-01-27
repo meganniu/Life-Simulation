@@ -1,0 +1,6 @@
+TODO:
+- everything to do with food
+- success determined by its total accumulation of energy of egg laying
+- documentation
+- user's guide
+- developer's guide
