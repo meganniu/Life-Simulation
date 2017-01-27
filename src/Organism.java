@@ -41,6 +41,8 @@ public abstract class Organism {
 	}
 	
 	public abstract double detectItem();
+	
+	public abstract void eat();
 
 	public void move(int width, int height) {
 		angle = detectItem();
