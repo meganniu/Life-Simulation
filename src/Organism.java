@@ -15,25 +15,23 @@ public abstract class Organism {
 
 	double angle;
 
-	double speed;// ticks/pixel
+	int speed;// ticks/pixel
 
 	protected int detectRadius;
-
-	int generation;//generation of organism
-	long sinceLastEgg = 0;	
+	
+	int carnivorePoints;
+	
+	long sinceLastEgg;
 	int eggCycle;
 
-	public Organism(Point pos, double angle, double speed, int detectRadius, int gen) {
-
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
 		this.detectRadius = detectRadius;
-
-		this.generation = gen;
-
 		this.eggCycle = eggCycle;
-
+		this.carnivorePoints = carnivorePoints;
+		sinceLastEgg = GamePane.timeElapsed;
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 
@@ -138,9 +136,9 @@ public abstract class Organism {
 		}
 
 		if (angle == 270.0) {
-			nextY = (int) -speed;// if angle is 270 move vertically down by 2
+			nextY = -speed;// if angle is 270 move vertically down by 2
 		} else if (angle == 90.0) { // for tan(x), 90 and 270 are asymptotes
-			nextY = (int) speed;// if angle is 90, move vertically up 2
+			nextY = speed;// if angle is 90, move vertically up 2
 		}
 
 		Point nextPos = new Point(); // {nextX, nextY}
@@ -163,6 +161,10 @@ public abstract class Organism {
 		return pos;
 	}
 	
+	public int getSpeed(){
+		return speed;
+	}
+	
 	public int getDetectRadius(){
 		return detectRadius;
 	}
@@ -175,23 +177,17 @@ public abstract class Organism {
 		this.angle = angle % 360;
 	}
 	
-
-	public int getGen(){
-		return generation;
-	}
-	
-	public double getSpeed(){
-		return speed;
-		
-	}
-/**
 	public void layEgg(){
+		int evoSpeed = speed; 
+		int evoRadius = detectRadius;
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle){
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, detectRadius, detectRadius, detectRadius));
+			
 			sinceLastEgg=GamePane.timeElapsed;
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, evoSpeed, evoRadius, eggCycle, carnivorePoints));
+			
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 		}
 	}
-*/
+
 	public abstract ArrayList<String> getStats();
 }

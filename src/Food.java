@@ -7,7 +7,7 @@ public class Food
     public Food(int nutritrion, Point pos)
     {
         this.pos = pos;
-        box = new Hitbox(pos.x - 1, pos.y - 1, 3, 3);
+        box = new Hitbox(pos.x - 8, pos.y - 8, 16, 16);
     }
 
     public Point getPoint(){

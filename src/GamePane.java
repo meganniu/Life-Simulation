@@ -105,9 +105,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	}
 
 	public void tick() { // Per tick
-		drawArea.updateEggs();
 		drawArea.updatePositions();
-		//drawArea.layEggs();
+		drawArea.layEggs();
+		drawArea.hatchEggs();
 		Main.statsPanel.updateStats();
 	}
 

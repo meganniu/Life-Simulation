@@ -1,103 +1,65 @@
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 
-public class Egg
-{
-    private double hatchTime;
-    private Point pos;
-    
-    private double speed;
-    
-    private int detectRadius;
-    
-    private int gen;
-    
-    BufferedImage img;
-    
-    /**
-     * organism to be born
-     */
-    private Organism organism;
-    
-    /**
-     * parent of the egg
-     */
-    private Organism parent;
-    
-    /**
-     * if organism hatched is a herbivore (if false, org is a carnivore)
-     */
-    private boolean herbivore;
-    
-    /**
-     * counting until timer = hatchtime
-     * (when the egg will hatch)
-     */
-    private int timer;
-      
-    /**
-     * Constructor for objects of class Egg
-     */
-    public Egg(Point pos, int hatchTime, Organism parent)
-    {
-    	double ran = Math.random();
-    	
-    	timer = 0;
-    	
-    	/**
-    	 * if parent is carnivore, offspring is automatically a carnivore
-    	 * 1/10 chance of herbivore offspring to be carnivores (evolution)
-    	 */
-    	herbivore = true;
-    	if(parent instanceof Carnivore || (int)(Math.random() * 10) + 1 > 9){ 
-    		herbivore = false;
-    	}
-    	
-    	/**
-    	 * for herbivores, the addition of speed due to genetic mutation ranges from -0.1 to 0.2
-    	 * for carnivores, the addition of speed due to genetic mutation ranges from -0.2 to 0.1
-    	 * this way, herbivores will become naturally faster and carnivores will become naturally faster
-    	 */
-        this.speed = parent.getSpeed();
-        
-        if(herbivore){
-        	this.speed += ran * 1.3 - 0.1;
-        }
-        else{
-        	this.speed += ran * 1.3 - 0.2;
-        }
-        
-        this.detectRadius = parent.detectRadius;
-        this.hatchTime = hatchTime; //60 ticks is the hatchtime
-        this.pos = pos;
-        
-    }
-    
-    public boolean incrementTimer(){
-    	timer++;
-    	if(timer >= hatchTime){
-    		return true;
-    	}
-    	return false;
-    }
-    
-    public Herbivore getHerbivore(){
-    	return new Herbivore(pos, (int)(Math.random()*(1000-16)+8), speed, detectRadius, gen);
-    }
-    
-    public Carnivore getCarnivore(){
-    	return new Carnivore(pos, (int)(Math.random()*(1000-16)+8), speed, detectRadius, gen);
-    }
-    
-    public Point getPos(){
-    	return pos;
-    }
-    
-    public boolean isHerbivore(){
-    	return herbivore;
-    }
-    
-    public BufferedImage getImage() {
+public class Egg {
+	BufferedImage img;
+
+	Point pos;
+
+	double angle;
+
+	int speed;// ticks/pixel
+
+	protected int detectRadius;
+
+	int eggCycle;
+
+	long timeBorn;
+
+	int carnivorePoints;
+
+	/**
+	 * Constructor for objects of class Egg
+	 */
+	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
+		while(Math.random()>.7){
+			speed++;
+		}
+		this.speed = speed;
+		this.angle = angle;
+		this.pos = pos;
+		this.detectRadius = detectRadius;
+		this.eggCycle = eggCycle;
+		this.timeBorn= GamePane.timeElapsed;
+		this.carnivorePoints = carnivorePoints;
+		img = DrawArea.eImg;
+	}
+
+	public BufferedImage getImage() {
 		return img;
+	}
+
+	public Point getPoint() {
+		return pos;
+	}
+
+	public double getAngle() {
+		return angle;
+	}
+
+	public void mutate() {
+	}
+
+	public boolean hatch() {
+		if (timeBorn + 5000 <= GamePane.timeElapsed) {
+			if (carnivorePoints >= 100) {
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints));
+			} else {
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints));
+			}
+			System.out.println("Egg hatched at" + GamePane.timeElapsed / 1000.0);
+			return true;
+		}
+		return false;
 	}
 }

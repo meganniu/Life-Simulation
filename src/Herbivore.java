@@ -5,8 +5,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Herbivore extends Organism {
-	public Herbivore(Point pos, double angle, double speed, int detectRadius, int gen) {
-		super(pos, angle, speed, detectRadius, gen);
+	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints);
 		img = DrawArea.hImg;
 	}
 
@@ -81,3 +81,4 @@ public class Herbivore extends Organism {
 		}
 	}
 }
+

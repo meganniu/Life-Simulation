@@ -6,8 +6,10 @@ import java.util.ArrayList;
 
 public class Carnivore extends Organism {
 
-	public Carnivore(Point pos, double angle, double speed, int detectRadius, int gen) {
-		super(pos, angle, speed, detectRadius, gen);
+	private boolean chasing = false;
+
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints);
 		img = DrawArea.cImg;
 	}
 
@@ -39,40 +41,44 @@ public class Carnivore extends Organism {
 			}
 
 		}
-		if (shortestDistance == -1)
+		if (shortestDistance == -1) {
+			chasing = false;
 			return this.angle;
-		else {
-			// int deltaX = ;
-			// int deltaY;
+		} else {
+
+			chasing = true;
 
 			double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
 					pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
 			angle = Math.toDegrees(angle);
-			
+
 			if (angle >= 0 && angle <= 180) {
 				angle = 180 - angle;
 			} else if (angle >= -180 && angle <= 0) {
 				angle = 180 - angle;
 			}
-			
-			/*double smoother = 0;
-			
-			if(this.angle-angle<0)
-				smoother = angle - Math.sqrt(angle-this.angle);
-			else if(angle-this.angle<0)
-				smoother = this.angle - Math.sqrt(this.angle-angle);
-			
-			if (smoother >= 0 && smoother <= 180) {
-				smoother = 180 - smoother;
-			} else if (smoother >= -180 && smoother <= 0) {
-				smoother = 180 - smoother;
-			}
-			
-			return smoother;*/
-				
+
+			/*
+			 * double smoother = 0;
+			 * 
+			 * if(this.angle-angle<0) smoother = angle -
+			 * Math.sqrt(angle-this.angle); else if(angle-this.angle<0) smoother
+			 * = this.angle - Math.sqrt(this.angle-angle);
+			 * 
+			 * if (smoother >= 0 && smoother <= 180) { smoother = 180 -
+			 * smoother; } else if (smoother >= -180 && smoother <= 0) {
+			 * smoother = 180 - smoother; }
+			 * 
+			 * return smoother;
+			 */
+
 			return angle;
-				
+
 		}
+	}
+	
+	public boolean isChasing(){
+		return chasing;
 	}
 
 	public boolean eat() {
@@ -86,20 +92,20 @@ public class Carnivore extends Organism {
 		}
 		return false;
 	}
-	
-	public ArrayList<String> getStats(){
+
+	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-		
+
 		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
 		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
-		stats.add("<html><pre>Speed\t\t" +  speed + "</pre></html>");
+		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
 		stats.add("<html><pre>R. Detection\t</pre></html>");
 		stats.add("<html><pre>Egg Counter\t</pre></html>");
 		stats.add("<html><pre>Generation\t</pre></html>");
 		stats.add("<html><pre>Energy\t</pre></html>");
-		
+
 		return stats;
-		
+
 	}
 
 }
