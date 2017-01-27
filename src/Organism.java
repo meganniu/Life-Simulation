@@ -20,11 +20,11 @@ public abstract class Organism {
 	protected int detectRadius;
 	
 	int carnivorePoints;
-	int energy;
+	double energy;
 	long sinceLastEgg;
 	int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
@@ -174,7 +174,7 @@ public abstract class Organism {
 		return angle;
 	}
 
-	public int getEnergy(){
+	public double getEnergy(){
 		return energy;
 	}
 	public void setAngle(double angle) {
@@ -182,7 +182,8 @@ public abstract class Organism {
 	}
 	
 	public void energyUse(){
-		energy = energy - speed * speed;
+		energy-=1; // Passive energy loss
+		energy-=(Math.pow(speed, 2)/8.0);
 	}
 	public void layEgg(){
 		int evoSpeed = speed; 

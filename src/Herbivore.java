@@ -13,22 +13,6 @@ public class Herbivore extends Organism {
 		img = DrawArea.hImg;
 	}
 
-
-	public void setSelected(boolean b) {
-		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = img.getGraphics();
-		g.drawImage(DrawArea.hImg, 0, 0, null);
-		selected = b;
-		if (b) {
-			Color green = new Color(0, 255, 0, 100);
-			g.setColor(green);
-			g.fillOval(0, 0, 48, 48);
-			g.setColor(Color.green);
-			g.drawOval(0, 0, 48, 48);
-		}
-		this.img = img;
-	}
-
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 
@@ -70,18 +54,8 @@ public class Herbivore extends Organism {
 				angle = 180 - angle;
 			}
 
-			if (shortestDistance < detectRadius / 2) {
 				angle = (angle + 180) % 360;
 				return angle;
-			} else {
-				if (angle < (this.angle + 45) % 360 && angle > (this.angle - 45) % 360) {
-					angle = (angle + 180) % 360;
-					return angle;
-				}
-				else
-					return this.angle;
-			}
-
 		}
 
 	}

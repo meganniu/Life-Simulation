@@ -32,6 +32,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	private int tickCount;
 	private int frameCount;
 	
+	static Rectangle drawRegion;
+	
 	static long timeElapsed = 0; // In milliseconds
 	private long timeToAdd = 0;
 	static long tickCounter = 0;
@@ -121,7 +123,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		}
 		drawArea.updateImage();
 		Graphics g = bs.getDrawGraphics();
-		g.drawImage(drawArea.getSubimage(Main.xShift, Main.yShift, Main.drawWidth*2, Main.drawHeight*2), 0, 0, Main.drawWidth, Main.drawHeight, null);
+		g.drawImage(drawArea.getSubimage(drawRegion.x, drawRegion.y, drawRegion.width, drawRegion.height), 0, 0, drawRegion.width/2, drawRegion.height/2, null);
 		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
 		g.dispose();
 		bs.show();
@@ -134,36 +136,27 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		boolean found = false;
-		int x = 2*(e.getX() + Main.xShift);
-		int y = 2*(e.getY() + Main.yShift);
+		int x = 2*e.getX() + drawRegion.x;
+		int y = 2*e.getY() + drawRegion.y;
 		System.out.println(x + " " + y);
-		for (int i = 0; i < DrawArea.carnivores.size(); i++) {
-			if (DrawArea.carnivores.get(i).selected)
-				DrawArea.carnivores.get(i).setSelected(false);
-			else if (DrawArea.carnivores.get(i).hitbox.contains(x, y) && !found) {
-				DrawArea.carnivores.get(i).setSelected(true);
-				found = true;
+		for (int i = 0; i < DrawArea.carnivores.size() && !found; i++) {
+			if (DrawArea.carnivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.carnivores.get(i);
-			} else
-				DrawArea.carnivores.get(i).setSelected(false);
-		}
-		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
-			if (DrawArea.herbivores.get(i).selected)
-				DrawArea.herbivores.get(i).setSelected(false);
-			else if (DrawArea.herbivores.get(i).hitbox.contains(x, y) && !found) {
-				DrawArea.herbivores.get(i).setSelected(true);
 				found = true;
+			}
+		}
+		for (int i = 0; i < DrawArea.herbivores.size() && !found; i++) {
+			if (DrawArea.herbivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
-			} else
-				DrawArea.herbivores.get(i).setSelected(false);
-
+				found = true;
+			}
 		}
 
 		if (!found) {
 			StatsPanel.selectedOrg = null;
 		}
-
 		Main.statsPanel.updateStats();
+		render();
 	}
 
 	@Override

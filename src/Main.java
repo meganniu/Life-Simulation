@@ -1,5 +1,6 @@
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -12,11 +13,12 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.sun.javafx.geom.Rectangle;
+
 public class Main extends JFrame implements KeyListener, ActionListener {
 
 	boolean startSim; // true to start sim, false to pause sim
-	static int xShift = 0, yShift = 0;
-	static int drawWidth = 600, drawHeight = 600;
+	private static int drawWidth = 600, drawHeight = 600;
 	GamePane gamePane = new GamePane(drawWidth, drawHeight);
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
@@ -29,7 +31,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		addKeyListener(this);
 		setFocusable(true);
+		this.requestFocusInWindow();
 
+		GamePane.drawRegion = new Rectangle(0, 0, drawWidth*2, drawHeight*2);
+		
 		setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 
@@ -44,6 +49,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		System.out.println("here2");
 
+		gbc.insets = new Insets(2,5,2,5);
 		gbc.gridheight = 2;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -92,20 +98,20 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			startSim = !startSim;
 		}
 		if (e.getSource() == up) {
-			if (yShift - 100 >= 0)
-				yShift -= 100;
+			if (GamePane.drawRegion.y - 100 >= 0)
+				GamePane.drawRegion.y -= 100;
 		}
 		if (e.getSource() == right) {
-			if (xShift + 100 + drawWidth*2 <= DrawArea.width)
-				xShift += 100;
+			if (GamePane.drawRegion.x + 100 + drawWidth*2 <= DrawArea.width)
+				GamePane.drawRegion.x += 100;
 		}
 		if (e.getSource() == down) {
-			if (yShift + 100 + drawHeight*2 <= DrawArea.height)
-				yShift += 100;
+			if (GamePane.drawRegion.y + 100 + drawHeight*2 <= DrawArea.height)
+				GamePane.drawRegion.y += 100;
 		}
 		if (e.getSource() == left) {
-			if (xShift - 100 >= 0)
-				xShift -= 100;
+			if (GamePane.drawRegion.x - 100 >= 0)
+				GamePane.drawRegion.x -= 100;
 		}
 		if (!GamePane.running)
 			gamePane.render();
@@ -115,20 +121,20 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			if (yShift - 100 >= 0)
-				yShift -= 100;
+			if (GamePane.drawRegion.y - 100 >= 0)
+				GamePane.drawRegion.y -= 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			if (xShift + 100 + drawWidth*2 <= DrawArea.width)
-				xShift += 100;
+			if (GamePane.drawRegion.x + 100 + drawWidth*2 <= DrawArea.width)
+				GamePane.drawRegion.x += 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			if (yShift + 100 + drawHeight*2 <= DrawArea.height)
-				yShift += 100;
+			if (GamePane.drawRegion.y + 100 + drawHeight*2 <= DrawArea.height)
+				GamePane.drawRegion.y += 100;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			if (xShift - 100 >= 0)
-				xShift -= 100;
+			if (GamePane.drawRegion.x - 100 >= 0)
+				GamePane.drawRegion.x -= 100;
 		}
 		if (!GamePane.running)
 			gamePane.render();
