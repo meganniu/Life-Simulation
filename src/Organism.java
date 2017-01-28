@@ -17,14 +17,14 @@ public abstract class Organism {
 
 	protected int speed;// ticks/pixel
 	protected int detectRadius;
-	protected int metabolism;
+	protected double metabolism;
 	protected int carnivorePoints;
 	
-	double energy;
+	protected double energy;
 	long sinceLastEgg;
 	protected int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;

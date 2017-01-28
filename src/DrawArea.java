@@ -56,8 +56,8 @@ public class DrawArea extends BufferedImage {
 			       (int) (Math.random() * 60 + 20),//dRadius
 			       (int) (Math.random() * 1000 + 50000),//EggCycle
 			       20,//carnivorepoints
-			       1000.0,//energy
-			       100));//metabolism
+			       4000.0,//energy
+			       Math.random() * 200.0 + 50.0));//metabolism
 			  }
 			  for (int i = 0; i < 1; i++) {
 			   carnivores.add(new Carnivore(
@@ -68,8 +68,8 @@ public class DrawArea extends BufferedImage {
 			     (int) (Math.random() * 80 + 100),//dRadius
 			     (int) (Math.random() * 1000 + 5000),//eggCycle
 			     120,//carnivorePoints
-			     1000.0,//energy
-			     100));//metabolism
+			     4000.0,//energy
+			     Math.random() * 200.0 + 50.0));//metabolism
 			  }
 	}
 
@@ -114,7 +114,8 @@ public class DrawArea extends BufferedImage {
 
 	public void energyCheck() {
 		for (int i = 0; i < carnivores.size(); i++) {
-			//carnivores.get(i).energyUse();
+			carnivores.get(i).energyUse();
+			carnivores.get(i).eat();
 			if (carnivores.get(i).getEnergy() <= 0) {
 				carnivores.remove(i);
 				i--;
@@ -122,7 +123,8 @@ public class DrawArea extends BufferedImage {
 			}
 		}
 		for (int i = 0; i < herbivores.size(); i++) {
-			//herbivores.get(i).energyUse();
+			herbivores.get(i).energyUse();
+			herbivores.get(i).eat();
 			if (herbivores.get(i).getEnergy() <= 0) {
 				herbivores.remove(i);
 				i--;
@@ -131,11 +133,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 	
-
-	
 	public void spawnFood() {
 		if (GamePane.tickCounter%15==0) {
-			food.add(new Food(4000, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+			food.add(new Food(300.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
 		}
 	}
 

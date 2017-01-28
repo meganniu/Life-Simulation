@@ -12,7 +12,7 @@ public class Carnivore extends Organism {
 	private long chaseStart;
 	private long cooldownStart;
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism);
 		img = DrawArea.cImg;
 	}
@@ -116,6 +116,7 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
+				energy += ((DrawArea.herbivores.get(i).getEnergy() / 10 + 1000.0) * metabolism / 100.0);
 				DrawArea.herbivores.remove(i);
 				i--;
 			}
@@ -128,10 +129,11 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
 		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
 		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
-		stats.add("<html><pre>R. Detection\t</pre></html>");
-		stats.add("<html><pre>Egg Counter\t</pre></html>");
-		stats.add("<html><pre>Generation\t</pre></html>");
-		stats.add("<html><pre>Energy\t</pre></html>");
+		stats.add("<html><pre>R. Detection\t" +  detectRadius + "</pre></html>");
+		stats.add("<html><pre>Egg Counter\t" + eggCycle + "</pre></html>");
+		stats.add("<html><pre>Carnivorism\t" + carnivorePoints + "</pre></html>");
+		stats.add("<html><pre>Energy\t" + energy + "</pre></html>");
+		stats.add("<html><pre>Metabolism\t" + metabolism + "</pre></html>");
 
 		return stats;
 
