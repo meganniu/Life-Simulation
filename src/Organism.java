@@ -188,16 +188,15 @@ public abstract class Organism {
 	
 	public void energyUse(){
 		energy-=1; // Passive energy loss
-		energy-=(Math.pow(speed, 2)/8.0);
+		energy-=((Math.pow(speed, 2)/8.0)*metabolism /80.0);
 	}
 	
+	
 	public void layEgg(){
-		int evoSpeed = speed; 
-		int evoRadius = detectRadius;
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 15000){
 			
 			sinceLastEgg=GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, evoSpeed, evoRadius, eggCycle, carnivorePoints));
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism));
 			
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 		}
