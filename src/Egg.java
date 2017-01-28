@@ -17,6 +17,8 @@ public class Egg {
 	long timeBorn;
 
 	int carnivorePoints;
+	
+	int accumulatedPoints;
 
 	/**
 	 * Constructor for objects of class Egg
@@ -30,11 +32,19 @@ public class Egg {
 		this.pos = pos;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
+		//this.accumulatedPoints = accumulatedPoints;
 		this.timeBorn= GamePane.timeElapsed;
 		this.carnivorePoints = carnivorePoints;
+		
+		mutate();
+		
 		img = DrawArea.eImg;
 	}
 
+	public void mutate(){
+		
+	}
+	
 	public BufferedImage getImage() {
 		return img;
 	}
@@ -45,9 +55,6 @@ public class Egg {
 
 	public double getAngle() {
 		return angle;
-	}
-
-	public void mutate() {
 	}
 
 	public boolean hatch() {
