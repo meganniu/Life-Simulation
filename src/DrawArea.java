@@ -147,10 +147,12 @@ public class DrawArea extends BufferedImage {
 			if (GamePane.drawRegion.contains(eggs.get(i).getPoint().x, eggs.get(i).getPoint().y))
 				g.drawImage(eggs.get(i).getImage(), eggs.get(i).getPoint().x - 8, eggs.get(i).getPoint().y - 8, null);
 		}
+		/**
 		for (int i = 0; i < food.size(); i++) {
 			if (GamePane.drawRegion.contains(food.get(i).getPoint().x, food.get(i).getPoint().y))
 				g.drawImage(food.get(i).getImage(), food.get(i).getPoint().x - 8, food.get(i).getPoint().y - 8, null);
 		}
+		**/
 		for (int i = 0; i < carnivores.size(); i++) {
 			if (GamePane.drawRegion.contains(carnivores.get(i).getPoint().x, carnivores.get(i).getPoint().y)) {
 				AffineTransform tx = AffineTransform
