@@ -42,6 +42,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton left = new JButton("<");
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
+
 	
 	
 	public class StartScreen extends JPanel{
