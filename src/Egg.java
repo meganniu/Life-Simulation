@@ -17,6 +17,8 @@ public class Egg {
 	long timeBorn;
 
 	int carnivorePoints;
+	
+	int accumulatedPoints;
 
 	/**
 	 * Constructor for objects of class Egg
@@ -30,11 +32,19 @@ public class Egg {
 		this.pos = pos;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
+		//this.accumulatedPoints = accumulatedPoints;
 		this.timeBorn= GamePane.timeElapsed;
 		this.carnivorePoints = carnivorePoints;
+		
+		mutate();
+		
 		img = DrawArea.eImg;
 	}
 
+	public void mutate(){
+		
+	}
+	
 	public BufferedImage getImage() {
 		return img;
 	}
@@ -47,15 +57,12 @@ public class Egg {
 		return angle;
 	}
 
-	public void mutate() {
-	}
-
 	public boolean hatch() {
 		if (timeBorn + 5000 <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 100) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000));
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, 100));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000));
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, 100));
 			}
 			System.out.println("Egg hatched at" + GamePane.timeElapsed / 1000.0);
 			return true;

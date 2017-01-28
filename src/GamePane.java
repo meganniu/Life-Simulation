@@ -11,7 +11,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.text.DecimalFormat;
 
-import com.sun.javafx.geom.Rectangle;
+import java.awt.Rectangle;
 
 public class GamePane extends Canvas implements MouseListener, Runnable {
 

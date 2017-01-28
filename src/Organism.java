@@ -22,6 +22,7 @@ public abstract class Organism {
 	
 	protected double energy;
 	long sinceLastEgg;
+
 	protected int eggCycle;
 
 	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism) {
