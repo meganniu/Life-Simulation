@@ -136,17 +136,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		}
 
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-
+		@Override public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated
 		}
 
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-
+		@Override public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated
 		}
+
 
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -162,7 +159,49 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
-	static StatsPanel statsPanel = new StatsPanel();
+		/*
+		 * public class StartScreen extends JPanel { JTextField carnivoresTF =
+		 * new JTextField(); JTextField herbivoresTF = new JTextField();
+		 * 
+		 * JLabel carnivoresLbl = new JLabel("Carnivores:"); JLabel
+		 * herbivoresLbl = new JLabel("Herbivores:");
+		 * 
+		 * public StartScreen() { this.setPreferredSize(new Dimension(1000,
+		 * 800)); this.setLayout(new GridBagLayout());
+		 * 
+		 * GridBagConstraints gbc = new GridBagConstraints();
+		 * 
+		 * gbc.anchor = GridBagConstraints.PAGE_END;
+		 * 
+		 * gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.7; gbc.insets = new
+		 * Insets(0, 0, 10, 10); this.add(carnivoresLbl, gbc);
+		 * 
+		 * gbc.gridx = 1; gbc.insets = new Insets(0, 10, 10, 0);
+		 * this.add(herbivoresLbl, gbc);
+		 * 
+		 * gbc.anchor = GridBagConstraints.PAGE_START; GhostText ghostTextC =
+		 * new GhostText(carnivoresTF, "Carnivores to start"); GhostText
+		 * ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+		 * 
+		 * gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 0.05; gbc.insets = new
+		 * Insets(0, 0, 0, 10); carnivoresTF.setPreferredSize(new Dimension(200,
+		 * 20)); this.add(carnivoresTF, gbc);
+		 * 
+		 * gbc.gridx = 1; gbc.insets = new Insets(0, 10, 0, 0);
+		 * herbivoresTF.setPreferredSize(new Dimension(200, 20));
+		 * this.add(herbivoresTF, gbc);
+		 * 
+		 * gbc.insets = new Insets(0, 0, 0, 0); gbc.gridx = 0; gbc.gridy = 2;
+		 * gbc.gridwidth = 2; gbc.weighty = 0.1; gbc.anchor =
+		 * GridBagConstraints.PAGE_START; gbc.fill =
+		 * GridBagConstraints.HORIZONTAL; this.add(Main.startBtn, gbc);
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
+
+		static StatsPanel statsPanel = new StatsPanel();
 
 	public Main() {
 
@@ -184,130 +223,226 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-		if (gameStatus) {
-			if (e.getSource() == go) {
-				if (startSim == false) {
-					gamePane.start();
-				} else {
-					gamePane.stop();
+		public void actionPerformed(ActionEvent e) {
+			if (gameStatus) {
+				if (e.getSource() == go) {
+					if (startSim == false) {
+						gamePane.start();
+					} else {
+						gamePane.stop();
+					}
+					startSim = !startSim;
 				}
-				startSim = !startSim;
+				if (e.getSource() == up) {
+					if (GamePane.drawRegion.y - 100 >= 0)
+						GamePane.drawRegion.y -= 100;
+				}
+				if (e.getSource() == right) {
+					if (GamePane.drawRegion.x + 100 + drawWidth * 2 <= DrawArea.width)
+						GamePane.drawRegion.x += 100;
+				}
+				if (e.getSource() == down) {
+					if (GamePane.drawRegion.y + 100 + drawHeight * 2 <= DrawArea.height)
+						GamePane.drawRegion.y += 100;
+				}
+				if (e.getSource() == left) {
+					if (GamePane.drawRegion.x - 100 >= 0)
+						GamePane.drawRegion.x -= 100;
+				}
+				if (!GamePane.running && gameStatus)
+					gamePane.render();
 			}
-			if (e.getSource() == up) {
-				if (GamePane.drawRegion.y - 100 >= 0)
-					GamePane.drawRegion.y -= 100;
+			if (e.getSource() == startBtn) {
+				generateGame();
 			}
-			if (e.getSource() == right) {
-				if (GamePane.drawRegion.x + 100 + drawWidth * 2 <= DrawArea.width)
-					GamePane.drawRegion.x += 100;
-			}
-			if (e.getSource() == down) {
-				if (GamePane.drawRegion.y + 100 + drawHeight * 2 <= DrawArea.height)
-					GamePane.drawRegion.y += 100;
-			}
-			if (e.getSource() == left) {
-				if (GamePane.drawRegion.x - 100 >= 0)
-					GamePane.drawRegion.x -= 100;
-			}
-			if (!GamePane.running && gameStatus)
-				gamePane.render();
+			requestFocus();
 		}
-		if (e.getSource() == startBtn) {
-			generateGame();
+
+		public void generateGame() {
+			gamePane = new GamePane(drawWidth, drawHeight);
+			GridBagConstraints gbc = new GridBagConstraints();
+
+			startSim = false;
+
+			up.addActionListener(this);
+			down.addActionListener(this);
+			right.addActionListener(this);
+			left.addActionListener(this);
+			go.addActionListener(this);
+
+			gbc.insets = new Insets(0, 5, 0, 5);
+			gbc.gridheight = 2;
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gameScreen.add(statsPanel, gbc);
+
+			gbc.gridx = 1;
+			gameScreen.add(gamePane, gbc);
+
+			gbc.gridheight = 1;
+			gbc.gridx = 2;
+			gameScreen.add(go, gbc);
+
+			JPanel controlPanel = new JPanel(new GridBagLayout());
+			GridBagConstraints c2 = new GridBagConstraints();
+			c2.fill = GridBagConstraints.BOTH;
+			c2.gridx = 1;
+			controlPanel.add(up, c2);
+			c2.gridy = 1;
+			c2.gridx = 0;
+			controlPanel.add(left, c2);
+			c2.gridx = 2;
+			controlPanel.add(right, c2);
+			c2.gridy = 2;
+			c2.gridx = 1;
+			controlPanel.add(down, c2);
+
+			gbc.gridy = 1;
+			gameScreen.add(controlPanel, gbc);
+
+			setContentPane(gameScreen);
+			revalidate();
+			// pack();;
+			gameStatus = true;
+			System.out.println(getWidth() + " " + getHeight());
 		}
-		requestFocus();
-	}
 
-	public void generateGame() {
-		gamePane = new GamePane(drawWidth, drawHeight);
-		GridBagConstraints gbc = new GridBagConstraints();
-
-		startSim = false;
-
-		up.addActionListener(this);
-		down.addActionListener(this);
-		right.addActionListener(this);
-		left.addActionListener(this);
-		go.addActionListener(this);
-
-		gbc.insets = new Insets(0, 5, 0, 5);
-		gbc.gridheight = 2;
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-		gameScreen.add(statsPanel, gbc);
-
-		gbc.gridx = 1;
-		gameScreen.add(gamePane, gbc);
-
-		gbc.gridheight = 1;
-		gbc.gridx = 2;
-		gameScreen.add(go, gbc);
-
-		JPanel controlPanel = new JPanel(new GridBagLayout());
-		GridBagConstraints c2 = new GridBagConstraints();
-		c2.fill = GridBagConstraints.BOTH;
-		c2.gridx = 1;
-		controlPanel.add(up, c2);
-		c2.gridy = 1;
-		c2.gridx = 0;
-		controlPanel.add(left, c2);
-		c2.gridx = 2;
-		controlPanel.add(right, c2);
-		c2.gridy = 2;
-		c2.gridx = 1;
-		controlPanel.add(down, c2);
-
-		gbc.gridy = 1;
-		gameScreen.add(controlPanel, gbc);
-
-		setContentPane(gameScreen);
-		revalidate();
-		gameStatus = true;
-		System.out.println(getWidth() + " " + getHeight());
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (gameStatus) {
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				if (GamePane.drawRegion.y - 100 >= 0)
-					GamePane.drawRegion.y -= 100;
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (gameStatus) {
+				if (e.getKeyCode() == KeyEvent.VK_UP) {
+					if (GamePane.drawRegion.y - 100 >= 0)
+						GamePane.drawRegion.y -= 100;
+				}
+				if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+					if (GamePane.drawRegion.x + 100 + drawWidth * 2 <= DrawArea.width)
+						GamePane.drawRegion.x += 100;
+				}
+				if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+					if (GamePane.drawRegion.y + 100 + drawHeight * 2 <= DrawArea.height)
+						GamePane.drawRegion.y += 100;
+				}
+				if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+					if (GamePane.drawRegion.x - 100 >= 0)
+						GamePane.drawRegion.x -= 100;
+				}
+				if (!GamePane.running && gameStatus)
+					gamePane.render();
 			}
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-				if (GamePane.drawRegion.x + 100 + drawWidth * 2 <= DrawArea.width)
-					GamePane.drawRegion.x += 100;
-			}
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				if (GamePane.drawRegion.y + 100 + drawHeight * 2 <= DrawArea.height)
-					GamePane.drawRegion.y += 100;
-			}
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				if (GamePane.drawRegion.x - 100 >= 0)
-					GamePane.drawRegion.x -= 100;
-			}
-			if (!GamePane.running && gameStatus)
-				gamePane.render();
 		}
-	}
 
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
 
-	}
+		}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
 
-	}
+		}
 
-	public static void run() {
+		public static void run() {
 
-	}
+		}
 
-	public static void main(String[] args) {
-		Main simulation = new Main();
-	}
+		public static void main(String[] args) {
+			Main simulation = new Main();
+
+			class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
+				private final JTextField textfield;
+				private boolean isEmpty;
+				private Color ghostColor;
+				private Color foregroundColor;
+				private final String ghostText;
+
+				protected GhostText(final JTextField textfield, String ghostText) {
+					super();
+					this.textfield = textfield;
+					this.ghostText = ghostText;
+					this.ghostColor = Color.LIGHT_GRAY;
+					textfield.addFocusListener(this);
+					registerListeners();
+					updateState();
+					if (!this.textfield.hasFocus()) {
+						focusLost(null);
+					}
+				}
+
+				public void delete() {
+					unregisterListeners();
+					textfield.removeFocusListener(this);
+				}
+
+				private void registerListeners() {
+					textfield.getDocument().addDocumentListener(this);
+					textfield.addPropertyChangeListener("foreground", this);
+				}
+
+				private void unregisterListeners() {
+					textfield.getDocument().removeDocumentListener(this);
+					textfield.removePropertyChangeListener("foreground", this);
+				}
+
+				public Color getGhostColor() {
+					return ghostColor;
+				}
+
+				public void setGhostColor(Color ghostColor) {
+					this.ghostColor = ghostColor;
+				}
+
+				private void updateState() {
+					isEmpty = textfield.getText().length() == 0;
+					foregroundColor = textfield.getForeground();
+				}
+
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (isEmpty) {
+						unregisterListeners();
+						try {
+							textfield.setText("");
+							textfield.setForeground(foregroundColor);
+						} finally {
+							registerListeners();
+						}
+					}
+
+				}
+
+				@Override
+				public void focusLost(FocusEvent e) {
+					if (isEmpty) {
+						unregisterListeners();
+						try {
+							textfield.setText(ghostText);
+							textfield.setForeground(ghostColor);
+						} finally {
+							registerListeners();
+						}
+					}
+				}
+
+				@Override
+				public void propertyChange(PropertyChangeEvent evt) {
+					updateState();
+				}
+
+				@Override
+				public void changedUpdate(DocumentEvent e) {
+					updateState();
+				}
+
+				public void insertUpdate(DocumentEvent e) {
+					updateState();
+				}
+
+				public void removeUpdate(DocumentEvent e) {
+					updateState();
+				}
+
+			}
+		}
 }
