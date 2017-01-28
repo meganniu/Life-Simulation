@@ -1,29 +1,17 @@
+import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import com.sun.javafx.geom.Rectangle;
-import javax.swing.Timer;
 
 public class GamePane extends Canvas implements MouseListener, Runnable {
 
@@ -31,9 +19,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	private Thread thread;
 	private int tickCount;
 	private int frameCount;
-	
+
 	static Rectangle drawRegion;
-	
+
 	static long timeElapsed = 0; // In milliseconds
 	private long timeToAdd = 0;
 	static long tickCounter = 0;
@@ -124,8 +112,10 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		}
 		drawArea.updateImage();
 		Graphics g = bs.getDrawGraphics();
-		g.drawImage(drawArea.getSubimage(drawRegion.x, drawRegion.y, drawRegion.width, drawRegion.height), 0, 0, drawRegion.width/2, drawRegion.height/2, null);
-		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: " + new DecimalFormat("#.###").format(timeElapsed/1000.0)+"s", 5, 15);
+		g.drawImage(drawArea.getSubimage(drawRegion.x, drawRegion.y, drawRegion.width, drawRegion.height), 0, 0,
+				drawRegion.width / 2, drawRegion.height / 2, null);
+		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: "
+				+ new DecimalFormat("#.###").format(timeElapsed / 1000.0) + "s", 5, 15);
 		g.dispose();
 		bs.show();
 	}
@@ -134,11 +124,26 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		render();
 	}
 
+	public BufferedImage blur(BufferedImage img) {
+		int radius = 11;
+		int size = radius * 2 + 1;
+		float weight = 1.0f / (size * size);
+		float[] data = new float[size * size];
+
+		for (int i = 0; i < data.length; i++) {
+			data[i] = weight;
+		}
+
+		Kernel kernel = new Kernel(size, size, data);
+		BufferedImageOp op = new ConvolveOp(kernel, ConvolveOp.EDGE_ZERO_FILL, null);
+		return op.filter(img, null);
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		boolean found = false;
-		int x = 2*e.getX() + drawRegion.x;
-		int y = 2*e.getY() + drawRegion.y;
+		int x = 2 * e.getX() + drawRegion.x;
+		int y = 2 * e.getY() + drawRegion.y;
 		System.out.println(x + " " + y);
 		for (int i = 0; i < DrawArea.carnivores.size() && !found; i++) {
 			if (DrawArea.carnivores.get(i).hitbox.contains(x, y)) {
