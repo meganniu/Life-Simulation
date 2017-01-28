@@ -8,8 +8,8 @@ public class Herbivore extends Organism {
 	
 	private boolean chasing = false;
 	
-	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy);
+	public Herbivore() {
+		super(pos, angle, minSpeed, restingSpeed, maxSpeed, speed, detectRadius, eggCycle, carnivorePoints, metabolism, energy);
 		img = DrawArea.hImg;
 	}
 
@@ -29,21 +29,6 @@ public class Herbivore extends Organism {
 		this.img = img;
 	}
 
-	public ArrayList<String> getStats() {
-		ArrayList<String> stats = new ArrayList<String>();
-
-		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
-		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
-		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
-		stats.add("<html><pre>R. Detection\t</pre></html>");
-		stats.add("<html><pre>Egg Counter\t</pre></html>");
-		stats.add("<html><pre>Generation\t</pre></html>");
-		stats.add("<html><pre>Energy\t</pre></html>");
-		
-		return stats;
-
-	}
-
 	public double detectItem() {
 
 		double shortestDistance = -1;
@@ -57,9 +42,34 @@ public class Herbivore extends Organism {
 			}
 
 		}
-		if (shortestDistance == -1)
-			return this.angle;
-		else {
+
+		if (shortestDistance == -1) {
+			double shortestDistanceFood = -1;
+			int indexOfClosestFood = -1;
+			for (int i = 0; i < DrawArea.food.size(); i++) {
+				Point hPoint = DrawArea.food.get(i).getPoint();
+				double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
+				if (distance < detectRadius && (distance < shortestDistanceFood || shortestDistanceFood == -1)) {
+					shortestDistanceFood = distance;
+					indexOfClosestFood = i;
+				}
+			}
+			if (shortestDistanceFood == -1)
+				return this.angle;
+			else {
+				double angle = Math.atan2(pos.y - DrawArea.food.get(indexOfClosestFood).getPoint().y,
+						pos.x - DrawArea.food.get(indexOfClosestFood).getPoint().x);
+				angle = Math.toDegrees(angle);
+
+				if (angle >= 0 && angle <= 180) {
+					angle = 180 - angle;
+				} else if (angle >= -180 && angle <= 0) {
+					angle = 180 - angle;
+				}
+				return angle;
+			}
+
+		} else {
 			double angle = Math.atan2(pos.y - DrawArea.carnivores.get(indexOfClosest).getPoint().y,
 					pos.x - DrawArea.carnivores.get(indexOfClosest).getPoint().x);
 			angle = Math.toDegrees(angle);
@@ -70,20 +80,35 @@ public class Herbivore extends Organism {
 				angle = 180 - angle;
 			}
 
-			if (shortestDistance < detectRadius / 2) {
-				angle = (angle + 180) % 360;
-				return angle;
-			} else {
-				if (angle < (this.angle + 45) % 360 && angle > (this.angle - 45) % 360) {
-					angle = (angle + 180) % 360;
-					return angle;
-				}
-				else
-					return this.angle;
-			}
-
+			angle = (angle + 180) % 360;
+			return angle;
 		}
+	}
 
+	public ArrayList<String> getStats() {
+		ArrayList<String> stats = new ArrayList<String>();
+
+		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
+		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
+		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
+		stats.add("<html><pre>R. Detection\t</pre></html>");
+		stats.add("<html><pre>Egg Counter\t</pre></html>");
+		stats.add("<html><pre>Generation\t</pre></html>");
+		stats.add("<html><pre>Energy\t</pre></html>");
+
+		return stats;
+
+	}
+	
+	public void eat() {
+		for (int i = 0; i < DrawArea.food.size(); i++) {
+			Point hPoint = DrawArea.food.get(i).getPoint();
+			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
+			if (distance <= 24) {
+				DrawArea.food.remove(i);
+				i--;
+			}
+		}
 	}
 }
 

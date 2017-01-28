@@ -7,12 +7,15 @@ import java.util.ArrayList;
 public class Carnivore extends Organism {
 
 	private boolean chasing = false;
+	private boolean canChase = true;
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy);
+	private long chaseStart;
+	private long cooldownStart;
+
+	public Carnivore() {
+		super(pos, angle, minSpeed, restingSpeed, maxSpeed, speed, detectRadius, eggCycle, carnivorePoints, metabolism, energy);
 		img = DrawArea.cImg;
 	}
-
 
 	public void setSelected(boolean b) {
 		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
@@ -47,53 +50,74 @@ public class Carnivore extends Organism {
 			return this.angle;
 		} else {
 
+			if (!chasing){
+				chaseStart = GamePane.timeElapsed;
+				System.out.println("Chase has begun!" + GamePane.timeElapsed);
+			}
 			chasing = true;
 
-			double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
-					pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
-			angle = Math.toDegrees(angle);
+			if (GamePane.timeElapsed < chaseStart + 5000 && canChase) {
 
-			if (angle >= 0 && angle <= 180) {
-				angle = 180 - angle;
-			} else if (angle >= -180 && angle <= 0) {
-				angle = 180 - angle;
+				double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
+						pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
+				angle = Math.toDegrees(angle);
+
+				if (angle >= 0 && angle <= 180) {
+					angle = 180 - angle;
+				} else if (angle >= -180 && angle <= 0) {
+					angle = 180 - angle;
+				}
+
+				/*
+				 * double smoother = 0;
+				 * 
+				 * if(this.angle-angle<0) smoother = angle -
+				 * Math.sqrt(angle-this.angle); else if(angle-this.angle<0)
+				 * smoother = this.angle - Math.sqrt(this.angle-angle);
+				 * 
+				 * if (smoother >= 0 && smoother <= 180) { smoother = 180 -
+				 * smoother; } else if (smoother >= -180 && smoother <= 0) {
+				 * smoother = 180 - smoother; }
+				 * 
+				 * return smoother;
+				 */
+
+				return angle;
+			} else {
+				chaseStart = GamePane.timeElapsed;
+				if (canChase){
+					canChase = false;
+					cooldownStart = GamePane.timeElapsed;
+					System.out.println("End of chase" + GamePane.timeElapsed);
+					return (this.angle + Math.random() * 91 - 45) % 360;
+				}
+				else{
+					if(GamePane.timeElapsed > cooldownStart + 4000){
+						canChase = true;
+						System.out.println("Can chase" + GamePane.timeElapsed);
+					}
+					return this.angle;
+				}
+				
+				
 			}
-
-			/*
-			 * double smoother = 0;
-			 * 
-			 * if(this.angle-angle<0) smoother = angle -
-			 * Math.sqrt(angle-this.angle); else if(angle-this.angle<0) smoother
-			 * = this.angle - Math.sqrt(this.angle-angle);
-			 * 
-			 * if (smoother >= 0 && smoother <= 180) { smoother = 180 -
-			 * smoother; } else if (smoother >= -180 && smoother <= 0) {
-			 * smoother = 180 - smoother; }
-			 * 
-			 * return smoother;
-			 */
-
-			return angle;
 
 		}
 	}
-	
-	public boolean isChasing(){
+
+	public boolean isChasing() {
 		return chasing;
 	}
 
-	public boolean eat() {
+	public void eat() {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
-			if (distance <= 12) {
-				energy = energy + DrawArea.herbivores.get(i).getEnergy()/5;
+			if (distance <= 24) {
 				DrawArea.herbivores.remove(i);
 				i--;
-				
 			}
 		}
-		return false;
 	}
 
 	public ArrayList<String> getStats() {
@@ -109,6 +133,6 @@ public class Carnivore extends Organism {
 
 		return stats;
 
-	}
+}
 
 }

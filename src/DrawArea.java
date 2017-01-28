@@ -48,10 +48,10 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 50; i++) {
-			herbivores.add(new Herbivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360.0,(int)(Math.random()*10+5),(int)(Math.random()*60+20), (int)(Math.random()*1000+50000), 20, 20000));
+			herbivores.add(new Herbivore(new Point((int)(Math.random()*(2000-16)+8), (int)(Math.random()*(2000-16)+8)),Math.random()*360.0,(int)(Math.random()*10+5), (int)(Math.random()*20+10), (int)(Math.random()*90+80), (int)(Math.random()*20+10), (int)(Math.random()*20+10), (int)(Math.random()*1000+5000), 20, 100, 20000));
 		}
 		for (int i = 0; i < 1; i++) {
-			carnivores.add(new Carnivore(new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8)),Math.random()*360.0,(int)(Math.random()*10+5),(int)(Math.random()*80+100), (int)(Math.random()*1000+5000), 120, 20000));
+			carnivores.add(new Carnivore(new Point((int)(Math.random()*(2000-16)+8), (int)(Math.random()*(2000-16)+8)),Math.random()*360.0, 60, 90, 120, 90, (int)(Math.random()*20+10), (int)(Math.random()*1000+5000), 120, 100, 20000));
 		}
 	}
 
@@ -104,9 +104,20 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 	
+	public void speedCheck(){
+		for (int i = 0; i < carnivores.size(); i++){
+			if (carnivores.get(i).getEnergy() < 5000);
+				carnivores.get(i).setSpeed(carnivores.get(i).getMinSpeed());
+		}
+		for (int i = 0; i < herbivores.size(); i++){
+			if (herbivores.get(i).getEnergy() < 5000);
+			herbivores.get(i).setSpeed(carnivores.get(i).getMinSpeed());
+		}
+	}
+	
 	public void spawnFood(){
 		if (Math.random()<0.2){
-			food.add(new Food(4000, new Point((int)(Math.random()*(1000-16)+8), (int)(Math.random()*(1000-16)+8))));
+			food.add(new Food(4000, new Point((int)(Math.random()*(2000-16)+8), (int)(Math.random()*(2000-16)+8))));
 			System.out.println("Spawned a food");
 		}
 	}

@@ -15,23 +15,32 @@ public abstract class Organism {
 
 	double angle;
 
-	int speed;// ticks/pixel
-
+	protected int minSpeed;
+	protected int restingSpeed;
+	protected int speed;// ticks/pixel
+	protected int maxSpeed;
+	protected int minDetectRadius;
+	protected int restingRadius;
 	protected int detectRadius;
-	
-	int carnivorePoints;
-	int energy;
+	protected int metabolism;
+	protected int carnivorePoints;
+	protected int energy;
 	long sinceLastEgg;
-	int eggCycle;
+	protected int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, int energy) {
-		this.speed = speed;
+	public Organism(Point pos, double angle, int minSpeed, int restingSpeed, int maxSpeed, int speed, int detectRadius, int eggCycle, int carnivorePoints, int metabolism, int energy) {
+		this.minSpeed = minSpeed;
+		this.restingSpeed = restingSpeed;
+		this.maxSpeed = maxSpeed;
 		this.angle = angle;
 		this.pos = pos;
+		this.minDetectRadius = minDetectRadius;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
 		this.carnivorePoints = carnivorePoints;
+		this.metabolism = metabolism;
 		this.energy = energy;
+		this.speed = speed;
 		sinceLastEgg = GamePane.timeElapsed;
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
@@ -182,12 +191,14 @@ public abstract class Organism {
 	}
 	
 	public void energyUse(){
-		energy = energy - speed * speed;
+		energy-=1; // Passive energy loss
+		energy-=(Math.pow(speed, 2)/8.0);
 	}
+	
 	public void layEgg(){
 		int evoSpeed = speed; 
 		int evoRadius = detectRadius;
-		if(GamePane.timeElapsed>sinceLastEgg+eggCycle){
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 15000){
 			
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(new Point(pos), angle, evoSpeed, evoRadius, eggCycle, carnivorePoints));
@@ -196,6 +207,33 @@ public abstract class Organism {
 		}
 	}
 
+	public void setSpeed(int s){
+		speed = s;
+	}
+	
+	public void setRadius(int r){
+		detectRadius = r;
+	}
+	
+	public int getMinSpeed(){
+		return minSpeed;
+	}
+	
+	public int getRestingSpeed(){
+		return restingSpeed;
+	}
+	
+	public int getMaxSpeed(){
+		return maxSpeed;
+	}
+	
+	public int getMinRadius(){
+		return minDetectRadius;
+	}
+	
+	public int getRestingRadius(){
+		return restingRadius;
+	}
 	
 	public abstract ArrayList<String> getStats();
 }
