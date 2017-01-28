@@ -55,7 +55,7 @@ public class DrawArea extends BufferedImage {
 					Math.random() * 360.0, // angle
 					(int) (Math.random() * 1 + 5), // speed
 					(int) (Math.random() * 60 + 20), // dRadius
-					(int) (Math.random() * 1000 + 50000), // EggCycle
+					(int) (Math.random() * 1000 + 6000), // EggCycle
 					20, // carnivorepoints
 					1000.0, // energy
 					100));// metabolism
@@ -67,7 +67,7 @@ public class DrawArea extends BufferedImage {
 					Math.random() * 360.0, // angle
 					(int) (Math.random() * 1 + 8), // spd
 					(int) (Math.random() * 80 + 100), // dRadius
-					(int) (Math.random() * 1000 + 5000), // eggCycle
+					(int) (Math.random() * 1000 + 10000), // eggCycle
 					120, // carnivorePoints
 					1000.0, // energy
 					100));// metabolism
@@ -140,7 +140,7 @@ public class DrawArea extends BufferedImage {
 	}
 
 	public void drawTrails() {
-		g.setColor(new Color(0,255,0,100));
+		g.setColor(new Color(0, 255, 0, 100));
 		for (int i = 0; i < carnivores.size(); i++) {
 			ArrayList<Point> points = carnivores.get(i).prevPoints;
 			int stroke = 1;
@@ -148,14 +148,13 @@ public class DrawArea extends BufferedImage {
 			for (int j = 0; j < points.size() - 1; j++) {
 				if (points.get(j) == null || points.get(j + 1) == null) {
 					stroke++;
-					System.out.println(stroke);
 					g.setStroke(new BasicStroke(stroke));
 				} else {
 					g.drawLine(points.get(j).x, points.get(j).y, points.get(j + 1).x, points.get(j + 1).y);
 				}
 			}
 		}
-		
+
 		for (int i = 0; i < herbivores.size(); i++) {
 			ArrayList<Point> points = herbivores.get(i).prevPoints;
 			int stroke = 1;
@@ -165,7 +164,8 @@ public class DrawArea extends BufferedImage {
 					stroke++;
 					g.setStroke(new BasicStroke(stroke));
 				} else {
-					g.drawLine(points.get(j).x, points.get(j).y, points.get(j + 1).x, points.get(j + 1).y);
+					if (GamePane.drawRegion.contains(points.get(j)))
+						g.drawLine(points.get(j).x, points.get(j).y, points.get(j + 1).x, points.get(j + 1).y);
 				}
 			}
 		}
@@ -219,6 +219,7 @@ public class DrawArea extends BufferedImage {
 
 		if (StatsPanel.selectedOrg != null) {
 			g.setColor(Color.green);
+			g.setStroke(new BasicStroke(1));
 			g.drawOval(StatsPanel.selectedOrg.getPoint().x - 32, StatsPanel.selectedOrg.getPoint().y - 32, 64, 64);
 		}
 	}

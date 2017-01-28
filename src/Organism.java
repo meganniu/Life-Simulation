@@ -205,12 +205,10 @@ public abstract class Organism {
 	}
 
 	public void layEgg() {
-		int evoSpeed = speed;
-		int evoRadius = detectRadius;
-		if (GamePane.timeElapsed > sinceLastEgg + eggCycle && energy > 15000) {
+		if (GamePane.timeElapsed > sinceLastEgg + eggCycle) {
 
 			sinceLastEgg = GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, evoSpeed, evoRadius, eggCycle, carnivorePoints));
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints));
 
 			System.out.println("Layed egg at " + GamePane.timeElapsed / 1000.0);
 		}
