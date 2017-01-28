@@ -1,37 +1,57 @@
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import java.awt.GridBagLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
-import javax.swing.JLabel;
+
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class StartScreen extends JPanel {
-
-	/**
-	 * Create the panel.
-	 */
+	
+	JLabel title = new JLabel("Evolution Simulator");
+	JButton startBtn = new JButton("Start");
+	JButton instBtn = new JButton("Instructions");
+	JButton quitBtn = new JButton("Quit");
+	
 	public StartScreen() {
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWeights = new double[]{0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0};
-		setLayout(gridBagLayout);
+		setPreferredSize(new Dimension(1000,800));
+		setLayout(new GridBagLayout());
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Desktop.Desktop-PC\\Desktop\\Git\\LifeSimulation\\images\\carnivore.png"));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel.gridx = 0;
-		gbc_lblNewLabel.gridy = 0;
-		add(lblNewLabel, gbc_lblNewLabel);
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx=1;
+		c.insets = new Insets(300,5,5,5);
 		
-		JButton startBtn = new JButton("Start");
-		GridBagConstraints gbc_startBtn = new GridBagConstraints();
-		gbc_startBtn.anchor = GridBagConstraints.NORTHWEST;
-		gbc_startBtn.gridx = 0;
-		gbc_startBtn.gridy = 3;
-		add(startBtn, gbc_startBtn);
-
+		add(title, c);
+		
+		c.insets = new Insets(5,5,5,5);
+		c.gridy=1;
+		add(startBtn, c);
+		
+		c.gridy = 2;
+		add(instBtn, c);
+		
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.SOUTHEAST;
+		c.gridy=3;
+		c.weighty = 1;
+		add(quitBtn, c);
+	}
+	
+	public void paintComponent(Graphics g){
+		g.setColor(Color.GREEN);
+		g.fillRect(0,0,getWidth(),getHeight());
+	}
+	
+	public class StartButton extends JButton{
+		
+		public StartButton(String text){
+			
+		}
+		
 	}
 
 }

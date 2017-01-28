@@ -23,6 +23,7 @@ public abstract class Organism {
 	double energy;
 	long sinceLastEgg;
 	int eggCycle;
+	
 
 	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy) {
 		this.speed = speed;

@@ -34,13 +34,13 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
 
-	public class StartScreen extends JPanel{
+	/*public class StartScreen extends JPanel{
 
 		public StartScreen(){
 			this.add(Main.startBtn);
 		}
 		
-	}
+	}*/
 
 	static StatsPanel statsPanel = new StatsPanel();
 
