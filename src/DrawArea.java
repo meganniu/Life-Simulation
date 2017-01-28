@@ -48,20 +48,29 @@ public class DrawArea extends BufferedImage {
 		 */
 
 		for (int i = 0; i < 50; i++) {
-			herbivores
-					.add(new Herbivore(
-							new Point((int) (Math.random() * (width - 16) + 8),
-									(int) (Math.random() * (height - 16) + 8)),
-							Math.random() * 360.0,
-							(int) (Math.random() * 1 + 5), (int) (Math.random() * 60 + 20),
-							(int) (Math.random() * 1000 + 50000), 20, 1000));
-		}
-		for (int i = 0; i < 1; i++) {
-			carnivores.add(new Carnivore(
-					new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)),
-					Math.random() * 360.0, (int) (Math.random() * 1 + 5), (int) (Math.random() * 80 + 100),
-					(int) (Math.random() * 1000 + 5000), 120, 1000));
-		}
+			   herbivores.add(new Herbivore(
+			       new Point((int) (Math.random() * (width - 16) + 8),//x
+			    		   (int) (Math.random() * (height - 16) + 8)),//y
+			       Math.random() * 360.0,//angle
+			       (int) (Math.random() * 1 + 5),//speed
+			       (int) (Math.random() * 60 + 20),//dRadius
+			       (int) (Math.random() * 1000 + 50000),//EggCycle
+			       20,//carnivorepoints
+			       1000.0,//energy
+			       100));//metabolism
+			  }
+			  for (int i = 0; i < 1; i++) {
+			   carnivores.add(new Carnivore(
+			     new Point((int) (Math.random() * (width - 16) + 8),//x
+			    		 (int) (Math.random() * (height - 16) + 8)),//y
+			     Math.random() * 360.0, //angle
+			     (int) (Math.random() * 1 + 5),//spd
+			     (int) (Math.random() * 80 + 100),//dRadius
+			     (int) (Math.random() * 1000 + 5000),//eggCycle
+			     120,//carnivorePoints
+			     1000.0,//energy
+			     100));//metabolism
+			  }
 	}
 
 	public void updatePositions() {
@@ -121,11 +130,12 @@ public class DrawArea extends BufferedImage {
 			}
 		}
 	}
+	
 
+	
 	public void spawnFood() {
 		if (GamePane.tickCounter%15==0) {
-			food.add(new Food(4000,
-					new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+			food.add(new Food(4000, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
 		}
 	}
 

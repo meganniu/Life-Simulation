@@ -12,11 +12,27 @@ public class Carnivore extends Organism {
 	private long chaseStart;
 	private long cooldownStart;
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
-			int energy) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy);
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism);
 		img = DrawArea.cImg;
 	}
+
+	public void setSelected(boolean b) {
+		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = img.getGraphics();
+		g.drawImage(DrawArea.cImg, 0, 0, null);
+		selected = b;
+		if (b) {
+			Color green = new Color(0, 255, 0, 100);
+			g.setColor(green);
+			g.fillOval(0, 0, 48, 48);
+			g.setColor(Color.green);
+			g.drawOval(0, 0, 48, 48);
+		}
+		this.img = img;
+	}
+
+	
 
 	public double detectItem() {
 
@@ -119,6 +135,6 @@ public class Carnivore extends Organism {
 
 		return stats;
 
-	}
+}
 
 }
