@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Herbivore extends Organism {
-	
+
 	private boolean chasing = false;
 	
-	public Herbivore() {
-		super(pos, angle, minSpeed, restingSpeed, maxSpeed, speed, detectRadius, eggCycle, carnivorePoints, metabolism, energy);
+	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism);
 		img = DrawArea.hImg;
 	}
 
@@ -28,6 +28,13 @@ public class Herbivore extends Organism {
 		}
 		this.img = img;
 	}
+	/*
+	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+			int energy) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy);
+		img = DrawArea.hImg;
+	}
+	*/
 
 	public double detectItem() {
 

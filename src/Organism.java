@@ -15,26 +15,19 @@ public abstract class Organism {
 
 	double angle;
 
-	protected int minSpeed;
-	protected int restingSpeed;
 	protected int speed;// ticks/pixel
-	protected int maxSpeed;
-	protected int minDetectRadius;
-	protected int restingRadius;
 	protected int detectRadius;
 	protected int metabolism;
 	protected int carnivorePoints;
-	protected int energy;
+	
+	double energy;
 	long sinceLastEgg;
 	protected int eggCycle;
 
-	public Organism(Point pos, double angle, int minSpeed, int restingSpeed, int maxSpeed, int speed, int detectRadius, int eggCycle, int carnivorePoints, int metabolism, int energy) {
-		this.minSpeed = minSpeed;
-		this.restingSpeed = restingSpeed;
-		this.maxSpeed = maxSpeed;
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
-		this.minDetectRadius = minDetectRadius;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
 		this.carnivorePoints = carnivorePoints;
@@ -50,6 +43,8 @@ public abstract class Organism {
 	}
 	
 	public abstract double detectItem();
+	
+	public abstract void eat();
 
 	public void move(int width, int height) {
 		angle = detectItem();
@@ -183,7 +178,7 @@ public abstract class Organism {
 		return angle;
 	}
 
-	public int getEnergy(){
+	public double getEnergy(){
 		return energy;
 	}
 	public void setAngle(double angle) {
@@ -207,33 +202,5 @@ public abstract class Organism {
 		}
 	}
 
-	public void setSpeed(int s){
-		speed = s;
-	}
-	
-	public void setRadius(int r){
-		detectRadius = r;
-	}
-	
-	public int getMinSpeed(){
-		return minSpeed;
-	}
-	
-	public int getRestingSpeed(){
-		return restingSpeed;
-	}
-	
-	public int getMaxSpeed(){
-		return maxSpeed;
-	}
-	
-	public int getMinRadius(){
-		return minDetectRadius;
-	}
-	
-	public int getRestingRadius(){
-		return restingRadius;
-	}
-	
 	public abstract ArrayList<String> getStats();
 }

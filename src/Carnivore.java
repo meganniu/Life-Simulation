@@ -12,8 +12,8 @@ public class Carnivore extends Organism {
 	private long chaseStart;
 	private long cooldownStart;
 
-	public Carnivore() {
-		super(pos, angle, minSpeed, restingSpeed, maxSpeed, speed, detectRadius, eggCycle, carnivorePoints, metabolism, energy);
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism);
 		img = DrawArea.cImg;
 	}
 
@@ -31,6 +31,8 @@ public class Carnivore extends Organism {
 		}
 		this.img = img;
 	}
+
+	
 
 	public double detectItem() {
 
