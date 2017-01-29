@@ -217,7 +217,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseClicked(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
-			else if(r2.contains(e.getPoint()))
+			else if(r3.contains(e.getPoint()))
 				getPreferences();
 
 		}
@@ -387,26 +387,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				gamePane.render();
 		}
 		if (e.getSource() == startBtn) {
-			
-			/**
-			try{
-				gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), Integer.parseInt(herbivoresTF.getText()));
-			}
-			catch(NumberFormatException e1){
-				try{
-					gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, (int)(Math.random()*200) + 1);
-				}
-				catch(NumberFormatException e2){
-					try{
-						gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), (int)(Math.random()*200) + 1);
-					}
-					catch(NumberFormatException e3){
-						gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, Integer.parseInt(herbivoresTF.getText()));
-					}
-				}
-			}
-			*/
-			
 			GridBagConstraints gbc = new GridBagConstraints();
 
 			startSim = false;
