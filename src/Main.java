@@ -75,9 +75,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		Rectangle r1 = new Rectangle((getWidth() - 700) / 2 - (shiftx - 500) / 20 + 175,
 				25 + (getHeight() - 400) / 2 - (shifty - 400) / 16, 350, 350);
-		Rectangle r2 = new Rectangle(getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 + 63,
-				10 + 400 - (shifty - 400) / 12, 125, 125);
-		Rectangle r3 = new Rectangle(getWidth() / 2 + 50 - (shiftx - 500) / 15 + 63, 10 + 400 - (shifty - 400) / 12,
+		Rectangle r2 = new Rectangle(getWidth() / 2 - 250 - 50 - (shiftx - 500) / 13 + 63,
+				10 + 400 - (shifty - 400) / 10, 125, 125);
+		Rectangle r3 = new Rectangle(getWidth() / 2 + 50 - (shiftx - 500) / 13 + 63, 10 + 400 - (shifty - 400) / 10,
 				125, 125);
 
 		public StartScreen() {
@@ -133,7 +133,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(back.getSubimage(shiftx / 10, shifty / 6, getWidth(), getHeight()), 0, 0, null);
+			g.drawImage(back.getSubimage(shiftx / 10, shifty / 6, getWidth()+50, getHeight()), 0, 0, null);
 
 			if (selected1)
 				g.drawImage(frontSel, (getWidth() - 730) / 2 - (shiftx - 500) / 20,
@@ -143,16 +143,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 						(getHeight() - 400) / 2 - (shifty - 400) / 16 - 75, null);
 
 			if (selected2)
-				g.drawImage(btn1Sel, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 12 - 4,
+				g.drawImage(btn1Sel, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 13 - 6, 400 - (shifty - 400) / 10 - 4,
 						null);
 			else
-				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
+				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 13, 400 - (shifty - 400) / 10, null);
 
 			if (selected3)
-				g.drawImage(btn2Sel, getWidth() / 2 + 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 16 - 4,
+				g.drawImage(btn2Sel, getWidth() / 2 + 50 - (shiftx - 500) / 13 - 6, 400 - (shifty - 400) / 10 - 4,
 						null);
 			else
-				g.drawImage(btn2, getWidth() / 2 + 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
+				g.drawImage(btn2, getWidth() / 2 + 50 - (shiftx - 500) / 13, 400 - (shifty - 400) / 10, null);
 		}
 
 		@Override
@@ -200,11 +200,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			r1.x = 175 + (getWidth() - 700) / 2 - (shiftx - 500) / 20;
 			r1.y = 25 + (getHeight() - 400) / 2 - (shifty - 400) / 16 - 75;
 
-			r2.x = getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 + 63;
-			r2.y = 10 + 400 - (shifty - 400) / 12;
+			r2.x = getWidth() / 2 - 250 - 50 - (shiftx - 500) / 13 + 63;
+			r2.y = 10 + 400 - (shifty - 400) / 10;
 
-			r3.x = getWidth() / 2 + 50 - (shiftx - 500) / 15 + 63;
-			r3.y = 10 + 400 - (shifty - 400) / 12;
+			r3.x = getWidth() / 2 + 50 - (shiftx - 500) / 13 + 63;
+			r3.y = 10 + 400 - (shifty - 400) / 10;
 			repaint();
 
 		}
