@@ -48,7 +48,7 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
-			for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 4; i++) {
 			   herbivores.add(new Herbivore(
 			       new Point((int) (Math.random() * (width - 16) + 8),//x
 			    		   (int) (Math.random() * (height - 16) + 8)),//y
@@ -57,10 +57,11 @@ public class DrawArea extends BufferedImage {
 			       (int) (Math.random() * 60 + 20),//dRadius
 			       (int) (Math.random() * 1000 + 5000),//EggCycle
 			       5,//carnivorepoints
-			       4000.0,//energy
-			       Math.random() * 200.0 + 50.0));//metabolism
+			       15000.0,//energy
+			       (Math.random() * 150.0 + 50.0),
+			       5000));//metabolism
 			  }
-			  for (int i = 0; i < 1; i++) {
+			  for (int i = 0; i < 2; i++) {
 			   carnivores.add(new Carnivore(
 			     new Point((int) (Math.random() * (width - 16) + 8),//x
 			    		 (int) (Math.random() * (height - 16) + 8)),//y
@@ -69,8 +70,9 @@ public class DrawArea extends BufferedImage {
 			     (int) (Math.random() * 80 + 100),//dRadius
 			     (int) (Math.random() * 1000 + 5000),//eggCycle
 			     10,//carnivorePoints
-			     4000.0,//energy
-			     Math.random() * 200.0 + 50.0));//metabolism
+			     15000.0,//energy
+			     (Math.random() * 150.0 + 50.0),//metabolism
+				 5000));//chaseLength
 			  }
 	}
 
@@ -134,10 +136,17 @@ public class DrawArea extends BufferedImage {
 	
 	public void spawnFood() {
 		if (GamePane.tickCounter%15==0) {
-			food.add(new Food(300.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+			food.add(new Food(3000.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
 		}
 	}
 
+	public void eatCheck(){
+		for (int i = 0; i < carnivores.size(); i++)
+			carnivores.get(i).eat();
+		for (int i = 0; i < herbivores.size(); i++)
+			herbivores.get(i).eat();
+	}
+	
 	public void drawTrails() {
 		g.setColor(new Color(0, 255, 0, 100));
 		for (int i = 0; i < carnivores.size(); i++) {

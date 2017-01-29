@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Carnivore extends Organism {
@@ -12,8 +13,8 @@ public class Carnivore extends Organism {
 	private long chaseStart;
 	private long cooldownStart;
 
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism);
+	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
+		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
 		img = DrawArea.cImg;
 	}
 
@@ -58,7 +59,7 @@ public class Carnivore extends Organism {
 			}
 			chasing = true;
 
-			if (GamePane.timeElapsed < chaseStart + 5000 && canChase) {
+			if (GamePane.timeElapsed < chaseStart + chaseLength && canChase) {
 
 				double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
 						pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
@@ -116,10 +117,21 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
-				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10 + 800.0) * metabolism )/ 100.0);
+				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10 + 5000.0) * metabolism )/ 100.0);
+				if (energy > 15000.0)
+					energy = 15000.0;
 				DrawArea.herbivores.remove(i);
 				i--;
 			}
+		}
+	}
+	
+	public void layEgg(){
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 10000){
+			sinceLastEgg=GamePane.timeElapsed;
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
+			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
+
 		}
 	}
 
@@ -132,9 +144,9 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre>R. Detection\t" +  detectRadius + "</pre></html>");
 		stats.add("<html><pre>Egg Counter\t" + eggCycle + "</pre></html>");
 		stats.add("<html><pre>Carnivorism\t" + carnivorePoints + "</pre></html>");
-		stats.add("<html><pre>Energy\t" + energy + "</pre></html>");
-		stats.add("<html><pre>Metabolism\t" + metabolism + "</pre></html>");
-
+		stats.add("<html><pre>Energy\t\t" + (new DecimalFormat("#.##").format(energy / 1000.0)) + "</pre></html>");
+		stats.add("<html><pre>Metabolism\t" + new DecimalFormat("#.##").format(metabolism / 1000.0) + "</pre></html>");
+		stats.add("<html><pre>Chasing Duration\t" + chaseLength + "</pre></html>");
 		return stats;
 
 }
