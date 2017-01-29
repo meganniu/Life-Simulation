@@ -131,7 +131,7 @@ public class Carnivore extends Organism {
 
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-
+		try{
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
@@ -141,6 +141,11 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Energy\t" + new DecimalFormat("#.##").format(energy) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
 		return stats;
+		}
+		catch(NullPointerException e){
+			System.out.println("HERE");
+			return null;
+		}
 	}
 
 }

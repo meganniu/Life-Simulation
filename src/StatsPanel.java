@@ -34,7 +34,6 @@ public class StatsPanel extends JPanel {
 		
 		updateStats();
 		
-		//this.add(new JLabel("hi"));
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		Border border = BorderFactory.createTitledBorder(blackline, "Stats");
 		((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
@@ -55,13 +54,13 @@ public class StatsPanel extends JPanel {
 			temp = selectedOrg.getStats();
 		}
 		
-		
-		for (int i = 0; i < statLabel.size(); i++) {
-			if (i < temp.size())
-				statLabel.get(i).setText(temp.get(i));
-			else
-				statLabel.get(i).setText(" ");
-			
+		if(temp != null){
+			for (int i = 0; i < statLabel.size(); i++) {
+				if (i < temp.size())
+					statLabel.get(i).setText(temp.get(i));
+				else
+					statLabel.get(i).setText(" ");
+			}
 		}
 
 		revalidate();
