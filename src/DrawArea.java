@@ -21,8 +21,8 @@ public class DrawArea extends BufferedImage {
 	private Graphics2D g = null;
 	static int width, height;
 
-	//public DrawArea(int startingCarnivores, int startingHerbivores) {
-	public DrawArea() {
+	public DrawArea(int startingCarnivores, int startingHerbivores) {
+	//public DrawArea() {
 		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
 		width = getWidth();
@@ -49,57 +49,8 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
-/**
+
 		for (int i = 0; i < startingHerbivores; i++) {
-
->>>>>>> d982e51da5400ca1bbdd2f601cd446aee23640ef
-			   herbivores.add(new Herbivore(
-			       new Point((int) (Math.random() * (width - 16) + 8),//x
-			    		   (int) (Math.random() * (height - 16) + 8)),//y
-			       Math.random() * 360.0,//angle
-			       (int) (Math.random() * 1 + 5),//speed
-			       (int) (Math.random() * 60 + 20),//dRadius
-<<<<<<< HEAD
-			       (int) (Math.random() * 1000 + 5000),//EggCycle
-			       5,//carnivorepoints
-			       15000.0,//energy
-			       (Math.random() * 150.0 + 50.0),
-			       5000));//metabolism
-			  }
-			  for (int i = 0; i < 2; i++) {
-			   carnivores.add(new Carnivore(
-			     new Point((int) (Math.random() * (width - 16) + 8),//x
-			    		 (int) (Math.random() * (height - 16) + 8)),//y
-			     Math.random() * 360.0, //angle
-			     (int) (Math.random() * 1 + 5),//spd
-			     (int) (Math.random() * 80 + 100),//dRadius
-			     (int) (Math.random() * 1000 + 5000),//eggCycle
-			     10,//carnivorePoints
-			     15000.0,//energy
-			     (Math.random() * 150.0 + 50.0),//metabolism
-				 5000));//chaseLength
-=======
-			       (int) (Math.random() * 1000 + 50000),//EggCycle
-			       20,//carnivorepoints
-			       1000.0,//energy
-			       100));//metabolism
->>>>>>> d982e51da5400ca1bbdd2f601cd446aee23640ef
-			  }
-		for (int i = 0; i < startingCarnivores; i++) {
-			carnivores.add(new Carnivore(
-			new Point((int) (Math.random() * (width - 16) + 8),//x
-			    (int) (Math.random() * (height - 16) + 8)),//y
-				Math.random() * 360.0, //angle
-				(int) (Math.random() * 1 + 5),//spd
-				(int) (Math.random() * 80 + 100),//dRadius
-				(int) (Math.random() * 1000 + 5000),//eggCycle
-				120,//carnivorePoints
-				1000.0,//energy
-				100));//metabolism
-		}
-		**/
-
-		for (int i = 0; i < 10; i++) {
 			herbivores.add(new Herbivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
@@ -111,8 +62,10 @@ public class DrawArea extends BufferedImage {
 					15000.0, // energy
 					100,// metabolism
 					5000));//chase length
+
 		}
-		for (int i = 0; i < 1 ; i++) {
+
+		for (int i = 0; i < startingCarnivores; i++) {
 			carnivores.add(new Carnivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
@@ -125,6 +78,7 @@ public class DrawArea extends BufferedImage {
 					100,// metabolism
 					5000));//chase length
 		}
+
 	}
 
 	public void updatePositions() {
@@ -170,8 +124,9 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).energyUse();
 			if (carnivores.get(i).getEnergy() <= 0) {
+				if(carnivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
 				carnivores.remove(i);
-				StatsPanel.selectedOrg = null;
 				i--;
 				System.out.println("Carnivore died");
 			}
@@ -179,8 +134,9 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < herbivores.size(); i++) {
 			herbivores.get(i).energyUse();
 			if (herbivores.get(i).getEnergy() <= 0) {
-				herbivores.remove(i);
-				StatsPanel.selectedOrg = null;
+				if(herbivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
+				herbivores.remove(i);	
 				i--;
 				System.out.println("Herbivore died");
 			}
@@ -188,8 +144,8 @@ public class DrawArea extends BufferedImage {
 	}
 	
 	public void spawnFood() {
-		if (GamePane.tickCounter%10==0) {
-			food.add(new Food(3000.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+		if (GamePane.tickCounter%5==0) {
+			food.add(new Food(new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)), 3000.0));
 		}
 	}
 
