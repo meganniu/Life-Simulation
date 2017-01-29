@@ -42,12 +42,12 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton left = new JButton("<");
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
-
+	
+	JTextField carnivoresTF;
+	JTextField herbivoresTF;
 	
 	
 	public class StartScreen extends JPanel{
-		JTextField carnivoresTF = new JTextField();
-		JTextField herbivoresTF = new JTextField();
 		
 		JLabel carnivoresLbl = new JLabel("Carnivores:");
 		JLabel herbivoresLbl = new JLabel("Herbivores:");
@@ -55,6 +55,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public StartScreen(){
 			this.setPreferredSize(new Dimension(1000, 800));
 			this.setLayout(new GridBagLayout());
+			
+			carnivoresTF = new JTextField();
+			herbivoresTF = new JTextField();
 			
 			GridBagConstraints gbc = new GridBagConstraints();
 			
@@ -94,6 +97,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			this.add(Main.startBtn, gbc);
+		}
+		
+		public int getCarnivores(){
+			return Integer.parseInt(carnivoresTF.getText());
+		}
+		
+		public int getHerbivores(){
+			return Integer.parseInt(herbivoresTF.getText());
 		}
 		
 	}
@@ -149,7 +160,23 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				gamePane.render();
 		}
 		if (e.getSource() == startBtn) {
-			gamePane = new GamePane(drawWidth, drawHeight);
+			try{
+				gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), Integer.parseInt(herbivoresTF.getText()));
+			}
+			catch(NumberFormatException e1){
+				try{
+					gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, (int)(Math.random()*200) + 1);
+				}
+				catch(NumberFormatException e2){
+					try{
+						gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), (int)(Math.random()*200) + 1);
+					}
+					catch(NumberFormatException e3){
+						gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, Integer.parseInt(herbivoresTF.getText()));
+					}
+				}
+			}
+			
 			GridBagConstraints gbc = new GridBagConstraints();
 
 			startSim = false;
