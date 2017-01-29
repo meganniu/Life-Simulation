@@ -48,6 +48,54 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton left = new JButton("<");
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
+/**
+	
+	JTextField carnivoresTF;
+	JTextField herbivoresTF;
+	
+	
+	public class StartScreen extends JPanel{
+		
+		JLabel carnivoresLbl = new JLabel("Carnivores:");
+		JLabel herbivoresLbl = new JLabel("Herbivores:");
+		
+		public StartScreen(){
+			this.setPreferredSize(new Dimension(1000, 800));
+			this.setLayout(new GridBagLayout());
+			
+			carnivoresTF = new JTextField();
+			herbivoresTF = new JTextField();
+			
+			GridBagConstraints gbc = new GridBagConstraints();
+			
+			gbc.anchor = GridBagConstraints.PAGE_END;
+			
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weighty = 0.7;
+			gbc.insets = new Insets(0, 0, 10, 10);
+			this.add(carnivoresLbl, gbc);
+			
+			gbc.gridx = 1;
+			gbc.insets = new Insets(0, 10, 10, 0);
+			this.add(herbivoresLbl, gbc);
+			
+			gbc.anchor = GridBagConstraints.PAGE_START;
+			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
+			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+			
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weighty = 0.05;
+			gbc.insets = new Insets(0, 0, 0, 10);
+			carnivoresTF.setPreferredSize(new Dimension(200, 20));
+			this.add(carnivoresTF, gbc);
+			
+			gbc.gridx = 1;
+			gbc.insets = new Insets(0, 10, 0, 0);
+			herbivoresTF.setPreferredSize(new Dimension(200, 20));
+			this.add(herbivoresTF, gbc);
+**/
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -240,6 +288,52 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
+	public class InstructionScreen extends JPanel implements MouseMotionListener, MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseMoved(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	/*
 	 * public class StartScreen extends JPanel { JTextField carnivoresTF = new
 	 * JTextField(); JTextField herbivoresTF = new JTextField();
@@ -335,7 +429,73 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				gamePane.render();
 		}
 		if (e.getSource() == startBtn) {
+			
+			/**
+			try{
+				gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), Integer.parseInt(herbivoresTF.getText()));
+			}
+			catch(NumberFormatException e1){
+				try{
+					gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, (int)(Math.random()*200) + 1);
+				}
+				catch(NumberFormatException e2){
+					try{
+						gamePane = new GamePane(drawWidth, drawHeight, Integer.parseInt(carnivoresTF.getText()), (int)(Math.random()*200) + 1);
+					}
+					catch(NumberFormatException e3){
+						gamePane = new GamePane(drawWidth, drawHeight, (int)(Math.random()*20) + 1, Integer.parseInt(herbivoresTF.getText()));
+					}
+				}
+			}
+			*/
+			
+			GridBagConstraints gbc = new GridBagConstraints();
+
+			startSim = false;
+
+			up.addActionListener(this);
+			down.addActionListener(this);
+			right.addActionListener(this);
+			left.addActionListener(this);
+			go.addActionListener(this);
+
+			gbc.insets = new Insets(10, 5, 10, 5);
+			gbc.gridheight = 2;
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gameScreen.add(statsPanel, gbc);
+
+			gbc.gridx = 1;
+			gameScreen.add(gamePane, gbc);
+
+			gbc.gridheight = 1;
+			gbc.gridx = 2;
+			gameScreen.add(go, gbc);
+
+			JPanel controlPanel = new JPanel(new GridBagLayout());
+			GridBagConstraints c2 = new GridBagConstraints();
+			c2.fill = GridBagConstraints.BOTH;
+			c2.gridx = 1;
+			controlPanel.add(up, c2);
+			c2.gridy = 1;
+			c2.gridx = 0;
+			controlPanel.add(left, c2);
+			c2.gridx = 2;
+			controlPanel.add(right, c2);
+			c2.gridy = 2;
+			c2.gridx = 1;
+			controlPanel.add(down, c2);
+
+			gbc.gridy = 1;
+			gameScreen.add(controlPanel, gbc);
+			
+			setContentPane(gameScreen);
+			revalidate();
+			pack();
+			gameStatus = true;
+
 			generateGame();
+
 		}
 		requestFocus();
 	}
