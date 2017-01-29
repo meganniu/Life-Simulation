@@ -1,11 +1,16 @@
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class Egg {
 	BufferedImage img;
 
 	Point pos;
 
+	Rectangle hitbox;
+	
 	double angle;
 
 	int speed;// ticks/pixel
@@ -37,6 +42,12 @@ public class Egg {
 		this.carnivorePoints = carnivorePoints;
 		this.metabolism = metabolism;
 		this.chaseLength = chaseLength;
+		mutate();
+		img = DrawArea.eImg;
+		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
+	}
+	
+	public void mutate(){
 		while(Math.random()>.8){
 			speed++;
 		}
@@ -55,10 +66,10 @@ public class Egg {
 		while(Math.random()>.2){
 			metabolism --;
 		}
-		while(Math.random()>.8){
+		while(Math.random()>.9){
 			carnivorePoints++;
 		}
-		while(Math.random()>.8){
+		while(Math.random()>.9){
 			carnivorePoints--;
 		}
 		while(Math.random()>.15){
@@ -69,7 +80,6 @@ public class Egg {
 		}
 		if (speed >= 9)
 			detectRadius -= 20;
-		img = DrawArea.eImg;
 	}
 	
 	public BufferedImage getImage() {
@@ -95,5 +105,19 @@ public class Egg {
 			return true;
 		}
 		return false;
+	}
+	
+	public ArrayList<String> getStats() {
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("<html><pre><span style=\"font-family: arial\">Egg\t\t");
+		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">R. Detection\t" +  detectRadius + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Egg Counter\t" + eggCycle + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Chase length\t" + chaseLength + "</span></pre></html>");
+		return stats;
 	}
 }
