@@ -100,7 +100,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	public void tick() { // Per tick
 		drawArea.updatePositions();
 		drawArea.decayFood();
-		//drawArea.eat();
+		drawArea.eat();
 		drawArea.spawnFood();
 		drawArea.layEggs();
 		drawArea.hatchEggs();
@@ -127,21 +127,6 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	public void paint(Graphics g) {
 		render();
-	}
-
-	public BufferedImage blur(BufferedImage img) {
-		int radius = 11;
-		int size = radius * 2 + 1;
-		float weight = 1.0f / (size * size);
-		float[] data = new float[size * size];
-
-		for (int i = 0; i < data.length; i++) {
-			data[i] = weight;
-		}
-
-		Kernel kernel = new Kernel(size, size, data);
-		BufferedImageOp op = new ConvolveOp(kernel, ConvolveOp.EDGE_ZERO_FILL, null);
-		return op.filter(img, null);
 	}
 
 	@Override

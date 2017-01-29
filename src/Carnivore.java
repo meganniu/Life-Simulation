@@ -99,10 +99,6 @@ public class Carnivore extends Organism {
 		}
 	}
 
-	public boolean isChasing() {
-		return chasing;
-	}
-
 	public void eat() {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();

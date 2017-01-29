@@ -6,8 +6,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Herbivore extends Organism {
-
-	private boolean chasing = false;
 	
 	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, 5000);
