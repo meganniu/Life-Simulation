@@ -23,6 +23,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -48,55 +49,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton left = new JButton("<");
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
-/**
-	
-	JTextField carnivoresTF;
-	JTextField herbivoresTF;
-	
-	
-	public class StartScreen extends JPanel{
-		
-		JLabel carnivoresLbl = new JLabel("Carnivores:");
-		JLabel herbivoresLbl = new JLabel("Herbivores:");
-		
-		public StartScreen(){
-			this.setPreferredSize(new Dimension(1000, 800));
-			this.setLayout(new GridBagLayout());
-			
-			carnivoresTF = new JTextField();
-			herbivoresTF = new JTextField();
-			
-			GridBagConstraints gbc = new GridBagConstraints();
-			
-			gbc.anchor = GridBagConstraints.PAGE_END;
-			
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			gbc.weighty = 0.7;
-			gbc.insets = new Insets(0, 0, 10, 10);
-			this.add(carnivoresLbl, gbc);
-			
-			gbc.gridx = 1;
-			gbc.insets = new Insets(0, 10, 10, 0);
-			this.add(herbivoresLbl, gbc);
-			
-			gbc.anchor = GridBagConstraints.PAGE_START;
-			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
-			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
-			
-			gbc.gridx = 0;
-			gbc.gridy = 1;
-			gbc.weighty = 0.05;
-			gbc.insets = new Insets(0, 0, 0, 10);
-			carnivoresTF.setPreferredSize(new Dimension(200, 20));
-			this.add(carnivoresTF, gbc);
-			
-			gbc.gridx = 1;
-			gbc.insets = new Insets(0, 10, 0, 0);
-			herbivoresTF.setPreferredSize(new Dimension(200, 20));
-			this.add(herbivoresTF, gbc);
-**/
 
+	int startingCarnivores = 5;
+	int startingHerbivores = 50;
+	
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
 		int shiftx = 500, shifty = 300;
@@ -261,6 +217,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseClicked(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
+			else if(r2.contains(e.getPoint()))
+				getPreferences();
 
 		}
 
@@ -499,9 +457,103 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 		requestFocus();
 	}
+	
+	public class GetPreferences extends JFrame{
+		JFrame frame = new JFrame();
+		JButton set = new JButton("Set");
+		JButton cancel = new JButton("Cancel");
+		
+		JLabel carnivoresLbl = new JLabel("Carnivores:");
+		JLabel herbivoresLbl = new JLabel("Herbivores:");
+		JTextField carnivoresTF = new JTextField();
+		JTextField herbivoresTF = new JTextField();
+		
+		
+		public GetPreferences(){
+			frame.setSize(450,300);
+			frame.setVisible(true);
+			//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLayout(new GridBagLayout());
+			
+			GridBagConstraints gbc = new GridBagConstraints();
+			
+			gbc.anchor = GridBagConstraints.PAGE_END;
+			
+			gbc.gridx = 0;
+			gbc.gridy = 0;
+			gbc.weighty = 0.4;
+			gbc.insets = new Insets(0, 0, 10, 10);
+			frame.add(carnivoresLbl, gbc);
+			
+			gbc.gridx = 1;
+			gbc.insets = new Insets(0, 10, 10, 0);
+			frame.add(herbivoresLbl, gbc);
+			
+			gbc.anchor = GridBagConstraints.PAGE_START;
+			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
+			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+			
+			gbc.gridx = 0;
+			gbc.gridy = 1;
+			gbc.weighty = 0.3;
+			gbc.insets = new Insets(10, 0, 0, 10);
+			carnivoresTF.setPreferredSize(new Dimension(200, 20));
+			frame.add(carnivoresTF, gbc);
+			
+			gbc.gridx = 1;
+			gbc.insets = new Insets(10, 10, 0, 0);
+			herbivoresTF.setPreferredSize(new Dimension(200, 20));
+			frame.add(herbivoresTF, gbc);
+			
+			cancel.addActionListener(new MouseListener());
+			set.addActionListener(new MouseListener());
+			
+			cancel.setPreferredSize(new Dimension(80, 30));
+			set.setPreferredSize(new Dimension(80, 30));
+			
+			gbc.gridx = 0;
+			gbc.gridy = 2;
+			gbc.weighty = 0.3;
+			frame.add(cancel, gbc);
+			
+			gbc.gridx = 1;
+			frame.add(set, gbc);
+		}
+		
+		class MouseListener implements ActionListener{
+			public void actionPerformed(ActionEvent e){
+				if(e.getSource() == cancel){
+					frame.setVisible(false);
+					frame.dispose();
+				}
+				else if(e.getSource() == set){
+					try{
+						startingCarnivores = Integer.parseInt(carnivoresTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					
+					try{
+						startingHerbivores = Integer.parseInt(herbivoresTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					
+					frame.setVisible(false);
+					frame.dispose();
+				}
+			}
+		}
+	}
 
+	public void getPreferences(){
+		GetPreferences getPreferences = new GetPreferences();
+	}
+	
 	public void generateGame() {
-		gamePane = new GamePane(drawWidth, drawHeight);
+		System.out.println("startingCarnivores: " + startingCarnivores);
+		System.out.println("startingHerbivores: " + startingHerbivores);
+		gamePane = new GamePane(drawWidth, drawHeight, startingCarnivores, startingHerbivores);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		startSim = false;
@@ -591,99 +643,100 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	public static void main(String[] args) {
 		Main simulation = new Main();
 
-		class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
-			private final JTextField textfield;
-			private boolean isEmpty;
-			private Color ghostColor;
-			private Color foregroundColor;
-			private final String ghostText;
+	}
+	
+	class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
+		private final JTextField textfield;
+		private boolean isEmpty;
+		private Color ghostColor;
+		private Color foregroundColor;
+		private final String ghostText;
 
-			protected GhostText(final JTextField textfield, String ghostText) {
-				super();
-				this.textfield = textfield;
-				this.ghostText = ghostText;
-				this.ghostColor = Color.LIGHT_GRAY;
-				textfield.addFocusListener(this);
-				registerListeners();
-				updateState();
-				if (!this.textfield.hasFocus()) {
-					focusLost(null);
-				}
+		protected GhostText(final JTextField textfield, String ghostText) {
+			super();
+			this.textfield = textfield;
+			this.ghostText = ghostText;
+			this.ghostColor = Color.LIGHT_GRAY;
+			textfield.addFocusListener(this);
+			registerListeners();
+			updateState();
+			if (!this.textfield.hasFocus()) {
+				focusLost(null);
 			}
+		}
 
-			public void delete() {
+		public void delete() {
+			unregisterListeners();
+			textfield.removeFocusListener(this);
+		}
+
+		private void registerListeners() {
+			textfield.getDocument().addDocumentListener(this);
+			textfield.addPropertyChangeListener("foreground", this);
+		}
+
+		private void unregisterListeners() {
+			textfield.getDocument().removeDocumentListener(this);
+			textfield.removePropertyChangeListener("foreground", this);
+		}
+
+		public Color getGhostColor() {
+			return ghostColor;
+		}
+
+		public void setGhostColor(Color ghostColor) {
+			this.ghostColor = ghostColor;
+		}
+
+		private void updateState() {
+			isEmpty = textfield.getText().length() == 0;
+			foregroundColor = textfield.getForeground();
+		}
+
+		@Override
+		public void focusGained(FocusEvent e) {
+			if (isEmpty) {
 				unregisterListeners();
-				textfield.removeFocusListener(this);
-			}
-
-			private void registerListeners() {
-				textfield.getDocument().addDocumentListener(this);
-				textfield.addPropertyChangeListener("foreground", this);
-			}
-
-			private void unregisterListeners() {
-				textfield.getDocument().removeDocumentListener(this);
-				textfield.removePropertyChangeListener("foreground", this);
-			}
-
-			public Color getGhostColor() {
-				return ghostColor;
-			}
-
-			public void setGhostColor(Color ghostColor) {
-				this.ghostColor = ghostColor;
-			}
-
-			private void updateState() {
-				isEmpty = textfield.getText().length() == 0;
-				foregroundColor = textfield.getForeground();
-			}
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (isEmpty) {
-					unregisterListeners();
-					try {
-						textfield.setText("");
-						textfield.setForeground(foregroundColor);
-					} finally {
-						registerListeners();
-					}
+				try {
+					textfield.setText("");
+					textfield.setForeground(foregroundColor);
+				} finally {
+					registerListeners();
 				}
-
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (isEmpty) {
-					unregisterListeners();
-					try {
-						textfield.setText(ghostText);
-						textfield.setForeground(ghostColor);
-					} finally {
-						registerListeners();
-					}
-				}
-			}
-
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				updateState();
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent e) {
-				updateState();
-			}
-
-			public void insertUpdate(DocumentEvent e) {
-				updateState();
-			}
-
-			public void removeUpdate(DocumentEvent e) {
-				updateState();
 			}
 
 		}
+
+		@Override
+		public void focusLost(FocusEvent e) {
+			if (isEmpty) {
+				unregisterListeners();
+				try {
+					textfield.setText(ghostText);
+					textfield.setForeground(ghostColor);
+				} finally {
+					registerListeners();
+				}
+			}
+		}
+
+		@Override
+		public void propertyChange(PropertyChangeEvent evt) {
+			updateState();
+		}
+
+		@Override
+		public void changedUpdate(DocumentEvent e) {
+			updateState();
+		}
+
+		public void insertUpdate(DocumentEvent e) {
+			updateState();
+		}
+
+		public void removeUpdate(DocumentEvent e) {
+			updateState();
+		}
+
 	}
 }

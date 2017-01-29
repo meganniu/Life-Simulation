@@ -21,8 +21,8 @@ public class DrawArea extends BufferedImage {
 	private Graphics2D g = null;
 	static int width, height;
 
-	//public DrawArea(int startingCarnivores, int startingHerbivores) {
-	public DrawArea() {
+	public DrawArea(int startingCarnivores, int startingHerbivores) {
+	//public DrawArea() {
 		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
 		width = getWidth();
@@ -49,8 +49,6 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
-
-/**
 		for (int i = 0; i < startingHerbivores; i++) {
 
 			   herbivores.add(new Herbivore(
@@ -76,8 +74,8 @@ public class DrawArea extends BufferedImage {
 				1000.0,//energy
 				100));//metabolism
 		}
-		**/
-
+		
+/**
 		for (int i = 0; i < 50; i++) {
 			herbivores.add(new Herbivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
@@ -103,6 +101,7 @@ public class DrawArea extends BufferedImage {
 					100));// metabolism
 
 		}
+		**/
 	}
 
 	public void updatePositions() {

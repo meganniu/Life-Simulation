@@ -136,7 +136,6 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + metabolism + "</span></pre></html>");
 
 		return stats;
-
-}
+	}
 
 }
