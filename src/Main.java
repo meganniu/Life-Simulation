@@ -23,7 +23,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
@@ -51,12 +53,13 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		int shiftx = 500, shifty = 300;
 
-		BufferedImage front = null, frontSel = null, btn1 = null, btn1Sel = null;
-		BufferedImage back[] = new BufferedImage[249];
+		BufferedImage front = null, frontSel = null, btn1 = null, btn1Sel = null, btn2 = null, btn2Sel = null;
+		//BufferedImage back[] = new BufferedImage[249];
+		BufferedImage back = null;
 
 		int frameCounter = 0;
 
-		private Timer t = new Timer(60, new ActionListener() {
+		private Timer t = new Timer(40, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (frameCounter == 248)
 					frameCounter = 0;
@@ -81,13 +84,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			addMouseMotionListener(this);
 			addMouseListener(this);
-
+			
 			try {
-				//back[0] = ImageIO.read(new File("images/backgroundw.jpg"));
-				for(int i = 1; i <=249; i++){
-					back[i-1] = ImageIO.read(new File("images/gif/gif_Layer_"+i+".png"));
-					System.out.println("Loaded gif image #"+i);
-				}
+				/*back[0] = ImageIO.read(new File("images/backgroundw.jpg"));
+				for (int i = 1; i <= 249; i++) {
+					back[i - 1] = ImageIO.read(new File("images/gif/gif_Layer_" + i + ".png"));
+					System.out.println("Loaded gif image #" + i);
+					progress.setValue(progress.getValue() + 1);
+				}*/
+				back = ImageIO.read(new File("images/backgroundw.png"));
+				System.out.println("Loaded background");
 				front = ImageIO.read(new File("images/foreground.png"));
 				System.out.println("Loaded logo");
 				frontSel = ImageIO.read(new File("images/foregroundS.png"));
@@ -96,13 +102,17 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				System.out.println("Loaded button");
 				btn1Sel = ImageIO.read(new File("images/btn1S.png"));
 				System.out.println("Loaded selected button");
+				btn2 = ImageIO.read(new File("images/btn2.png"));
+				System.out.println("Loaded button");
+				btn2Sel = ImageIO.read(new File("images/btn2S.png"));
+				System.out.println("Loaded selected button");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			setPreferredSize(new Dimension(1000, 600));
 			setLayout(new GridBagLayout());
-			
+
 			t.start();
 
 			GridBagConstraints c = new GridBagConstraints();
@@ -123,7 +133,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(back[frameCounter].getSubimage(shiftx / 10, shifty / 6, getWidth(), getHeight()), 0, 0, null);
+			g.drawImage(back.getSubimage(shiftx / 10, shifty / 6, getWidth(), getHeight()), 0, 0, null);
 
 			if (selected1)
 				g.drawImage(frontSel, (getWidth() - 730) / 2 - (shiftx - 500) / 20,
@@ -139,10 +149,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
 
 			if (selected3)
-				g.drawImage(btn1Sel, getWidth() / 2 + 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 16 - 4,
+				g.drawImage(btn2Sel, getWidth() / 2 + 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 16 - 4,
 						null);
 			else
-				g.drawImage(btn1, getWidth() / 2 + 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
+				g.drawImage(btn2, getWidth() / 2 + 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
 		}
 
 		@Override
