@@ -21,6 +21,12 @@ public class Food
         return nutrition;
     }
     
+    public void decayNutrition(){
+    	nutrition-=1;
+    	if(nutrition<0)
+    		nutrition = 0;
+    }
+    
 	public BufferedImage getImage() {
 		return img;
 	}
