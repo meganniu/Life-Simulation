@@ -21,11 +21,11 @@ public class Egg {
 	int carnivorePoints;
 	
 	int accumulatedPoints;
-
+	long chaseLength;
 	/**
 	 * Constructor for objects of class Egg
 	 */
-	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism) {
+	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism, long chaseLength) {
 		
 		this.speed = speed;
 		this.angle = angle;
@@ -36,22 +36,36 @@ public class Egg {
 		this.timeBorn= GamePane.timeElapsed;
 		this.carnivorePoints = carnivorePoints;
 		this.metabolism = metabolism;
-		while(Math.random()>.7){
+		this.chaseLength = chaseLength;
+		while(Math.random()>.8){
 			speed++;
 		}
-		while(Math.random()>.7){
-			detectRadius += 3;
+		while(Math.random()>.8){
+			speed--;
 		}
-		while(Math.random()>.7){
-			metabolism+= 10.0;
+		while(Math.random()>.4){
+			detectRadius ++;
 		}
-		if (carnivorePoints < 100){
-			for (int x = 0; x < 3; x++){
-				if(Math.random()>=.5)
-					carnivorePoints ++ ;
-				else
-					carnivorePoints --;
-			}
+		while(Math.random()>.4){
+			detectRadius --;
+		}
+		while(Math.random()>.2){
+			metabolism ++;
+		}
+		while(Math.random()>.2){
+			metabolism --;
+		}
+		while(Math.random()>.8){
+			carnivorePoints++;
+		}
+		while(Math.random()>.8){
+			carnivorePoints--;
+		}
+		while(Math.random()>.15){
+			chaseLength += 10;
+		}
+		while(Math.random()>.15){
+			chaseLength -= 10;
 		}
 		if (speed >= 9)
 			detectRadius -= 20;
@@ -72,10 +86,10 @@ public class Egg {
 
 	public boolean hatch() {
 		if (timeBorn + 5000 <= GamePane.timeElapsed) {
-			if (carnivorePoints >= 100) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism));
+			if (carnivorePoints >= 10) {
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism, chaseLength));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism));
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism, 5000));
 			}
 			System.out.println("Egg hatched at" + GamePane.timeElapsed / 1000.0);
 			return true;

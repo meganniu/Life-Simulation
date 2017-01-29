@@ -49,34 +49,8 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
-		for (int i = 0; i < startingHerbivores; i++) {
 
-			   herbivores.add(new Herbivore(
-			       new Point((int) (Math.random() * (width - 16) + 8),//x
-			    		   (int) (Math.random() * (height - 16) + 8)),//y
-			       Math.random() * 360.0,//angle
-			       (int) (Math.random() * 1 + 5),//speed
-			       (int) (Math.random() * 60 + 20),//dRadius
-			       (int) (Math.random() * 1000 + 50000),//EggCycle
-			       20,//carnivorepoints
-			       1000.0,//energy
-			       100));//metabolism
-			  }
-		for (int i = 0; i < startingCarnivores; i++) {
-			carnivores.add(new Carnivore(
-			new Point((int) (Math.random() * (width - 16) + 8),//x
-			    (int) (Math.random() * (height - 16) + 8)),//y
-				Math.random() * 360.0, //angle
-				(int) (Math.random() * 1 + 5),//spd
-				(int) (Math.random() * 80 + 100),//dRadius
-				(int) (Math.random() * 1000 + 5000),//eggCycle
-				120,//carnivorePoints
-				1000.0,//energy
-				100));//metabolism
-		}
-		
-/**
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < startingHerbivores; i++) {
 			herbivores.add(new Herbivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
@@ -86,9 +60,11 @@ public class DrawArea extends BufferedImage {
 					(int) (Math.random() * 1000 + 6000), // EggCycle
 					20, // carnivorepoints
 					1000.0, // energy
-					100));// metabolism
-		}
-		for (int i = 0; i < 5; i++) {
+					100,// metabolism
+					5000));//chase length
+			  }
+			 
+		for (int i = 0; i < startingCarnivores; i++) {
 			carnivores.add(new Carnivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
@@ -98,10 +74,10 @@ public class DrawArea extends BufferedImage {
 					(int) (Math.random() * 1000 + 10000), // eggCycle
 					120, // carnivorePoints
 					1000.0, // energy
-					100));// metabolism
-
+					100,// metabolism
+					5000));//chase length
 		}
-		**/
+
 	}
 
 	public void updatePositions() {
@@ -147,6 +123,8 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).energyUse();
 			if (carnivores.get(i).getEnergy() <= 0) {
+				if(carnivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
 				carnivores.remove(i);
 				i--;
 				System.out.println("Carnivore died");
@@ -155,7 +133,9 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < herbivores.size(); i++) {
 			herbivores.get(i).energyUse();
 			if (herbivores.get(i).getEnergy() <= 0) {
-				herbivores.remove(i);
+				if(herbivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
+				herbivores.remove(i);	
 				i--;
 				System.out.println("Herbivore died");
 			}
@@ -163,11 +143,18 @@ public class DrawArea extends BufferedImage {
 	}
 	
 	public void spawnFood() {
-		if (GamePane.tickCounter%15==0) {
-			food.add(new Food(300.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+		if (GamePane.tickCounter%5==0) {
+			food.add(new Food(new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)), 3000.0));
 		}
 	}
 
+	public void eatCheck(){
+		for (int i = 0; i < carnivores.size(); i++)
+			carnivores.get(i).eat();
+		for (int i = 0; i < herbivores.size(); i++)
+			herbivores.get(i).eat();
+	}
+	
 	public void drawTrails() {
 		g.setColor(new Color(0, 255, 0, 100));
 		for (int i = 0; i < carnivores.size(); i++) {
@@ -255,8 +242,12 @@ public class DrawArea extends BufferedImage {
 
 		if (StatsPanel.selectedOrg != null) {
 			g.setColor(Color.green);
-			g.setStroke(new BasicStroke(1));
+			g.setStroke(new BasicStroke(2));
 			g.drawOval(StatsPanel.selectedOrg.getPoint().x - 32, StatsPanel.selectedOrg.getPoint().y - 32, 64, 64);
+			int dr = StatsPanel.selectedOrg.getDetectRadius();
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.red);
+			g.drawOval(StatsPanel.selectedOrg.getPoint().x - dr, StatsPanel.selectedOrg.getPoint().y - dr, dr*2, dr*2);
 		}
 	}
 }

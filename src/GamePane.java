@@ -104,6 +104,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.layEggs();
 		drawArea.hatchEggs();
 		drawArea.energyCheck();
+		drawArea.eatCheck();
 		Main.statsPanel.updateStats();
 	}
 
