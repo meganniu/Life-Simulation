@@ -87,9 +87,9 @@ public class Egg {
 	public boolean hatch() {
 		if (timeBorn + 5000 <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism, chaseLength));
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 15000, metabolism, chaseLength));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 20000, metabolism, 5000));
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 15000, metabolism, 5000));
 			}
 			System.out.println("Egg hatched at" + GamePane.timeElapsed / 1000.0);
 			return true;

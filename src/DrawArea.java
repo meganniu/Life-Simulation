@@ -99,29 +99,29 @@ public class DrawArea extends BufferedImage {
 		}
 		**/
 
-		for (int i = 0; i < 50; i++) {
+		for (int i = 0; i < 10; i++) {
 			herbivores.add(new Herbivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
 					(int) (Math.random() * 1 + 5), // speed
 					(int) (Math.random() * 60 + 20), // dRadius
-					(int) (Math.random() * 1000 + 6000), // EggCycle
+					(int) (Math.random() * 1000 + 5000), // EggCycle
 					20, // carnivorepoints
-					1000.0, // energy
+					15000.0, // energy
 					100,// metabolism
 					5000));//chase length
 		}
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 1 ; i++) {
 			carnivores.add(new Carnivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
 					(int) (Math.random() * 1 + 8), // spd
 					(int) (Math.random() * 80 + 100), // dRadius
-					(int) (Math.random() * 1000 + 10000), // eggCycle
+					(int) (Math.random() * 9000 + 10000), // eggCycle
 					120, // carnivorePoints
-					1000.0, // energy
+					15000.0, // energy
 					100,// metabolism
 					5000));//chase length
 		}
@@ -188,7 +188,7 @@ public class DrawArea extends BufferedImage {
 	}
 	
 	public void spawnFood() {
-		if (GamePane.tickCounter%15==0) {
+		if (GamePane.tickCounter%10==0) {
 			food.add(new Food(3000.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
 		}
 	}

@@ -117,7 +117,7 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
-				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10 + 5000.0) * metabolism )/ 100.0);
+				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10.0 + 5000.0) * metabolism )/ 100.0);
 				if (energy > 15000.0)
 					energy = 15000.0;
 				DrawArea.herbivores.remove(i);
