@@ -225,7 +225,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated
 		}
-
+		
+		public void mousePressed(MouseEvent e){
+			
+		}
+		/**
 		@Override
 		public void mousePressed(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
@@ -236,6 +240,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				getPreferences();
 
 		}
+		**/
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
