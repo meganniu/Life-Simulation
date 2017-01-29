@@ -228,8 +228,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseMoved(MouseEvent e) {
 
 			if (r1.contains(e.getPoint())) {
-				if (!selected1)
+				if (!selected1){
 					click.play();
+				}
 				selected1 = true;
 			} else
 				selected1 = false;
