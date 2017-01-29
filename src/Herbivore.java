@@ -8,9 +8,10 @@ import java.util.ArrayList;
 public class Herbivore extends Organism {
 
 	private boolean chasing = false;
-	
+	private long timeBorn;
 	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, 5000);
+		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.hImg;
 	}
 
@@ -94,17 +95,17 @@ public class Herbivore extends Organism {
 	}
 
 	public void layEgg(){
-		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 10000){
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 6000.0){
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
-
+			energy-=4000;
 		}
 	}
 	
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-
+		stats.add("<html><pre><span style=\"font-family: arial\">Herbivore");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
@@ -113,6 +114,7 @@ public class Herbivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Energy\t" + new DecimalFormat("#.##").format(energy) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Time Alive\t" + (GamePane.timeElapsed - timeBorn) + "</span></pre></html>");
 
 		return stats;
 
@@ -126,6 +128,8 @@ public class Herbivore extends Organism {
 				energy += (DrawArea.food.get(i).getNutrition() * metabolism / 100.0);
 				if (energy > 15000.0)
 					energy = 15000.0;
+				if (DrawArea.food.get(i) == StatsPanel.selectedFood)
+					StatsPanel.selectedFood = null;
 				DrawArea.food.remove(i);
 				i--;
 			}

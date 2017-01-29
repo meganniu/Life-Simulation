@@ -16,17 +16,15 @@ public class StatsPanel extends JPanel {
 	static ArrayList<String> temp = new ArrayList<String>();
 
 	static Organism selectedOrg = null;
+	
+	static Egg selectedEgg = null;
 
+	static Food selectedFood = null;
+	
 	public StatsPanel() {
-		if (selectedOrg == null) {
-			temp.add("No organsism selected");
-		} else {
-			temp = selectedOrg.getStats();
-		}
-
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		for (int i = 0; i < 8; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
+		for (int i = 0; i < 11; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
 			statLabel.add(new JLabel());
 			statLabel.get(i).setAlignmentX(JLabel.CENTER_ALIGNMENT);
 			this.add(statLabel.get(i));
@@ -47,12 +45,11 @@ public class StatsPanel extends JPanel {
 	}
 
 	public void updateStats() {
-		if (selectedOrg == null) {
-			temp = new ArrayList<String>();
-			temp.add("No organsism selected");
-		} else {
+		
+		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();
 		}
+
 		
 		if(temp != null){
 			for (int i = 0; i < statLabel.size(); i++) {
@@ -61,6 +58,24 @@ public class StatsPanel extends JPanel {
 				else
 					statLabel.get(i).setText(" ");
 			}
+		}
+		else if (selectedEgg != null){
+			temp = selectedEgg.getStats();
+		}
+		else if (selectedFood != null){
+			temp = selectedFood.getStats();
+		}
+		else {
+			temp = new ArrayList<String>();
+			temp.add("No organsism, egg, or food selected");
+		}
+		
+		for (int i = 0; i < statLabel.size(); i++) {
+			if (i < temp.size())
+				statLabel.get(i).setText(temp.get(i));
+			else
+				statLabel.get(i).setText(" ");
+			
 		}
 
 		revalidate();

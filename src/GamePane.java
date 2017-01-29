@@ -99,7 +99,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	public void tick() { // Per tick
 		drawArea.updatePositions();
-		drawArea.eat();
+		drawArea.decayFood();
+		//drawArea.eat();
 		drawArea.spawnFood();
 		drawArea.layEggs();
 		drawArea.hatchEggs();
@@ -145,25 +146,53 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		boolean found = false;
+		boolean orgFound = false;
+		boolean eggFound = false;
+		boolean foodFound = false;
 		int x = 2 * e.getX() + drawRegion.x;
 		int y = 2 * e.getY() + drawRegion.y;
 		System.out.println(x + " " + y);
-		for (int i = 0; i < DrawArea.carnivores.size() && !found; i++) {
+		for (int i = 0; i < DrawArea.carnivores.size() && !orgFound; i++) {
 			if (DrawArea.carnivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.carnivores.get(i);
-				found = true;
+				orgFound = true;
 			}
 		}
-		for (int i = 0; i < DrawArea.herbivores.size() && !found; i++) {
+		for (int i = 0; i < DrawArea.herbivores.size() && !orgFound; i++) {
 			if (DrawArea.herbivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
-				found = true;
+				orgFound = true;
 			}
 		}
-
-		if (!found) {
+		for (int i = 0; i < DrawArea.eggs.size() && !eggFound; i++) {
+			if (DrawArea.eggs.get(i).hitbox.contains(x, y)) {
+				StatsPanel.selectedEgg = DrawArea.eggs.get(i);
+				eggFound = true;
+			}
+		}
+		for (int i = 0; i < DrawArea.food.size() && !foodFound; i++) {
+			if (DrawArea.food.get(i).hitbox.contains(x, y)) {
+				StatsPanel.selectedFood = DrawArea.food.get(i);
+				foodFound = true;
+			}
+		}
+		
+		if (orgFound) {
+			StatsPanel.selectedEgg = null;
+			StatsPanel.selectedFood = null;
+		}
+		else if (eggFound){
 			StatsPanel.selectedOrg = null;
+			StatsPanel.selectedFood = null;
+		}
+		else if (foodFound){
+			StatsPanel.selectedOrg = null;
+			StatsPanel.selectedEgg = null;
+		}
+		else{
+			StatsPanel.selectedOrg = null;
+			StatsPanel.selectedEgg = null;
+			StatsPanel.selectedFood = null;
 		}
 		Main.statsPanel.updateStats();
 		render();
