@@ -149,6 +149,7 @@ public class DrawArea extends BufferedImage {
 			carnivores.get(i).energyUse();
 			if (carnivores.get(i).getEnergy() <= 0) {
 				carnivores.remove(i);
+				StatsPanel.selectedOrg = null;
 				i--;
 				System.out.println("Carnivore died");
 			}
@@ -157,6 +158,7 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).energyUse();
 			if (herbivores.get(i).getEnergy() <= 0) {
 				herbivores.remove(i);
+				StatsPanel.selectedOrg = null;
 				i--;
 				System.out.println("Herbivore died");
 			}
@@ -256,8 +258,12 @@ public class DrawArea extends BufferedImage {
 
 		if (StatsPanel.selectedOrg != null) {
 			g.setColor(Color.green);
-			g.setStroke(new BasicStroke(1));
+			g.setStroke(new BasicStroke(2));
 			g.drawOval(StatsPanel.selectedOrg.getPoint().x - 32, StatsPanel.selectedOrg.getPoint().y - 32, 64, 64);
+			int dr = StatsPanel.selectedOrg.getDetectRadius();
+			g.setStroke(new BasicStroke(1));
+			g.setColor(Color.red);
+			g.drawOval(StatsPanel.selectedOrg.getPoint().x - dr, StatsPanel.selectedOrg.getPoint().y - dr, dr*2, dr*2);
 		}
 	}
 }
