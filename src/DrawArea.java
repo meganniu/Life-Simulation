@@ -21,6 +21,7 @@ public class DrawArea extends BufferedImage {
 	private Graphics2D g = null;
 	static int width, height;
 
+	//public DrawArea(int startingCarnivores, int startingHerbivores) {
 	public DrawArea() {
 		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
@@ -48,13 +49,64 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
+<<<<<<< HEAD
+/**
+		for (int i = 0; i < startingHerbivores; i++) {
+=======
 			for (int i = 0; i < 50; i++) {
+>>>>>>> b260a6be6d58f25542b73147524d8b2502696bdd
 			   herbivores.add(new Herbivore(
 			       new Point((int) (Math.random() * (width - 16) + 8),//x
 			    		   (int) (Math.random() * (height - 16) + 8)),//y
 			       Math.random() * 360.0,//angle
 			       (int) (Math.random() * 1 + 5),//speed
 			       (int) (Math.random() * 60 + 20),//dRadius
+<<<<<<< HEAD
+			       (int) (Math.random() * 1000 + 50000),//EggCycle
+			       20,//carnivorepoints
+			       1000.0,//energy
+			       100));//metabolism
+			  }
+		for (int i = 0; i < startingCarnivores; i++) {
+			carnivores.add(new Carnivore(
+			new Point((int) (Math.random() * (width - 16) + 8),//x
+			    (int) (Math.random() * (height - 16) + 8)),//y
+				Math.random() * 360.0, //angle
+				(int) (Math.random() * 1 + 5),//spd
+				(int) (Math.random() * 80 + 100),//dRadius
+				(int) (Math.random() * 1000 + 5000),//eggCycle
+				120,//carnivorePoints
+				1000.0,//energy
+				100));//metabolism
+		}
+		**/
+
+		for (int i = 0; i < 50; i++) {
+			herbivores.add(new Herbivore(
+					new Point((int) (Math.random() * (width - 16) + 8), // x
+							(int) (Math.random() * (height - 16) + 8)), // y
+					Math.random() * 360.0, // angle
+					(int) (Math.random() * 1 + 5), // speed
+					(int) (Math.random() * 60 + 20), // dRadius
+					(int) (Math.random() * 1000 + 6000), // EggCycle
+					20, // carnivorepoints
+					1000.0, // energy
+					100));// metabolism
+		}
+		for (int i = 0; i < 5; i++) {
+			carnivores.add(new Carnivore(
+					new Point((int) (Math.random() * (width - 16) + 8), // x
+							(int) (Math.random() * (height - 16) + 8)), // y
+					Math.random() * 360.0, // angle
+					(int) (Math.random() * 1 + 8), // spd
+					(int) (Math.random() * 80 + 100), // dRadius
+					(int) (Math.random() * 1000 + 10000), // eggCycle
+					120, // carnivorePoints
+					1000.0, // energy
+					100));// metabolism
+
+		}
+=======
 			       (int) (Math.random() * 1000 + 5000),//EggCycle
 			       5,//carnivorepoints
 			       4000.0,//energy
@@ -72,6 +124,7 @@ public class DrawArea extends BufferedImage {
 			     4000.0,//energy
 			     Math.random() * 200.0 + 50.0));//metabolism
 			  }
+>>>>>>> b260a6be6d58f25542b73147524d8b2502696bdd
 	}
 
 	public void updatePositions() {
