@@ -1,3 +1,4 @@
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -47,7 +48,7 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
 
-		for (int i = 0; i < 50; i++) {
+			for (int i = 0; i < 50; i++) {
 			   herbivores.add(new Herbivore(
 			       new Point((int) (Math.random() * (width - 16) + 8),//x
 			    		   (int) (Math.random() * (height - 16) + 8)),//y
@@ -82,8 +83,8 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).move(width, height);
 		}
 	}
-	
-	public void eat(){
+
+	public void eat() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).eat();
 		}
@@ -115,7 +116,6 @@ public class DrawArea extends BufferedImage {
 	public void energyCheck() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).energyUse();
-			carnivores.get(i).eat();
 			if (carnivores.get(i).getEnergy() <= 0) {
 				carnivores.remove(i);
 				i--;
@@ -124,7 +124,6 @@ public class DrawArea extends BufferedImage {
 		}
 		for (int i = 0; i < herbivores.size(); i++) {
 			herbivores.get(i).energyUse();
-			herbivores.get(i).eat();
 			if (herbivores.get(i).getEnergy() <= 0) {
 				herbivores.remove(i);
 				i--;
@@ -136,6 +135,39 @@ public class DrawArea extends BufferedImage {
 	public void spawnFood() {
 		if (GamePane.tickCounter%15==0) {
 			food.add(new Food(300.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+		}
+	}
+
+	public void drawTrails() {
+		g.setColor(new Color(0,255,0,100));
+		for (int i = 0; i < carnivores.size(); i++) {
+			ArrayList<Point> points = carnivores.get(i).prevPoints;
+			int stroke = 1;
+			g.setStroke(new BasicStroke(stroke));
+			for (int j = 0; j < points.size() - 1; j++) {
+				if (points.get(j) == null || points.get(j + 1) == null) {
+					stroke++;
+					System.out.println(stroke);
+					g.setStroke(new BasicStroke(stroke));
+				} else {
+					g.drawLine(points.get(j).x, points.get(j).y, points.get(j + 1).x, points.get(j + 1).y);
+				}
+			}
+		}
+		
+		for (int i = 0; i < herbivores.size(); i++) {
+			ArrayList<Point> points = herbivores.get(i).prevPoints;
+			int stroke = 1;
+			g.setStroke(new BasicStroke(stroke));
+			for (int j = 0; j < points.size() - 1; j++) {
+				if (points.get(j) == null || points.get(j + 1) == null) {
+					stroke++;
+					g.setStroke(new BasicStroke(stroke));
+				} else {
+					g.drawLine(points.get(j).x, points.get(j).y, points.get(j + 1).x, points.get(j + 1).y);
+				}
+			}
+
 		}
 	}
 
@@ -163,6 +195,13 @@ public class DrawArea extends BufferedImage {
 				g.drawImage(food.get(i).getImage(), food.get(i).getPoint().x - 8, food.get(i).getPoint().y - 8, null);
 		}
 
+		/**
+		 * for (int i = 0; i < food.size(); i++) { if
+		 * (GamePane.drawRegion.contains(food.get(i).getPoint().x,
+		 * food.get(i).getPoint().y)) g.drawImage(food.get(i).getImage(),
+		 * food.get(i).getPoint().x - 8, food.get(i).getPoint().y - 8, null); }
+		 **/
+		drawTrails();
 		for (int i = 0; i < carnivores.size(); i++) {
 			if (GamePane.drawRegion.contains(carnivores.get(i).getPoint().x, carnivores.get(i).getPoint().y)) {
 				AffineTransform tx = AffineTransform

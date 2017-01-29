@@ -55,14 +55,7 @@ public class Egg {
 		}
 		if (speed >= 9)
 			detectRadius -= 20;
-		mutate();
-		
 		img = DrawArea.eImg;
-	}
-
-	public void mutate(){
-		double r = Math.random();
-		
 	}
 	
 	public BufferedImage getImage() {
