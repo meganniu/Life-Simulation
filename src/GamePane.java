@@ -28,10 +28,51 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	int width;
 	int height;
+	int startingCarnivores, startingHerbivores;
+	int startMinSpeed, startMaxSpeed; 
+	int startMinRad, startMaxRad;
+	int startMinEgg, startMaxEgg;
+	double startMinEnergy, startMaxEnergy;
+	double startMinMetabolism, startMaxMetabolism;
+	double startMinFood, startMaxFood;
 	private DrawArea drawArea;
 
-	public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
-		drawArea = new DrawArea(startingCarnivores, startingHerbivores);
+	public GamePane(int width, int height, 
+			int startingCarnivores, int startingHerbivores, 
+			int startMinSpeed, int startMaxSpeed, 
+			int startMinRad, int startMaxRad, 
+			int startMinEgg, int startMaxEgg, 
+			double startMinEnergy, double startMaxEnergy, 
+			double startMinMetabolism, double startMaxMetabolism, 
+			double startMinFood, double startMaxFood) {
+		this.startingCarnivores = startingCarnivores;
+		this.startingHerbivores = startingHerbivores;
+		
+		this.startMinSpeed = startMinSpeed;
+		this.startMaxSpeed = startMaxSpeed;
+		
+		this.startMinRad = startMinRad;
+		this.startMaxRad = startMaxRad;
+		
+		this.startMinEgg = startMinEgg;
+		this.startMaxEgg = startMaxEgg;
+		
+		this.startMinEnergy = startMinEnergy;
+		this.startMaxEnergy = startMaxEnergy;
+		
+		this.startMinMetabolism = startMinMetabolism;
+		this.startMaxMetabolism = startMaxMetabolism;
+		
+		this.startMinFood = startMinFood;
+		this.startMaxFood = startMaxFood;
+		
+		drawArea = new DrawArea(startingCarnivores, startingHerbivores, 
+				startMinSpeed, startMaxSpeed, 
+				startMinRad, startMaxRad, 
+				startMinEgg, startMaxEgg, 
+				startMinEnergy, startMaxEnergy, 
+				startMinMetabolism, startMaxMetabolism, 
+				startMinFood, startMaxFood);
 		
 	//public GamePane(int width, int height) {
 		//drawArea = new DrawArea();
