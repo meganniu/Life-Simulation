@@ -119,6 +119,7 @@ public class Carnivore extends Organism {
 				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10 + 800.0) * metabolism )/ 100.0);
 				DrawArea.herbivores.remove(i);
 				i--;
+				canChase=true;
 			}
 		}
 	}
