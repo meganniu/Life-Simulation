@@ -11,7 +11,7 @@ import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.text.DecimalFormat;
 
-import com.sun.javafx.geom.Rectangle;
+import java.awt.Rectangle;
 
 public class GamePane extends Canvas implements MouseListener, Runnable {
 
@@ -30,9 +30,11 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	int height;
 	private DrawArea drawArea;
 
-	public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
-		drawArea = new DrawArea(startingCarnivores, startingHerbivores);
+	//public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
+		//drawArea = new DrawArea(startingCarnivores, startingHerbivores);
 		
+	public GamePane(int width, int height) {
+		drawArea = new DrawArea();
 		this.width = width;
 		this.height = height;
 

@@ -19,13 +19,16 @@ public abstract class Organism {
 	protected int detectRadius;
 	protected int metabolism;
 	protected int carnivorePoints;
-	
+
 	double energy;
 	long sinceLastEgg;
 
 	protected int eggCycle;
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, int metabolism) {
+	public ArrayList<Point> prevPoints = new ArrayList<Point>();
+
+	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+			double energy, int metabolism) {
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
@@ -36,15 +39,17 @@ public abstract class Organism {
 		this.energy = energy;
 		this.speed = speed;
 		sinceLastEgg = GamePane.timeElapsed;
-		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
+		hitbox = new Rectangle(pos.x - 16, pos.y - 16, 32, 32);
+
+		prevPoints.add(pos);
 	}
 
 	public BufferedImage getImage() {
 		return img;
 	}
-	
+
 	public abstract double detectItem();
-	
+
 	public abstract void eat();
 
 	public void move(int width, int height) {
@@ -90,9 +95,16 @@ public abstract class Organism {
 			angle = 360 - angle;
 
 		}
-		
+
 		pos.x = nextPos.x;
 		pos.y = nextPos.y;
+
+		if (prevPoints.size() >= 15)
+			prevPoints.remove(0);
+		if (GamePane.tickCounter % 3 != 0)
+			prevPoints.add(nextPos);
+		else
+			prevPoints.add(null);
 
 		hitbox.x = nextPos.x - 8;
 		hitbox.y = nextPos.y - 8;
@@ -166,12 +178,12 @@ public abstract class Organism {
 	public Point getPoint() {
 		return pos;
 	}
-	
-	public int getSpeed(){
+
+	public int getSpeed() {
 		return speed;
 	}
-	
-	public int getDetectRadius(){
+
+	public int getDetectRadius() {
 		return detectRadius;
 	}
 
@@ -179,27 +191,26 @@ public abstract class Organism {
 		return angle;
 	}
 
-	public double getEnergy(){
+	public double getEnergy() {
 		return energy;
 	}
+
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
-	
-	public void energyUse(){
-		energy-=1; // Passive energy loss
-		energy-=(Math.pow(speed, 2)/8.0);
+
+	public void energyUse() {
+		energy -= 1; // Passive energy loss
+		energy -= (Math.pow(speed, 2) / 8.0);
 	}
-	
-	public void layEgg(){
-		int evoSpeed = speed; 
-		int evoRadius = detectRadius;
-		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 15000){
-			
-			sinceLastEgg=GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, evoSpeed, evoRadius, eggCycle, carnivorePoints));
-			
-			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
+
+	public void layEgg() {
+		if (GamePane.timeElapsed > sinceLastEgg + eggCycle) {
+
+			sinceLastEgg = GamePane.timeElapsed;
+			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints));
+
+			System.out.println("Layed egg at " + GamePane.timeElapsed / 1000.0);
 		}
 	}
 
