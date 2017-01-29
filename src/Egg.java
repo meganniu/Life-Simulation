@@ -54,10 +54,10 @@ public class Egg {
 		while(Math.random()>.5){
 			speed--;
 		}
-		while(Math.random()>.4){
+		while(Math.random()>.2){
 			detectRadius ++;
 		}
-		while(Math.random()>.4){
+		while(Math.random()>.2){
 			detectRadius --;
 		}
 		while(Math.random()>.2){
@@ -86,6 +86,18 @@ public class Egg {
 		}
 		if (speed >= 10)
 			detectRadius =  detectRadius / 3;
+		if (speed < 2)
+			speed = 2;
+		if (detectRadius < 50)
+			detectRadius = 50;
+		if (eggCycle < 25000)
+			eggCycle = 25000;
+		if (carnivorePoints < 2)
+			carnivorePoints = 2;
+		if (metabolism < 60.0)
+			metabolism = 60.0;
+		if (chaseLength < 3500)
+			chaseLength = 3500;
 	}
 	
 	public BufferedImage getImage() {
@@ -123,7 +135,8 @@ public class Egg {
 		stats.add("<html><pre><span style=\"font-family: arial\">Egg Counter\t" + eggCycle + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Chase length\t" + chaseLength + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Chase Length\t" + chaseLength + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Time Until Hatch\t" + (timeBorn + 10000 - GamePane.timeElapsed) + "</span></pre></html>");
 		return stats;
 	}
 }

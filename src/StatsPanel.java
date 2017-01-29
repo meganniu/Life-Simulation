@@ -24,7 +24,7 @@ public class StatsPanel extends JPanel {
 	public StatsPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		for (int i = 0; i < 10; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
+		for (int i = 0; i < 11; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
 			statLabel.add(new JLabel());
 			statLabel.get(i).setAlignmentX(JLabel.CENTER_ALIGNMENT);
 			this.add(statLabel.get(i));
@@ -32,7 +32,6 @@ public class StatsPanel extends JPanel {
 		
 		updateStats();
 		
-		//this.add(new JLabel("hi"));
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		Border border = BorderFactory.createTitledBorder(blackline, "Stats");
 		((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
@@ -49,6 +48,16 @@ public class StatsPanel extends JPanel {
 		
 		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();
+		}
+
+		
+		if(temp != null){
+			for (int i = 0; i < statLabel.size(); i++) {
+				if (i < temp.size())
+					statLabel.get(i).setText(temp.get(i));
+				else
+					statLabel.get(i).setText(" ");
+			}
 		}
 		else if (selectedEgg != null){
 			temp = selectedEgg.getStats();
