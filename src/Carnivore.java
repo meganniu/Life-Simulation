@@ -141,7 +141,6 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Energy\t" + new DecimalFormat("#.##").format(energy) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
 		return stats;
-
-}
+	}
 
 }

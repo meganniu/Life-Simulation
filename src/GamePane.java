@@ -30,11 +30,11 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	int height;
 	private DrawArea drawArea;
 
-	//public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
-		//drawArea = new DrawArea(startingCarnivores, startingHerbivores);
+	public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
+		drawArea = new DrawArea(startingCarnivores, startingHerbivores);
 		
-	public GamePane(int width, int height) {
-		drawArea = new DrawArea();
+	//public GamePane(int width, int height) {
+		//drawArea = new DrawArea();
 		this.width = width;
 		this.height = height;
 
