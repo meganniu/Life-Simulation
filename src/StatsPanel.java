@@ -26,7 +26,7 @@ public class StatsPanel extends JPanel {
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
-		for (int i = 0; i < 7; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
+		for (int i = 0; i < 8; i++) { // 7 is Number of stats there are NEEDS TO BE CHANGED EACH TIME :((((
 			statLabel.add(new JLabel());
 			statLabel.get(i).setAlignmentX(JLabel.CENTER_ALIGNMENT);
 			this.add(statLabel.get(i));
