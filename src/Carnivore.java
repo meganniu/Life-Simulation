@@ -126,14 +126,13 @@ public class Carnivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 
-		stats.add("<html><pre>Position\t(" + pos.x + ", " + pos.y + ")</pre></html>");
-		stats.add("<html><pre>Angle\t\t" + (int) angle + " deg</pre></html>");
-		stats.add("<html><pre>Speed\t\t" + speed + "</pre></html>");
-		stats.add("<html><pre>R. Detection\t" +  detectRadius + "</pre></html>");
-		stats.add("<html><pre>Egg Counter\t" + eggCycle + "</pre></html>");
-		stats.add("<html><pre>Carnivorism\t" + carnivorePoints + "</pre></html>");
-		stats.add("<html><pre>Energy\t" + energy + "</pre></html>");
-		stats.add("<html><pre>Metabolism\t" + metabolism + "</pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">R. Detection\t" +  detectRadius + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Egg Counter\t" + eggCycle + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + metabolism + "</span></pre></html>");
 
 		return stats;
 

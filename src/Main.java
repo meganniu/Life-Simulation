@@ -161,10 +161,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			setPreferredSize(new Dimension(1000, 600));
 			setLayout(new GridBagLayout());
 
-<<<<<<< HEAD
-			
-=======
->>>>>>> b260a6be6d58f25542b73147524d8b2502696bdd
 			t.start();
 
 			GridBagConstraints c = new GridBagConstraints();
@@ -228,9 +224,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseMoved(MouseEvent e) {
 
 			if (r1.contains(e.getPoint())) {
-				if (!selected1){
+				if (!selected1)
 					click.play();
-				}
 				selected1 = true;
 			} else
 				selected1 = false;
