@@ -212,7 +212,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (r1.contains(e.getPoint()))
 				generateGame();
 			else if (r2.contains(e.getPoint()))
-				instructions();
+				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
 
@@ -249,7 +249,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (r1.contains(e.getPoint()))
 				generateGame();
 			else if (r2.contains(e.getPoint()))
-				instructions();
+				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
 		}
@@ -257,7 +257,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	public class InstructionScreen extends JPanel implements MouseMotionListener, MouseListener {
 
-		int shifty = 300;
+		int shifty = 420;
 
 		BufferedImage front = null, back = null;
 
@@ -330,6 +330,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			shifty = e.getY();
 			repaint();
 
+		}
+
+		public void setShiftY(int shifty) {
+			this.shifty = shifty;
+			
 		}
 
 	}
@@ -432,7 +437,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		requestFocus();
 	}
 
-	public void instructions() {
+	public void instructions(int shifty) {
+		instructionScreen.setShiftY(shifty);
 		setContentPane(instructionScreen);
 		revalidate();
 	}
