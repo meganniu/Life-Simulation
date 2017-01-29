@@ -12,9 +12,10 @@ public class Carnivore extends Organism {
 
 	private long chaseStart;
 	private long cooldownStart;
-
+	private long timeBorn;
 	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
+		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.cImg;
 	}
 
@@ -141,6 +142,7 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Energy\t" + new DecimalFormat("#.##").format(energy) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Chase Length\t" + chaseLength + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Time Alive\t" + (GamePane.timeElapsed - timeBorn) + "</span></pre></html>");
 		return stats;
 	}
 

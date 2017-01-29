@@ -34,7 +34,7 @@ public class Food
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Food\t\t");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Nutrition Value\t" + new DecimalFormat("#.##").format(nutrition) + " deg</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Nutrition Value\t" + new DecimalFormat("#.##").format(nutrition) + " </span></pre></html>");
 		return stats;
 	}
 
