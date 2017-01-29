@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -14,7 +15,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
-import java.awt.Rectangle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
@@ -23,9 +23,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -51,14 +51,31 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		int shiftx = 500, shifty = 300;
 
-		BufferedImage back = null, front = null, frontSel;
+		BufferedImage front = null, frontSel = null, btn1 = null, btn1Sel = null;
+		BufferedImage back[] = new BufferedImage[249];
 
-		boolean selected = false;
+		int frameCounter = 0;
+
+		private Timer t = new Timer(60, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (frameCounter == 248)
+					frameCounter = 0;
+				else
+					frameCounter++;
+				repaint();
+			}
+		});
+
+		boolean selected1, selected2, selected3;
 
 		AudioClip click = new AudioClip(new File("sounds/click.wav").toURI().toString());
 
-		Rectangle r = new Rectangle((getWidth() - 700) / 2 - (shiftx - 500) / 20 + 175, (getHeight() - 400) / 2 - (shifty - 400) / 16, 350,
-				350);
+		Rectangle r1 = new Rectangle((getWidth() - 700) / 2 - (shiftx - 500) / 20 + 175,
+				25 + (getHeight() - 400) / 2 - (shifty - 400) / 16, 350, 350);
+		Rectangle r2 = new Rectangle(getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 + 63,
+				10 + 400 - (shifty - 400) / 12, 125, 125);
+		Rectangle r3 = new Rectangle(getWidth() / 2 + 50 - (shiftx - 500) / 15 + 63, 10 + 400 - (shifty - 400) / 12,
+				125, 125);
 
 		public StartScreen() {
 
@@ -66,15 +83,27 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			addMouseListener(this);
 
 			try {
-				back = ImageIO.read(new File("images/backgroundw.jpg"));
+				//back[0] = ImageIO.read(new File("images/backgroundw.jpg"));
+				for(int i = 1; i <=249; i++){
+					back[i-1] = ImageIO.read(new File("images/gif/gif_Layer_"+i+".png"));
+					System.out.println("Loaded gif image #"+i);
+				}
 				front = ImageIO.read(new File("images/foreground.png"));
+				System.out.println("Loaded logo");
 				frontSel = ImageIO.read(new File("images/foregroundS.png"));
+				System.out.println("Loaded selected logo");
+				btn1 = ImageIO.read(new File("images/btn1.png"));
+				System.out.println("Loaded button");
+				btn1Sel = ImageIO.read(new File("images/btn1S.png"));
+				System.out.println("Loaded selected button");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
 			setPreferredSize(new Dimension(1000, 600));
 			setLayout(new GridBagLayout());
+			
+			t.start();
 
 			GridBagConstraints c = new GridBagConstraints();
 			c.weightx = 1;
@@ -94,51 +123,85 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(back.getSubimage(shiftx / 10, shifty / 6, getWidth(), getHeight()), 0, 0, null);
+			g.drawImage(back[frameCounter].getSubimage(shiftx / 10, shifty / 6, getWidth(), getHeight()), 0, 0, null);
 
-			if (selected)
-				g.drawImage(frontSel, (getWidth() - 770) / 2 - (shiftx - 500) / 20, (getHeight() - 440) / 2 - (shifty - 400) / 16, null);
+			if (selected1)
+				g.drawImage(frontSel, (getWidth() - 730) / 2 - (shiftx - 500) / 20,
+						(getHeight() - 420) / 2 - (shifty - 400) / 16 - 75, null);
 			else
-				g.drawImage(front, (getWidth() - 700) / 2 - (shiftx - 500) / 20, (getHeight() - 400) / 2 - (shifty - 400) / 16, null);
-			g.drawRect(r.x, r.y, r.width, r.height);
+				g.drawImage(front, (getWidth() - 700) / 2 - (shiftx - 500) / 20,
+						(getHeight() - 400) / 2 - (shifty - 400) / 16 - 75, null);
+
+			if (selected2)
+				g.drawImage(btn1Sel, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 12 - 4,
+						null);
+			else
+				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
+
+			if (selected3)
+				g.drawImage(btn1Sel, getWidth() / 2 + 50 - (shiftx - 500) / 15 - 6, 400 - (shifty - 400) / 16 - 4,
+						null);
+			else
+				g.drawImage(btn1, getWidth() / 2 + 50 - (shiftx - 500) / 15, 400 - (shifty - 400) / 12, null);
 		}
 
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
-			if (r.contains(e.getPoint()))
-				selected = true;
-			else
-				selected = false;
+			if (r1.contains(e.getPoint())) {
+				if (!selected1)
+					click.play();
+				selected1 = true;
+			} else
+				selected1 = false;
 
 			shiftx = e.getX();
 			shifty = e.getY();
-			r.x = 175 + (getWidth() - 700) / 2 - (shiftx - 500) / 20;
-			r.y = 25 + (getHeight() - 400) / 2 - (shifty - 400) / 16;
+			r1.x = 175 + (getWidth() - 700) / 2 - (shiftx - 500) / 20;
+			r1.y = 25 + (getHeight() - 400) / 2 - (shifty - 400) / 16 - 75;
 			repaint();
 		}
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
 
-			if (r.contains(e.getPoint())) {
-				if (!selected)
+			if (r1.contains(e.getPoint())) {
+				if (!selected1)
 					click.play();
-				selected = true;
+				selected1 = true;
 			} else
-				selected = false;
+				selected1 = false;
+			if (r2.contains(e.getPoint())) {
+				if (!selected2)
+					click.play();
+				selected2 = true;
+			} else
+				selected2 = false;
+			if (r3.contains(e.getPoint())) {
+				if (!selected3)
+					click.play();
+				selected3 = true;
+			} else
+				selected3 = false;
 
 			shiftx = e.getX();
 			shifty = e.getY();
-			r.x = 175 + (getWidth() - 700) / 2 - (shiftx - 500) / 20;
-			r.y = 25 + (getHeight() - 400) / 2 - (shifty - 400) / 16;
+
+			r1.x = 175 + (getWidth() - 700) / 2 - (shiftx - 500) / 20;
+			r1.y = 25 + (getHeight() - 400) / 2 - (shifty - 400) / 16 - 75;
+
+			r2.x = getWidth() / 2 - 250 - 50 - (shiftx - 500) / 15 + 63;
+			r2.y = 10 + 400 - (shifty - 400) / 12;
+
+			r3.x = getWidth() / 2 + 50 - (shiftx - 500) / 15 + 63;
+			r3.y = 10 + 400 - (shifty - 400) / 12;
 			repaint();
 
 		}
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			if (r.contains(e.getPoint()))
+			if (r1.contains(e.getPoint()))
 				generateGame();
 
 		}
@@ -155,14 +218,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (r.contains(e.getPoint()))
+			if (r1.contains(e.getPoint()))
 				generateGame();
 
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (r.contains(e.getPoint()))
+			if (r1.contains(e.getPoint()))
 				generateGame();
 		}
 	}

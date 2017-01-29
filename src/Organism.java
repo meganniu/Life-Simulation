@@ -214,7 +214,6 @@ public abstract class Organism {
 			
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 
-
 		}
 	}
 
