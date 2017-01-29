@@ -61,8 +61,13 @@ public class Carnivore extends Organism {
 
 			if (GamePane.timeElapsed < chaseStart + chaseLength && canChase) {
 
-				double angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
+				double angle = 0;
+				try{
+				angle = Math.atan2(pos.y - DrawArea.herbivores.get(indexOfClosest).getPoint().y,
 						pos.x - DrawArea.herbivores.get(indexOfClosest).getPoint().x);
+				}catch(NullPointerException e){
+					System.out.println("Error here");
+				}
 				angle = Math.toDegrees(angle);
 
 				if (angle >= 0 && angle <= 180) {
@@ -70,20 +75,6 @@ public class Carnivore extends Organism {
 				} else if (angle >= -180 && angle <= 0) {
 					angle = 180 - angle;
 				}
-
-				/*
-				 * double smoother = 0;
-				 * 
-				 * if(this.angle-angle<0) smoother = angle -
-				 * Math.sqrt(angle-this.angle); else if(angle-this.angle<0)
-				 * smoother = this.angle - Math.sqrt(this.angle-angle);
-				 * 
-				 * if (smoother >= 0 && smoother <= 180) { smoother = 180 -
-				 * smoother; } else if (smoother >= -180 && smoother <= 0) {
-				 * smoother = 180 - smoother; }
-				 * 
-				 * return smoother;
-				 */
 
 				return angle;
 			} else {
@@ -120,6 +111,8 @@ public class Carnivore extends Organism {
 				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10 + 5000.0) * metabolism )/ 100.0);
 				if (energy > 15000.0)
 					energy = 15000.0;
+				if(DrawArea.herbivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
 				DrawArea.herbivores.remove(i);
 				i--;
 				canChase=true;

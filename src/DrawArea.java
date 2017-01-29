@@ -170,8 +170,9 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).energyUse();
 			if (carnivores.get(i).getEnergy() <= 0) {
+				if(carnivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
 				carnivores.remove(i);
-				StatsPanel.selectedOrg = null;
 				i--;
 				System.out.println("Carnivore died");
 			}
@@ -179,8 +180,9 @@ public class DrawArea extends BufferedImage {
 		for (int i = 0; i < herbivores.size(); i++) {
 			herbivores.get(i).energyUse();
 			if (herbivores.get(i).getEnergy() <= 0) {
-				herbivores.remove(i);
-				StatsPanel.selectedOrg = null;
+				if(herbivores.get(i)==StatsPanel.selectedOrg)
+					StatsPanel.selectedOrg = null;
+				herbivores.remove(i);	
 				i--;
 				System.out.println("Herbivore died");
 			}
@@ -188,8 +190,8 @@ public class DrawArea extends BufferedImage {
 	}
 	
 	public void spawnFood() {
-		if (GamePane.tickCounter%15==0) {
-			food.add(new Food(3000.0, new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8))));
+		if (GamePane.tickCounter%5==0) {
+			food.add(new Food(new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)), 3000.0));
 		}
 	}
 
