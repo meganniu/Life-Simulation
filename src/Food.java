@@ -7,9 +7,10 @@ public class Food
     // instance variables - replace the example below with your own
     private Point pos;
     private Hitbox box;
-    private int nutrition;
-    public Food(int nutritrion, Point pos)
+    private double nutrition;
+    public Food(double nutritrion, Point pos)
     {
+    	this.nutrition = nutrition;
         this.pos = pos;
         box = new Hitbox(pos.x - 8, pos.y - 8, 16, 16);
         img = DrawArea.fImg;
@@ -18,7 +19,7 @@ public class Food
     public Point getPoint(){
         return pos;
     }
-    public int getNutrition(){
+    public double getNutrition(){
         return nutrition;
     }
     
