@@ -48,10 +48,10 @@ public class Egg {
 	}
 	
 	public void mutate(){
-		while(Math.random()>.8){
+		while(Math.random()>.5){
 			speed++;
 		}
-		while(Math.random()>.8){
+		while(Math.random()>.5){
 			speed--;
 		}
 		while(Math.random()>.4){
@@ -66,20 +66,26 @@ public class Egg {
 		while(Math.random()>.2){
 			metabolism --;
 		}
-		while(Math.random()>.9){
+		while(Math.random()>.6){
 			carnivorePoints++;
 		}
-		while(Math.random()>.9){
+		while(Math.random()>.6){
 			carnivorePoints--;
 		}
-		while(Math.random()>.15){
+		while(Math.random()>.2){
 			chaseLength += 10;
 		}
-		while(Math.random()>.15){
+		while(Math.random()>.2){
 			chaseLength -= 10;
 		}
-		if (speed >= 9)
-			detectRadius -= 20;
+		while(Math.random()>.2){
+			eggCycle += 50;
+		}
+		while(Math.random()>.2){
+			eggCycle -= 50;
+		}
+		if (speed >= 10)
+			detectRadius =  detectRadius / 3;
 	}
 	
 	public BufferedImage getImage() {
@@ -95,7 +101,7 @@ public class Egg {
 	}
 
 	public boolean hatch() {
-		if (timeBorn + 5000 <= GamePane.timeElapsed) {
+		if (timeBorn + 10000 <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
 				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 15000, metabolism, chaseLength));
 			} else {
