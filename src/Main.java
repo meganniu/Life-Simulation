@@ -386,6 +386,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		setSize(1000, 600);
 		setExtendedState(JFrame.NORMAL);
+		setTitle("Evolution Simulator - By Ayon B. Megan N. and Vincent W.");
 		pack();
 		setVisible(true);
 		setResizable(false);
