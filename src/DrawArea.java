@@ -55,26 +55,27 @@ public class DrawArea extends BufferedImage {
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
-					(int) (Math.random() * 1 + 5), // speed
-					(int) (Math.random() * 60 + 20), // dRadius
-					(int) (Math.random() * 1000 + 6000), // EggCycle
-					20, // carnivorepoints
-					1000.0, // energy
-					100,// metabolism
+					(int) (Math.random() * 6 + 2), // speed
+					(int) (Math.random() * 80 + 100), // dRadius
+					(int) (Math.random() * 1000 + 5000), // EggCycle
+					5, // carnivorepoints
+					15000.0, // energy
+					Math.random() * 80.0 + 120.0,// metabolism
 					5000));//chase length
-			  }
-			 
+
+		}
+
 		for (int i = 0; i < startingCarnivores; i++) {
 			carnivores.add(new Carnivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
-					(int) (Math.random() * 1 + 8), // spd
+					(int) (Math.random() * 8 + 3), // spd
 					(int) (Math.random() * 80 + 100), // dRadius
-					(int) (Math.random() * 1000 + 10000), // eggCycle
-					120, // carnivorePoints
-					1000.0, // energy
-					100,// metabolism
+					(int) (Math.random() * 9000 + 10000), // eggCycle
+					10, // carnivorePoints
+					15000.0, // energy
+					Math.random() * 80.0 + 120.0,// metabolism
 					5000));//chase length
 		}
 
@@ -240,7 +241,8 @@ public class DrawArea extends BufferedImage {
 			}
 		}
 
-		if (StatsPanel.selectedOrg != null) {
+		
+		if (StatsPanel.selectedOrg != null && StatsPanel.selectedEgg == null){
 			g.setColor(Color.green);
 			g.setStroke(new BasicStroke(2));
 			g.drawOval(StatsPanel.selectedOrg.getPoint().x - 32, StatsPanel.selectedOrg.getPoint().y - 32, 64, 64);
@@ -248,6 +250,11 @@ public class DrawArea extends BufferedImage {
 			g.setStroke(new BasicStroke(1));
 			g.setColor(Color.red);
 			g.drawOval(StatsPanel.selectedOrg.getPoint().x - dr, StatsPanel.selectedOrg.getPoint().y - dr, dr*2, dr*2);
+		}
+		else if(StatsPanel.selectedOrg == null && StatsPanel.selectedEgg != null){
+			g.setColor(Color.green);
+			g.setStroke(new BasicStroke(2));
+			g.drawOval(StatsPanel.selectedEgg.getPoint().x - 16, StatsPanel.selectedEgg.getPoint().y - 16, 32, 32);
 		}
 	}
 }

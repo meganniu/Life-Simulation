@@ -145,25 +145,39 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		boolean found = false;
+		boolean orgFound = false;
+		boolean eggFound = false;
 		int x = 2 * e.getX() + drawRegion.x;
 		int y = 2 * e.getY() + drawRegion.y;
 		System.out.println(x + " " + y);
-		for (int i = 0; i < DrawArea.carnivores.size() && !found; i++) {
+		for (int i = 0; i < DrawArea.carnivores.size() && !orgFound; i++) {
 			if (DrawArea.carnivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.carnivores.get(i);
-				found = true;
+				orgFound = true;
 			}
 		}
-		for (int i = 0; i < DrawArea.herbivores.size() && !found; i++) {
+		for (int i = 0; i < DrawArea.herbivores.size() && !orgFound; i++) {
 			if (DrawArea.herbivores.get(i).hitbox.contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
-				found = true;
+				orgFound = true;
 			}
 		}
-
-		if (!found) {
+		for (int i = 0; i < DrawArea.eggs.size() && !eggFound; i++) {
+			if (DrawArea.eggs.get(i).hitbox.contains(x, y)) {
+				StatsPanel.selectedEgg = DrawArea.eggs.get(i);
+				eggFound = true;
+			}
+		}
+		
+		if (!orgFound && eggFound) {
 			StatsPanel.selectedOrg = null;
+		}
+		else if (orgFound && !eggFound){
+			StatsPanel.selectedEgg = null;
+		}
+		else{
+			StatsPanel.selectedOrg = null;
+			StatsPanel.selectedEgg = null;
 		}
 		Main.statsPanel.updateStats();
 		render();

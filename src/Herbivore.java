@@ -94,7 +94,7 @@ public class Herbivore extends Organism {
 	}
 
 	public void layEgg(){
-		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 10000){
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 10000.0){
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
@@ -104,7 +104,7 @@ public class Herbivore extends Organism {
 	
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-
+		stats.add("<html><pre><span style=\"font-family: arial\">Herbivore");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
