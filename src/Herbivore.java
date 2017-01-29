@@ -126,6 +126,8 @@ public class Herbivore extends Organism {
 				energy += (DrawArea.food.get(i).getNutrition() * metabolism / 100.0);
 				if (energy > 15000.0)
 					energy = 15000.0;
+				if (DrawArea.food.get(i) == StatsPanel.selectedFood)
+					StatsPanel.selectedFood = null;
 				DrawArea.food.remove(i);
 				i--;
 			}
