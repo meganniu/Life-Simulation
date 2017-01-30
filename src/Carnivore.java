@@ -105,7 +105,7 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
-				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10.0 + 2000.0) * metabolism )/ 100.0);
+				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10.0 + 4000.0) * metabolism )/ 100.0);
 				if (energy > 15000.0)
 					energy = 15000.0;
 				if(DrawArea.herbivores.get(i)==StatsPanel.selectedOrg)
@@ -129,12 +129,7 @@ public class Carnivore extends Organism {
 
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-
-<<<<<<< HEAD
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tCarnivore</span></pre><html>");
-=======
-		stats.add("<html><pre><span style=\"font-family: arial\">Carnivore</span></pre></html>");
->>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");

@@ -57,22 +57,15 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
 
-<<<<<<< HEAD
-	//int startingCarnivores = 5;
-	//int startingHerbivores = 50;
-	int startingCarnivores = 1;
-	int startingHerbivores = 0;
-=======
-	int startingCarnivores = 3; 
-	int startingHerbivores = 20; 
-	int startMinSpeed = 2, startMaxSpeed = 9; 
+	int startingCarnivores = 3;
+	int startingHerbivores = 20;
+	int startMinSpeed = 2, startMaxSpeed = 9;
 	int startMinRad = 80, startMaxRad = 100;
 	int startMinEgg = 20000, startMaxEgg = 40000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
->>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
-	
+
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
 		int shiftx = 500, shifty = 300;
@@ -243,24 +236,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated
 		}
-		
-		public void mousePressed(MouseEvent e){
-		}
-<<<<<<< HEAD
-=======
-		/**
-		@Override
+
 		public void mousePressed(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
 			else if (r2.contains(e.getPoint()))
-				instructions();
+				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
 
 		}
-		**/
->>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -352,7 +337,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		public void setShiftY(int shifty) {
 			this.shifty = shifty;
-			
+
 		}
 
 	}
@@ -469,24 +454,24 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	public class GetPreferences extends JFrame implements WindowListener {
 		JButton set = new JButton("Set");
 		JButton cancel = new JButton("Cancel");
-		
+
 		JLabel carnivoresLbl = new JLabel("Carnivores");
 		JLabel minSpeedLbl = new JLabel("Minimum Starting Speed");
 		JLabel minRadLbl = new JLabel("Minimum Starting Detect Radius:");
 		JLabel minEggLbl = new JLabel("Minimum Starting Egg Cycle Length:");
 		JLabel minEnergyLbl = new JLabel("Minimum Starting Energy:");
 		JLabel minMetabolismLbl = new JLabel("Minimum Starting Metabolism:");
-		
+
 		JLabel herbivoresLbl = new JLabel("Herbivores:");
 		JLabel maxSpeedLbl = new JLabel("Maximum Starting Speed");
 		JLabel maxRadLbl = new JLabel("Maximum Starting Detect Radius:");
 		JLabel maxEggLbl = new JLabel("Maximum Starting Egg Cycle Length:");
 		JLabel maxEnergyLbl = new JLabel("Maximum Starting Energy:");
 		JLabel maxMetabolismLbl = new JLabel("Maximum Starting Metabolism:");
-		
+
 		JLabel minFoodLbl = new JLabel("Minimum Food nutrition");
 		JLabel maxFoodLbl = new JLabel("Maximum Food nutrition");
-		
+
 		JTextField carnivoresTF = new JTextField();
 		JTextField minSpeedTF = new JTextField();
 		JTextField minRadTF = new JTextField();
@@ -494,7 +479,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField minEnergyTF = new JTextField();
 		JTextField minMetabolismTF = new JTextField();
 		JTextField minFoodTF = new JTextField();
-		
+
 		JTextField herbivoresTF = new JTextField();
 		JTextField maxSpeedTF = new JTextField();
 		JTextField maxRadTF = new JTextField();
@@ -502,8 +487,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField maxEnergyTF = new JTextField();
 		JTextField maxMetabolismTF = new JTextField();
 		JTextField maxFoodTF = new JTextField();
-		
-		
 
 		public GetPreferences() {
 
@@ -515,7 +498,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			setLayout(new GridBagLayout());
 
 			addWindowListener(this);
-			
+
 			GridBagConstraints gbc = new GridBagConstraints();
 
 			gbc.anchor = GridBagConstraints.PAGE_END;
@@ -525,49 +508,48 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.weighty = 0;
 			gbc.insets = new Insets(0, 0, 0, 10);
 			add(carnivoresLbl, gbc);
-			
+
 			gbc.gridy = 2;
 			add(minSpeedLbl, gbc);
-			
+
 			gbc.gridy = 4;
 			add(minRadLbl, gbc);
-			
+
 			gbc.gridy = 6;
 			add(minEggLbl, gbc);
-			
+
 			gbc.gridy = 8;
 			add(minEnergyLbl, gbc);
-			
+
 			gbc.gridy = 10;
 			add(minMetabolismLbl, gbc);
-			
+
 			gbc.gridy = 12;
 			add(minFoodLbl, gbc);
-			
-			
+
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
 			add(herbivoresLbl, gbc);
-			
+
 			gbc.gridy = 2;
 			add(maxSpeedLbl, gbc);
-			
+
 			gbc.gridy = 4;
 			add(maxRadLbl, gbc);
-			
+
 			gbc.gridy = 6;
 			add(maxEggLbl, gbc);
-			
+
 			gbc.gridy = 8;
 			add(maxEnergyLbl, gbc);
-			
+
 			gbc.gridy = 10;
 			add(maxMetabolismLbl, gbc);
-			
+
 			gbc.gridy = 12;
 			add(maxFoodLbl, gbc);
-			
+
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
 			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
@@ -576,7 +558,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0");
 			GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0");
 			GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0");
-			
+
 			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
 			GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
 			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 100");
@@ -584,69 +566,68 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
 			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
 			GhostText ghostTextMaxCarn = new GhostText(maxFoodTF, "Default 800.0");
-			
-			
+
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weighty = 0.7;
 			gbc.insets = new Insets(0, 0, 10, 10);
 			carnivoresTF.setPreferredSize(new Dimension(200, 20));
 			add(carnivoresTF, gbc);
-			
+
 			gbc.gridy = 3;
 			minSpeedTF.setPreferredSize(new Dimension(200, 20));
 			add(minSpeedTF, gbc);
-			
+
 			gbc.gridy = 5;
 			minRadTF.setPreferredSize(new Dimension(200, 20));
 			add(minRadTF, gbc);
-			
+
 			gbc.gridy = 7;
 			minEggTF.setPreferredSize(new Dimension(200, 20));
 			add(minEggTF, gbc);
-			
+
 			gbc.gridy = 9;
 			minEnergyTF.setPreferredSize(new Dimension(200, 20));
 			add(minEnergyTF, gbc);
-			
+
 			gbc.gridy = 11;
 			minMetabolismTF.setPreferredSize(new Dimension(200, 20));
 			add(minMetabolismTF, gbc);
-			
+
 			gbc.gridy = 13;
 			minFoodTF.setPreferredSize(new Dimension(200, 20));
 			add(minFoodTF, gbc);
-			
+
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 10, 10, 0);
 			herbivoresTF.setPreferredSize(new Dimension(200, 20));
 			add(herbivoresTF, gbc);
-			
+
 			gbc.gridy = 3;
 			maxSpeedTF.setPreferredSize(new Dimension(200, 20));
 			add(maxSpeedTF, gbc);
-			
+
 			gbc.gridy = 5;
 			maxRadTF.setPreferredSize(new Dimension(200, 20));
 			add(maxRadTF, gbc);
-			
+
 			gbc.gridy = 7;
 			maxEggTF.setPreferredSize(new Dimension(200, 20));
 			add(maxEggTF, gbc);
-			
+
 			gbc.gridy = 9;
 			maxEnergyTF.setPreferredSize(new Dimension(200, 20));
 			add(maxEnergyTF, gbc);
-			
+
 			gbc.gridy = 11;
 			maxMetabolismTF.setPreferredSize(new Dimension(200, 20));
 			add(maxMetabolismTF, gbc);
-			
+
 			gbc.gridy = 13;
 			maxFoodTF.setPreferredSize(new Dimension(200, 20));
 			add(maxFoodTF, gbc);
-			
+
 			cancel.addActionListener(new MouseListener());
 			set.addActionListener(new MouseListener());
 
@@ -675,74 +656,61 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 					try {
 						startingHerbivores = Integer.parseInt(herbivoresTF.getText());
-					} 
-					catch (NumberFormatException ev) {
+					} catch (NumberFormatException ev) {
 					}
 
-					try{
+					try {
 						startMinSpeed = Integer.parseInt(minSpeedTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					
-					try{
+
+					try {
 						startMaxSpeed = Integer.parseInt(maxSpeedTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMinRad = Integer.parseInt(minRadTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					
-					try{
+
+					try {
 						startMaxRad = Integer.parseInt(maxRadTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMinEgg = Integer.parseInt(minEggTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					
-					try{
+
+					try {
 						startMaxEgg = Integer.parseInt(maxEggTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMinEnergy = Integer.parseInt(minEnergyTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					
-					try{
+
+					try {
 						startMaxEnergy = Integer.parseInt(maxEnergyTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMinMetabolism = Integer.parseInt(minMetabolismTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					
-					try{
+
+					try {
 						startMaxMetabolism = Integer.parseInt(maxMetabolismTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMinFood = Integer.parseInt(minFoodTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						startMaxFood = Integer.parseInt(maxFoodTF.getText());
-					}
-					catch(NumberFormatException ev){
+					} catch (NumberFormatException ev) {
 					}
 					setVisible(false);
 					settingsOpen = false;
@@ -794,7 +762,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
-
 	public void getPreferences() {
 		System.out.println(settingsOpen);
 		if (!settingsOpen) {
@@ -804,16 +771,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	}
 
 	public void generateGame() {
-		
+
 		sort();
-		gamePane = new GamePane(drawWidth, drawHeight, 
-				startingCarnivores, startingHerbivores, 
-				startMinSpeed, startMaxSpeed, 
-				startMinRad, startMaxRad, 
-				startMinEgg, startMaxEgg, 
-				startMinEnergy, startMaxEnergy, 
-				startMinMetabolism, startMaxMetabolism, 
-				startMinFood, startMaxFood);
+		gamePane = new GamePane(drawWidth, drawHeight, startingCarnivores, startingHerbivores, startMinSpeed,
+				startMaxSpeed, startMinRad, startMaxRad, startMinEgg, startMaxEgg, startMinEnergy, startMaxEnergy,
+				startMinMetabolism, startMaxMetabolism, startMinFood, startMaxFood);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		startSim = false;
@@ -860,87 +822,87 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		System.out.println(getWidth() + " " + getHeight());
 	}
 
-	public void sort(){
+	public void sort() {
 		int temp;
 		double temp2;
 		if (startingCarnivores < 0)
 			startingCarnivores = 0;
 		else if (startingCarnivores > 50)
 			startingCarnivores = 50;
-		
+
 		if (startingHerbivores < 0)
 			startingHerbivores = 0;
 		else if (startingHerbivores > 50)
 			startingHerbivores = 50;
-		
-		if (startMinSpeed > startMaxSpeed){
+
+		if (startMinSpeed > startMaxSpeed) {
 			temp = startMinSpeed;
 			startMinSpeed = startMaxSpeed;
 			startMaxSpeed = temp;
 		}
-		
-		if (startMinRad > startMaxRad){
+
+		if (startMinRad > startMaxRad) {
 			temp = startMinRad;
 			startMinRad = startMaxRad;
 			startMaxRad = temp;
 		}
-		
-		if (startMinEgg> startMaxEgg){
+
+		if (startMinEgg > startMaxEgg) {
 			temp = startMinEgg;
-			startMinEgg= startMaxEgg;
-			startMaxEgg= temp;
+			startMinEgg = startMaxEgg;
+			startMaxEgg = temp;
 		}
-		
-		if (startMinEnergy > startMaxEnergy){
+
+		if (startMinEnergy > startMaxEnergy) {
 			temp2 = startMinEnergy;
 			startMinEnergy = startMaxEnergy;
 			startMaxEnergy = temp2;
 		}
-		
-		if (startMinMetabolism > startMaxMetabolism){
+
+		if (startMinMetabolism > startMaxMetabolism) {
 			temp2 = startMinMetabolism;
 			startMinMetabolism = startMaxMetabolism;
 			startMaxMetabolism = temp2;
 		}
-		
-		if (startMinFood > startMaxFood){
+
+		if (startMinFood > startMaxFood) {
 			temp2 = startMinFood;
 			startMinFood = startMaxFood;
 			startMaxFood = temp2;
 		}
-		
+
 		if (startMinSpeed < 2)
 			startMinSpeed = 2;
 		if (startMaxSpeed > 9)
 			startMaxSpeed = 9;
-		
+
 		if (startMinRad < 80)
 			startMinRad = 80;
 		if (startMaxRad > 100)
 			startMaxRad = 100;
-		
+
 		if (startMinEgg < 20000)
 			startMinEgg = 20000;
 		if (startMaxEgg > 40000)
 			startMaxEgg = 40000;
-		
+
 		if (startMinEnergy < 6000.0)
 			startMinEnergy = 6000.0;
 		if (startMaxEnergy > 9000.0)
 			startMaxEnergy = 9000.0;
-		
+
 		if (startMinMetabolism < 80.0)
 			startMinMetabolism = 80.0;
 		if (startMaxMetabolism > 120.0)
 			startMaxMetabolism = 120.0;
-		
+
 		if (startMinFood < 200.0)
 			startMinFood = 200.0;
 		if (startMaxFood > 800.0)
 			startMaxFood = 800.0;
-			
+
 	}
-	
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (gameStatus) {
@@ -976,8 +938,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-	
-	
+
 	public static void main(String[] args) {
 		Main simulation = new Main();
 
