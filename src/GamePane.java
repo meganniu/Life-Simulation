@@ -37,6 +37,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	double startMinEnergy, startMaxEnergy;
 	double startMinMetabolism, startMaxMetabolism;
 	double startMinFood, startMaxFood;
+	long chaseLength;
 	private DrawArea drawArea;
 
 	Organism finalOrg;
@@ -48,7 +49,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			int startMinEgg, int startMaxEgg, 
 			double startMinEnergy, double startMaxEnergy, 
 			double startMinMetabolism, double startMaxMetabolism, 
-			double startMinFood, double startMaxFood) {
+			double startMinFood, double startMaxFood,
+			long chaseLength) {
 		this.startingCarnivores = startingCarnivores;
 		this.startingHerbivores = startingHerbivores;
 		
@@ -70,13 +72,20 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		this.startMinFood = startMinFood;
 		this.startMaxFood = startMaxFood;
 		
+		this.chaseLength = chaseLength;
+		
 		drawArea = new DrawArea(startingCarnivores, startingHerbivores, 
 				startMinSpeed, startMaxSpeed, 
 				startMinRad, startMaxRad, 
 				startMinEgg, startMaxEgg, 
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
+<<<<<<< HEAD
 				startMinFood, startMaxFood);
+=======
+				startMinFood, startMaxFood,
+				chaseLength);
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 
 		this.width = width;
 		this.height = height;

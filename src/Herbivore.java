@@ -94,11 +94,13 @@ public class Herbivore extends Organism {
 	}
 
 	public void layEgg(){
-		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > 6000.0){
+		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 			energy-=4000;
+			if (energy < 0)
+				energy = 0;
 		}
 	}
 	
@@ -141,8 +143,8 @@ public class Herbivore extends Organism {
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
 				energy += (DrawArea.food.get(i).getNutrition() * metabolism / 100.0);
-				if (energy > 15000.0)
-					energy = 15000.0;
+				if (energy > Main.maximumEnergy)
+					energy = Main.maximumEnergy;
 				if (DrawArea.food.get(i) == StatsPanel.selectedFood)
 					StatsPanel.selectedFood = null;
 				DrawArea.food.remove(i);

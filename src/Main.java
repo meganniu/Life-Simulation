@@ -52,6 +52,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	boolean startSim; // true to start sim, false to pause sim
 	private static int drawWidth = 600, drawHeight = 600;
+	public static int chaseCD = 4000;
+	public static int foodSpawnRate = 3;
+	public static double foodDecayRate = 1.0;
+	public static double energyDecayRate = 1.0;
+	public static double energyReq = 6000.0;
+	public static double newbornEnergy = 4000.0;
+	public static double maximumEnergy = 15000.0;
+	public static long hatchTime = 10000;
 	GamePane gamePane;
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
@@ -62,14 +70,24 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	static JButton addCarnivore = new JButton("Add Carnivore");
 	static JButton addHerbivore = new JButton("Add Herbivore");
 
+<<<<<<< HEAD
 	int startingCarnivores = 3;
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
+=======
+	int startingCarnivores = 3; 
+	int startingHerbivores = 20; 
+	int startMinSpeed = 2, startMaxSpeed = 9; 
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 	int startMinRad = 80, startMaxRad = 100;
 	int startMinEgg = 20000, startMaxEgg = 40000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
+<<<<<<< HEAD
+=======
+	long chaseLength = 5000;
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -249,7 +267,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 		}
 
 		@Override
@@ -484,21 +505,31 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		JLabel carnivoresLbl = new JLabel("Carnivores");
 		JLabel minSpeedLbl = new JLabel("Minimum Starting Speed");
-		JLabel minRadLbl = new JLabel("Minimum Starting Detect Radius:");
-		JLabel minEggLbl = new JLabel("Minimum Starting Egg Cycle Length:");
-		JLabel minEnergyLbl = new JLabel("Minimum Starting Energy:");
-		JLabel minMetabolismLbl = new JLabel("Minimum Starting Metabolism:");
-
-		JLabel herbivoresLbl = new JLabel("Herbivores:");
+		JLabel minRadLbl = new JLabel("Minimum Starting Detect Radius");
+		JLabel minEggLbl = new JLabel("Minimum Starting Egg Cycle Length");
+		JLabel minEnergyLbl = new JLabel("Minimum Starting Energy");
+		JLabel minMetabolismLbl = new JLabel("Minimum Starting Metabolism");
+		
+		JLabel herbivoresLbl = new JLabel("Herbivores");
 		JLabel maxSpeedLbl = new JLabel("Maximum Starting Speed");
-		JLabel maxRadLbl = new JLabel("Maximum Starting Detect Radius:");
-		JLabel maxEggLbl = new JLabel("Maximum Starting Egg Cycle Length:");
-		JLabel maxEnergyLbl = new JLabel("Maximum Starting Energy:");
-		JLabel maxMetabolismLbl = new JLabel("Maximum Starting Metabolism:");
-
+		JLabel maxRadLbl = new JLabel("Maximum Starting Detect Radius");
+		JLabel maxEggLbl = new JLabel("Maximum Starting Egg Cycle Length");
+		JLabel maxEnergyLbl = new JLabel("Maximum Starting Energy");
+		JLabel maxMetabolismLbl = new JLabel("Maximum Starting Metabolism");
+		
 		JLabel minFoodLbl = new JLabel("Minimum Food nutrition");
 		JLabel maxFoodLbl = new JLabel("Maximum Food nutrition");
-
+		
+		JLabel chaseLbl = new JLabel("Starting chase length");
+		JLabel chaseCdLbl = new JLabel("Chase cooldown length");
+		JLabel foodSpawnLbl = new JLabel("Food spawn rate");
+		JLabel foodDecayLbl = new JLabel("Food decay rate");
+		JLabel energyDecayLbl = new JLabel("Energy decay rate");
+		JLabel eggReqLbl = new JLabel ("Energy required for an egg");
+		JLabel eggHatchEnergyLbl = new JLabel("Newborn Starting Energy");
+		JLabel maximumEnergyLbl = new JLabel("Maximum possible energy");
+		JLabel eggHatchLbl = new JLabel("Egg hatch time");
+		
 		JTextField carnivoresTF = new JTextField();
 		JTextField minSpeedTF = new JTextField();
 		JTextField minRadTF = new JTextField();
@@ -506,7 +537,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField minEnergyTF = new JTextField();
 		JTextField minMetabolismTF = new JTextField();
 		JTextField minFoodTF = new JTextField();
-
+		JTextField minChaseTF = new JTextField();
+		
 		JTextField herbivoresTF = new JTextField();
 		JTextField maxSpeedTF = new JTextField();
 		JTextField maxRadTF = new JTextField();
@@ -514,12 +546,24 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField maxEnergyTF = new JTextField();
 		JTextField maxMetabolismTF = new JTextField();
 		JTextField maxFoodTF = new JTextField();
-
+		JTextField maxChaseTF = new JTextField();
+		
+		JTextField chaseTF = new JTextField();
+		JTextField chaseCdTF = new JTextField();
+		JTextField foodSpawnTF = new JTextField();
+		JTextField foodDecayTF = new JTextField();
+		JTextField energyDecayTF = new JTextField();
+		JTextField eggReqTF = new JTextField ();
+		JTextField eggHatchEnergyTF = new JTextField();
+		JTextField maximumEnergyTF = new JTextField();
+		JTextField eggHatchTF = new JTextField();
+		
 		public GetPreferences() {
 
 			System.out.println("Created settings");
 
-			setSize(450, 500);
+			setTitle("Customization");
+			setSize(650, 800);
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			setLocationRelativeTo(null);
 			setLayout(new GridBagLayout());
@@ -553,7 +597,22 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			gbc.gridy = 12;
 			add(minFoodLbl, gbc);
-
+			
+			gbc.gridy = 14;
+			add(chaseLbl, gbc);
+			
+			gbc.gridy = 16;
+			add(foodSpawnLbl, gbc);
+			
+			gbc.gridy = 18;
+			add(energyDecayLbl, gbc);
+			
+			gbc.gridy = 20;
+			add(eggHatchEnergyLbl, gbc);
+			
+			gbc.gridy = 22;
+			add(eggHatchLbl, gbc);
+			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
@@ -576,7 +635,19 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			gbc.gridy = 12;
 			add(maxFoodLbl, gbc);
-
+			
+			gbc.gridy = 14;
+			add(chaseCdLbl, gbc);
+			
+			gbc.gridy = 16;
+			add(foodDecayLbl, gbc);
+			
+			gbc.gridy = 18;
+			add(eggReqLbl, gbc);
+			
+			gbc.gridy = 20;
+			add(maximumEnergyLbl, gbc);
+			
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
 			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
@@ -592,68 +663,115 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
 			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
 			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
-			GhostText ghostTextMaxCarn = new GhostText(maxFoodTF, "Default 800.0");
-
+			GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
+			
+			GhostText ghostTextChase = new GhostText(chaseTF, "Default 5000, range 2000 - 6000");
+			GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
+			GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
+			GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
+			GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0");
+			GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy");
+			GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy");
+			GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0");
+			GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0");
+			
+			
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weighty = 0.7;
 			gbc.insets = new Insets(0, 0, 10, 10);
-			carnivoresTF.setPreferredSize(new Dimension(200, 20));
+			carnivoresTF.setPreferredSize(new Dimension(300, 20));
 			add(carnivoresTF, gbc);
 
 			gbc.gridy = 3;
-			minSpeedTF.setPreferredSize(new Dimension(200, 20));
+			minSpeedTF.setPreferredSize(new Dimension(300, 20));
 			add(minSpeedTF, gbc);
 
 			gbc.gridy = 5;
-			minRadTF.setPreferredSize(new Dimension(200, 20));
+			minRadTF.setPreferredSize(new Dimension(300, 20));
 			add(minRadTF, gbc);
 
 			gbc.gridy = 7;
-			minEggTF.setPreferredSize(new Dimension(200, 20));
+			minEggTF.setPreferredSize(new Dimension(300, 20));
 			add(minEggTF, gbc);
 
 			gbc.gridy = 9;
-			minEnergyTF.setPreferredSize(new Dimension(200, 20));
+			minEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(minEnergyTF, gbc);
 
 			gbc.gridy = 11;
-			minMetabolismTF.setPreferredSize(new Dimension(200, 20));
+			minMetabolismTF.setPreferredSize(new Dimension(300, 20));
 			add(minMetabolismTF, gbc);
 
 			gbc.gridy = 13;
-			minFoodTF.setPreferredSize(new Dimension(200, 20));
+			minFoodTF.setPreferredSize(new Dimension(300, 20));
 			add(minFoodTF, gbc);
-
+			
+			gbc.gridy = 15;
+			chaseTF.setPreferredSize(new Dimension(300, 20));
+			add(chaseTF, gbc);
+			
+			gbc.gridy = 17;
+			foodSpawnTF.setPreferredSize(new Dimension(300, 20));
+			add(foodSpawnTF, gbc);
+			
+			gbc.gridy = 19;
+			energyDecayTF.setPreferredSize(new Dimension(300, 20));
+			add(energyDecayTF, gbc);
+			
+			gbc.gridy = 21;
+			eggHatchEnergyTF.setPreferredSize(new Dimension(300, 20));
+			add(eggHatchEnergyTF, gbc);
+			
+			gbc.gridy = 23;
+			eggHatchTF.setPreferredSize(new Dimension(300, 20));
+			add(eggHatchTF, gbc);
+			
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 10, 10, 0);
-			herbivoresTF.setPreferredSize(new Dimension(200, 20));
+			herbivoresTF.setPreferredSize(new Dimension(300, 20));
 			add(herbivoresTF, gbc);
 
 			gbc.gridy = 3;
-			maxSpeedTF.setPreferredSize(new Dimension(200, 20));
+			maxSpeedTF.setPreferredSize(new Dimension(300, 20));
 			add(maxSpeedTF, gbc);
 
 			gbc.gridy = 5;
-			maxRadTF.setPreferredSize(new Dimension(200, 20));
+			maxRadTF.setPreferredSize(new Dimension(300, 20));
 			add(maxRadTF, gbc);
 
 			gbc.gridy = 7;
-			maxEggTF.setPreferredSize(new Dimension(200, 20));
+			maxEggTF.setPreferredSize(new Dimension(300, 20));
 			add(maxEggTF, gbc);
 
 			gbc.gridy = 9;
-			maxEnergyTF.setPreferredSize(new Dimension(200, 20));
+			maxEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(maxEnergyTF, gbc);
 
 			gbc.gridy = 11;
-			maxMetabolismTF.setPreferredSize(new Dimension(200, 20));
+			maxMetabolismTF.setPreferredSize(new Dimension(300, 20));
 			add(maxMetabolismTF, gbc);
 
 			gbc.gridy = 13;
-			maxFoodTF.setPreferredSize(new Dimension(200, 20));
+			maxFoodTF.setPreferredSize(new Dimension(300, 20));
 			add(maxFoodTF, gbc);
+			
+			gbc.gridy = 15;
+			chaseCdTF.setPreferredSize(new Dimension(300, 20));
+			add(chaseCdTF, gbc);
+			
+			gbc.gridy = 17;
+			foodDecayTF.setPreferredSize(new Dimension(300, 20));
+			add(foodDecayTF, gbc);
+			
+			gbc.gridy = 19;
+			eggReqTF.setPreferredSize(new Dimension(300, 20));
+			add(eggReqTF, gbc);
+			
+			gbc.gridy = 21;
+			maximumEnergyTF.setPreferredSize(new Dimension(300, 20));
+			add(maximumEnergyTF, gbc);
 
 			cancel.addActionListener(new MouseListener());
 			set.addActionListener(new MouseListener());
@@ -662,7 +780,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			set.setPreferredSize(new Dimension(80, 30));
 
 			gbc.gridx = 0;
-			gbc.gridy = 14;
+			gbc.gridy = 24;
 			gbc.weighty = 0.3;
 			add(cancel, gbc);
 
@@ -739,6 +857,46 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 						startMaxFood = Integer.parseInt(maxFoodTF.getText());
 					} catch (NumberFormatException ev) {
 					}
+					try{
+						chaseLength = Integer.parseInt(chaseTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						chaseCD = Integer.parseInt(chaseCdTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						foodSpawnRate = Integer.parseInt(foodSpawnTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						foodDecayRate = Integer.parseInt(foodDecayTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						energyDecayRate = Integer.parseInt(energyDecayTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						energyReq = Integer.parseInt(eggReqTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						newbornEnergy = Integer.parseInt(eggHatchEnergyTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						hatchTime = Integer.parseInt(eggHatchTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
 					setVisible(false);
 					settingsOpen = false;
 				}
@@ -800,9 +958,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	public void generateGame() {
 
 		sort();
-		gamePane = new GamePane(drawWidth, drawHeight, startingCarnivores, startingHerbivores, startMinSpeed,
-				startMaxSpeed, startMinRad, startMaxRad, startMinEgg, startMaxEgg, startMinEnergy, startMaxEnergy,
-				startMinMetabolism, startMaxMetabolism, startMinFood, startMaxFood);
+		gamePane = new GamePane(drawWidth, drawHeight, 
+				startingCarnivores, startingHerbivores, 
+				startMinSpeed, startMaxSpeed, 
+				startMinRad, startMaxRad, 
+				startMinEgg, startMaxEgg, 
+				startMinEnergy, startMaxEnergy, 
+				startMinMetabolism, startMaxMetabolism, 
+				startMinFood, startMaxFood, chaseLength);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		startSim = false;
@@ -961,7 +1124,51 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			startMinFood = 200.0;
 		if (startMaxFood > 800.0)
 			startMaxFood = 800.0;
-
+		
+		if (chaseLength < 2000)
+			chaseLength = 2000;
+		else if (chaseLength > 6000)
+			chaseLength = 6000;
+		
+		if (chaseCD < 2000)
+			chaseCD = 2000;
+		else if (chaseCD > 6000)
+			chaseCD = 6000;
+	
+		if (foodSpawnRate < 0)
+			foodSpawnRate = 0;
+		else if (foodSpawnRate > 9)
+			foodSpawnRate = 9;
+		
+		if (foodDecayRate < 0.0)
+			foodDecayRate = 0.0;
+		else if (foodDecayRate > 4.0)
+			foodDecayRate = 4.0;
+		
+		if (energyDecayRate < 0.0)
+			energyDecayRate = 0.0;
+		else if (energyDecayRate > 4.0)
+			energyDecayRate = 4.0;
+		
+		if (maximumEnergy < 2000.0)
+			maximumEnergy = 2000.0;
+		else if (maximumEnergy > 30000.0)
+			maximumEnergy = 30000.0;
+		
+		if (energyReq < 0.0)
+			energyReq = 0.0;
+		else if (energyReq > maximumEnergy)
+			energyReq = maximumEnergy;
+		
+		if (newbornEnergy < 2000.0)
+			newbornEnergy = 2000.0;
+		else if (newbornEnergy > maximumEnergy)
+			newbornEnergy = maximumEnergy;
+		
+		if (hatchTime < 2000)
+			hatchTime = 2000;
+		else if (hatchTime > 30000)
+			hatchTime = 30000;
 	}
 
 	@Override
