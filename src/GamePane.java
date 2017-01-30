@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
@@ -79,8 +80,12 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEgg, startMaxEgg, 
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
+<<<<<<< HEAD
+				startMinFood, startMaxFood);
+=======
 				startMinFood, startMaxFood,
 				chaseLength);
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 
 		this.width = width;
 		this.height = height;
@@ -247,6 +252,18 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			StatsPanel.selectedFood = null;
 		}
 		Main.statsPanel.updateStats();
+		
+		if(Main.addingCarnivore){
+			DrawArea.addCarnivore(new Point(x, y));
+			Main.addingCarnivore = false;
+			Main.addHerbivore.setEnabled(true);
+		}
+		if(Main.addingHerbivore){
+			DrawArea.addHerbivore(new Point(x, y));
+			Main.addingHerbivore = false;
+			Main.addCarnivore.setEnabled(true);
+		}
+		
 		render();
 	}
 

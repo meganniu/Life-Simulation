@@ -24,6 +24,15 @@ public class DrawArea extends BufferedImage {
 	static BufferedImage hImg = null, cImg = null, eImg = null, fImg = null;
 	private Graphics2D g = null;
 	static int width, height;
+<<<<<<< HEAD
+	static private int startingCarnivores, startingHerbivores;
+	static private int startMinSpeed, startMaxSpeed; 
+	static private int startMinRad, startMaxRad;
+	static private int startMinEgg, startMaxEgg;
+	static private double startMinEnergy, startMaxEnergy;
+	static private double startMinMetabolism, startMaxMetabolism;
+	static private double startMinFood, startMaxFood;
+=======
 	private int startingCarnivores, startingHerbivores;
 	private int startMinSpeed, startMaxSpeed; 
 	private int startMinRad, startMaxRad;
@@ -32,6 +41,7 @@ public class DrawArea extends BufferedImage {
 	private double startMinMetabolism, startMaxMetabolism;
 	private double startMinFood, startMaxFood;
 	private long chaseLength;
+>>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 
 	public DrawArea(int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 
@@ -333,19 +343,30 @@ public class DrawArea extends BufferedImage {
 		return null;
 	}
 	
-	/**
-	public void endGame(Organism finalOrg){
-		System.out.println("HERE");
-		g.setColor(Color.black);
-		g.fillRect((width - 300) / 2, (height - 400) / 2, 300, height);
-		g.drawString("Simulation Over!", (width - 300) / 2 + 10, (height - 400) / 2 + 10);
-		g.drawString("Only one organism left", (width - 300) / 2 + 10, (height - 400) / 2 + 20);
-		ArrayList<String> rawStats = finalOrg.getStats();
-		
-		for (int i = 0; i < rawStats.size(); i++){
-			g.drawString(rawStats.get(i), (width - 300) / 2 + 10, (height - 400) / 2 + (20 + 10 * i));
-		}
+	public static void addCarnivore(Point pos){
+		System.out.print("here");
+		carnivores.add(new Carnivore(pos,
+				Math.random() * 360.0, // angle
+				(int)(Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
+				(int)(Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
+				(int)(Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // eggCycle
+				10, // carnivorePoints
+				(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
+				(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism),// metabolism
+				5000));
 	}
-	**/
+	
+	public static void addHerbivore(Point pos){
+		herbivores.add(new Herbivore(pos,
+				Math.random() * 360.0, // angle
+				(int)(Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
+				(int)(Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
+				(int)(Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // eggCycle
+				10, // carnivorePoints
+				(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
+				(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism),// metabolism
+				5000));
+	}
+
 	
 }

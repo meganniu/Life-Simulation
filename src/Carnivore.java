@@ -4,7 +4,9 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+/**
+ * Carnivore organism objects
+ */
 public class Carnivore extends Organism {
 
 	private boolean chasing = false;
@@ -13,6 +15,19 @@ public class Carnivore extends Organism {
 	private long chaseStart;
 	private long cooldownStart;
 	private long timeBorn;
+	
+	/**
+	 * Carnivore constructor
+	 * @param pos Point position
+	 * @param angle Double angle
+	 * @param speed	Int speed
+	 * @param detectRadius radius of detection for herbivores
+	 * @param eggCycle time till hatching of eggs layed
+	 * @param carnivorePoints 
+	 * @param energy Double energy of carnivore
+	 * @param metabolism Double speed of energy use, metabolism
+	 * @param chaseLength Time until carnivore gives up chase of a herbivore
+	 */
 	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
 		timeBorn = GamePane.timeElapsed;
