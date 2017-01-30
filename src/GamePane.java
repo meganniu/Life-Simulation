@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
@@ -39,11 +40,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	private DrawArea drawArea;
 
 	Organism finalOrg;
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 	public GamePane(int width, int height, 
 			int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 
@@ -80,12 +77,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
 				startMinFood, startMaxFood);
-<<<<<<< HEAD
-		
-	//public GamePane(int width, int height) {
-		//drawArea = new DrawArea();
-=======
->>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
+
 		this.width = width;
 		this.height = height;
 
@@ -251,6 +243,18 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			StatsPanel.selectedFood = null;
 		}
 		Main.statsPanel.updateStats();
+		
+		if(Main.addingCarnivore){
+			DrawArea.addCarnivore(new Point(x, y));
+			Main.addingCarnivore = false;
+			Main.addHerbivore.setEnabled(true);
+		}
+		if(Main.addingHerbivore){
+			DrawArea.addHerbivore(new Point(x, y));
+			Main.addingHerbivore = false;
+			Main.addCarnivore.setEnabled(true);
+		}
+		
 		render();
 	}
 

@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -46,6 +47,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	boolean gameStatus = false;
 	boolean settingsOpen = false;
+	static boolean addingCarnivore = false;
+	static boolean addingHerbivore = false;
 
 	boolean startSim; // true to start sim, false to pause sim
 	private static int drawWidth = 600, drawHeight = 600;
@@ -56,26 +59,18 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton left = new JButton("<");
 	JButton go = new JButton("Start");
 	static JButton startBtn = new JButton("Start");
+	static JButton addCarnivore = new JButton("Add Carnivore");
+	static JButton addHerbivore = new JButton("Add Herbivore");
 
-<<<<<<< HEAD
-	int startingCarnivores = 3; 
-	int startingHerbivores = 20; 
-	int startMinSpeed = 2, startMaxSpeed = 9; 
-=======
 	int startingCarnivores = 3;
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
->>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 	int startMinRad = 80, startMaxRad = 100;
 	int startMinEgg = 20000, startMaxEgg = 40000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
 		int shiftx = 500, shifty = 300;
@@ -246,10 +241,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated
 		}
-<<<<<<< HEAD
-		
-		public void mousePressed(MouseEvent e){
-=======
 
 		public void mousePressed(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
@@ -259,7 +250,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
 
->>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 		}
 
 		@Override
@@ -450,6 +440,26 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			if (e.getSource() == left) {
 				if (GamePane.drawRegion.x - 100 >= 0)
 					GamePane.drawRegion.x -= 100;
+			}
+			if (e.getSource() == addCarnivore) {
+				addingCarnivore = !addingCarnivore;
+				if(addingCarnivore){
+					addHerbivore.setEnabled(false);
+					addingHerbivore = false;
+				}
+				else{
+					addHerbivore.setEnabled(true);
+				}
+			}
+			if (e.getSource() == addHerbivore) {
+				addingHerbivore = !addingHerbivore;
+				if(addingHerbivore){
+					addCarnivore.setEnabled(false);
+					addingCarnivore = false;
+				}
+				else{
+					addCarnivore.setEnabled(true);
+				}
 			}
 			if (!GamePane.running && gameStatus)
 				gamePane.render();
@@ -806,15 +816,13 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		gbc.insets = new Insets(0, 5, 0, 5);
 		gbc.gridheight = 2;
 		gbc.gridx = 0;
-		gbc.gridy = 0;
+		gbc.gridy = 1;
 		gameScreen.add(statsPanel, gbc);
 
+		gbc.gridheight = 3;
 		gbc.gridx = 1;
+		gbc.gridy = 0;
 		gameScreen.add(gamePane, gbc);
-
-		gbc.gridheight = 1;
-		gbc.gridx = 2;
-		gameScreen.add(go, gbc);
 
 		JPanel controlPanel = new JPanel(new GridBagLayout());
 		GridBagConstraints c2 = new GridBagConstraints();
@@ -830,9 +838,45 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		c2.gridx = 1;
 		controlPanel.add(down, c2);
 
+		addCarnivore.addActionListener(this);
+		addHerbivore.addActionListener(this);
+		
+		JPanel sidePanel = new JPanel();
+		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
+		
+		go.setAlignmentX(Component.CENTER_ALIGNMENT);
+		controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
+		addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
+		
+		sidePanel.add(go);
+		sidePanel.add(controlPanel);
+		sidePanel.add(addCarnivore);
+		sidePanel.add(addHerbivore);
+		
+		gbc.gridheight = 1;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gameScreen.add(sidePanel, gbc);
+		/**
+		gbc.gridheight = 1;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		gbc.weightx = 0;
+		gbc.weighty = 0;
+		gameScreen.add(go, gbc);
+		
 		gbc.gridy = 1;
 		gameScreen.add(controlPanel, gbc);
 
+
+		
+		gbc.gridy = 2;
+		gameScreen.add(addCarnivore, gbc);
+		
+		gbc.gridy = 3;
+		gameScreen.add(addHerbivore, gbc);
+		**/
 		setContentPane(gameScreen);
 		revalidate();
 		gameStatus = true;
