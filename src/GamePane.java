@@ -80,12 +80,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEgg, startMaxEgg, 
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
-<<<<<<< HEAD
 				startMinFood, startMaxFood,
 				chaseLength);
-=======
-				startMinFood, startMaxFood, chaseLength);
->>>>>>> 0bcb76551eaf8dd904b8df206887df4e0c988e6c
 
 		this.width = width;
 		this.height = height;
@@ -210,19 +206,19 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		int y = 2 * e.getY() + drawRegion.y;
 		System.out.println(x + " " + y);
 		for (int i = 0; i < DrawArea.carnivores.size() && !orgFound; i++) {
-			if (DrawArea.carnivores.get(i).hitbox.contains(x, y)) {
+			if (DrawArea.carnivores.get(i).getHitbox().contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.carnivores.get(i);
 				orgFound = true;
 			}
 		}
 		for (int i = 0; i < DrawArea.herbivores.size() && !orgFound; i++) {
-			if (DrawArea.herbivores.get(i).hitbox.contains(x, y)) {
+			if (DrawArea.herbivores.get(i).getHitbox().contains(x, y)) {
 				StatsPanel.selectedOrg = DrawArea.herbivores.get(i);
 				orgFound = true;
 			}
 		}
 		for (int i = 0; i < DrawArea.eggs.size() && !eggFound; i++) {
-			if (DrawArea.eggs.get(i).hitbox.contains(x, y)) {
+			if (DrawArea.eggs.get(i).getHitbox().contains(x, y)) {
 				StatsPanel.selectedEgg = DrawArea.eggs.get(i);
 				eggFound = true;
 			}
