@@ -54,10 +54,10 @@ public class Egg {
 		while(Math.random()>.5){
 			speed--;
 		}
-		while(Math.random()>.2){
+		while(Math.random()>.05){
 			detectRadius ++;
 		}
-		while(Math.random()>.2){
+		while(Math.random()>.05){
 			detectRadius --;
 		}
 		while(Math.random()>.2){

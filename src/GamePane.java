@@ -39,7 +39,11 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	private DrawArea drawArea;
 
 	Organism finalOrg;
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 	public GamePane(int width, int height, 
 			int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 
@@ -76,9 +80,12 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
 				startMinFood, startMaxFood);
+<<<<<<< HEAD
 		
 	//public GamePane(int width, int height) {
 		//drawArea = new DrawArea();
+=======
+>>>>>>> 5439b47968e0baffdfea340e594fc242d6a45ca5
 		this.width = width;
 		this.height = height;
 
