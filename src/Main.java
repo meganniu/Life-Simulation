@@ -47,7 +47,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	boolean startSim; // true to start sim, false to pause sim
 	private static int drawWidth = 600, drawHeight = 600;
 	GamePane gamePane;
-	JFrame frame = new JFrame("Customization");
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
@@ -498,13 +497,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			System.out.println("Created settings");
 
-			frame.setSize(450, 500);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setLocationRelativeTo(null);
-			frame.setLayout(new GridBagLayout());
+			setTitle("Customization");
+			setSize(450, 500);
+			setVisible(true);
+			setDefaultCloseOperation(JDISPOSE_ON_CLOSE);
+			setLocationRelativeTo(null);
+			setLayout(new GridBagLayout());
 
-			frame.addWindowListener(this);
+			addWindowListener(this);
 			
 			GridBagConstraints gbc = new GridBagConstraints();
 
@@ -514,49 +514,49 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.gridy = 0;
 			gbc.weighty = 0;
 			gbc.insets = new Insets(0, 0, 0, 10);
-			frame.add(carnivoresLbl, gbc);
+			add(carnivoresLbl, gbc);
 			
 			gbc.gridy = 2;
-			frame.add(minSpeedLbl, gbc);
+			add(minSpeedLbl, gbc);
 			
 			gbc.gridy = 4;
-			frame.add(minRadLbl, gbc);
+			add(minRadLbl, gbc);
 			
 			gbc.gridy = 6;
-			frame.add(minEggLbl, gbc);
+			add(minEggLbl, gbc);
 			
 			gbc.gridy = 8;
-			frame.add(minEnergyLbl, gbc);
+			add(minEnergyLbl, gbc);
 			
 			gbc.gridy = 10;
-			frame.add(minMetabolismLbl, gbc);
+			add(minMetabolismLbl, gbc);
 			
 			gbc.gridy = 12;
-			frame.add(minFoodLbl, gbc);
+			add(minFoodLbl, gbc);
 			
 			
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
-			frame.add(herbivoresLbl, gbc);
+			add(herbivoresLbl, gbc);
 			
 			gbc.gridy = 2;
-			frame.add(maxSpeedLbl, gbc);
+			add(maxSpeedLbl, gbc);
 			
 			gbc.gridy = 4;
-			frame.add(maxRadLbl, gbc);
+			add(maxRadLbl, gbc);
 			
 			gbc.gridy = 6;
-			frame.add(maxEggLbl, gbc);
+			add(maxEggLbl, gbc);
 			
 			gbc.gridy = 8;
-			frame.add(maxEnergyLbl, gbc);
+			add(maxEnergyLbl, gbc);
 			
 			gbc.gridy = 10;
-			frame.add(maxMetabolismLbl, gbc);
+			add(maxMetabolismLbl, gbc);
 			
 			gbc.gridy = 12;
-			frame.add(maxFoodLbl, gbc);
+			add(maxFoodLbl, gbc);
 			
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
@@ -581,61 +581,61 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.weighty = 0.7;
 			gbc.insets = new Insets(0, 0, 10, 10);
 			carnivoresTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(carnivoresTF, gbc);
+			add(carnivoresTF, gbc);
 			
 			gbc.gridy = 3;
 			minSpeedTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minSpeedTF, gbc);
+			add(minSpeedTF, gbc);
 			
 			gbc.gridy = 5;
 			minRadTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minRadTF, gbc);
+			add(minRadTF, gbc);
 			
 			gbc.gridy = 7;
 			minEggTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minEggTF, gbc);
+			add(minEggTF, gbc);
 			
 			gbc.gridy = 9;
 			minEnergyTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minEnergyTF, gbc);
+			add(minEnergyTF, gbc);
 			
 			gbc.gridy = 11;
 			minMetabolismTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minMetabolismTF, gbc);
+			add(minMetabolismTF, gbc);
 			
 			gbc.gridy = 13;
 			minFoodTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(minFoodTF, gbc);
+			add(minFoodTF, gbc);
 			
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 10, 10, 0);
 			herbivoresTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(herbivoresTF, gbc);
+			add(herbivoresTF, gbc);
 			
 			gbc.gridy = 3;
 			maxSpeedTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxSpeedTF, gbc);
+			add(maxSpeedTF, gbc);
 			
 			gbc.gridy = 5;
 			maxRadTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxRadTF, gbc);
+			add(maxRadTF, gbc);
 			
 			gbc.gridy = 7;
 			maxEggTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxEggTF, gbc);
+			add(maxEggTF, gbc);
 			
 			gbc.gridy = 9;
 			maxEnergyTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxEnergyTF, gbc);
+			add(maxEnergyTF, gbc);
 			
 			gbc.gridy = 11;
 			maxMetabolismTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxMetabolismTF, gbc);
+			add(maxMetabolismTF, gbc);
 			
 			gbc.gridy = 13;
 			maxFoodTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(maxFoodTF, gbc);
+			add(maxFoodTF, gbc);
 			
 			cancel.addActionListener(new MouseListener());
 			set.addActionListener(new MouseListener());
@@ -646,10 +646,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.gridx = 0;
 			gbc.gridy = 14;
 			gbc.weighty = 0.3;
-			frame.add(cancel, gbc);
+			add(cancel, gbc);
 
 			gbc.gridx = 1;
-			frame.add(set, gbc);
+			add(set, gbc);
 		}
 
 		class MouseListener implements ActionListener {
