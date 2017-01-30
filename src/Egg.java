@@ -3,30 +3,76 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-
+/**
+ * Egg object which hatched into an organism with evolved traits
+ */
 public class Egg {
-	BufferedImage img;
+	/**
+	 * egg image
+	 */
+	private BufferedImage img;
 
-	Point pos;
-
+	/**
+	 * position of egg
+	 */
+	private Point pos;
+	
+	/**
+	 * rectangle used as hitbox
+	 */
 	Rectangle hitbox;
 	
-	double angle;
-
-	int speed;// ticks/pixel
-
-	protected int detectRadius;
-
-	int eggCycle;
-
-	long timeBorn;
-
-	double metabolism;
+	/**
+	 * angle at which resulting organism will travel
+	 */
+	private double angle;
 	
-	int carnivorePoints;
+	/**
+	 * speed at which resulting organism will travel
+	 */
+	private int speed;// ticks/pixel
+	
+	/**
+	 * detect radius of resulting organism
+	 */
+	protected int detectRadius;
+	
+	/**
+	 * incubation time of egg
+	 */
+	private int eggCycle;
+	
+	/**
+	 * time when organism is born
+	 */
+	private long timeBorn;
+	
+	/**
+	 * metabolism rate of resulting organism
+	 */
+	private double metabolism;
+	
+	/**
+	 * carnivore points of resulting organism
+	 */
+	private int carnivorePoints;
+	
+	/**
+	 * chaselength of resutling organism
+	 */
+	private long chaseLength;
 
-	long chaseLength;
-
+	/**
+	 * Egg constructor
+	 * @param pos position of parent
+	 * @param angle angle of parent
+	 * @param speed speed of parent
+	 * @param detectRadius detect radius of parent
+	 * @param eggCycle eggCycle of parent
+	 * @param carnivorePoints carnivorePoints of parent
+	 * @param metabolism metabolism of parent
+	 * @param chaseLength chase length of paretn
+	 */
 	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism, long chaseLength) {
 		
 		this.speed = speed;
@@ -43,6 +89,9 @@ public class Egg {
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 	
+	/**
+	 * evolved the stats of egg based on stats of parent
+	 */
 	public void mutate(){
 		while(Math.random()>.5){
 			speed++;
@@ -96,18 +145,34 @@ public class Egg {
 			chaseLength = 3500;
 	}
 	
+	/**
+	 * get image of egg
+	 * @return image of egg
+	 */
 	public BufferedImage getImage() {
 		return img;
 	}
 
+	/**
+	 * get position of egg
+	 * @return position of egg
+	 */
 	public Point getPoint() {
 		return pos;
 	}
 
+	/**
+	 * get angle of resulting organism
+	 * @return angle of resulting organism
+	 */
 	public double getAngle() {
 		return angle;
 	}
 
+	/**
+	 * hatch egg when incubation time is over
+	 * @return if egg is ready to hatch
+	 */
 	public boolean hatch() {
 		if (timeBorn + Main.hatchTime <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
@@ -120,6 +185,10 @@ public class Egg {
 		return false;
 	}
 	
+	/**
+	 * stats of egg in html formatting
+	 * @return stats of egg in html
+	 */
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Egg\t\t");

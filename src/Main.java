@@ -79,10 +79,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
 	long chaseLength = 5000;
-<<<<<<< HEAD
-
-=======
->>>>>>> 0bcb76551eaf8dd904b8df206887df4e0c988e6c
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 

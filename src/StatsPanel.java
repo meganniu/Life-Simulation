@@ -10,16 +10,14 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class StatsPanel extends JPanel {
-	JLabel title = new JLabel("Organsim Stats");
-	ArrayList<JLabel> statLabel = new ArrayList<JLabel>();
+	private JLabel title = new JLabel("Organsim Stats");
+	private ArrayList<JLabel> statLabel = new ArrayList<JLabel>();
 
-	static ArrayList<String> temp = new ArrayList<String>();
+	protected static ArrayList<String> temp = new ArrayList<String>();
 
-	static Organism selectedOrg = null;
-	
-	static Egg selectedEgg = null;
-
-	static Food selectedFood = null;
+	protected static Organism selectedOrg = null;
+	protected static Egg selectedEgg = null;
+	protected static Food selectedFood = null;
 	
 	public StatsPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -48,16 +46,6 @@ public class StatsPanel extends JPanel {
 		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();
 		}
-
-/*		
-		if(temp != null){
-			for (int i = 0; i < statLabel.size(); i++) {
-				if (i < temp.size())
-					statLabel.get(i).setText(temp.get(i));
-				else
-					statLabel.get(i).setText(" ");
-			}
-		}*/
 		else if (selectedEgg != null){
 			temp = selectedEgg.getStats();
 		}
@@ -68,7 +56,6 @@ public class StatsPanel extends JPanel {
 			temp = new ArrayList<String>();
 			temp.add("No organsism, egg, or food selected");
 		}
-		
 		for (int i = 0; i < statLabel.size(); i++) {
 			if (i < temp.size())
 				statLabel.get(i).setText(temp.get(i));
@@ -76,7 +63,6 @@ public class StatsPanel extends JPanel {
 				statLabel.get(i).setText(" ");
 			
 		}
-
 		revalidate();
 		repaint();
 	}

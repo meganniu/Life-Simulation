@@ -7,19 +7,16 @@ import java.util.ArrayList;
 
 public abstract class Organism {
 	Rectangle hitbox;
-	boolean selected = false;
+	protected boolean selected = false;
 
-	BufferedImage img;
+	protected BufferedImage img;
 
-	Point pos;
-
-	double angle;
-
+	protected Point pos;
+	protected double angle;
 	protected int speed;// ticks/pixel
 	protected int detectRadius;
 	protected double metabolism;
 	protected int carnivorePoints;
-	
 	protected double energy;
 	protected long sinceLastEgg;
 	protected long chaseLength;

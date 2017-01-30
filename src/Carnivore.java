@@ -9,11 +9,29 @@ import java.util.ArrayList;
  */
 public class Carnivore extends Organism {
 
+	/**
+	 * boolean indicating chasing status
+	 */
 	private boolean chasing = false;
+	
+	/**
+	 * boolean indicating chasing availability
+	 */
 	private boolean canChase = true;
 
+	/**
+	 * time when chase started
+	 */
 	private long chaseStart;
+	
+	/**
+	 * time when cooldown period starting
+	 */
 	private long cooldownStart;
+	
+	/**
+	 * time since birth
+	 */
 	private long timeBorn;
 	
 	/**
@@ -34,6 +52,10 @@ public class Carnivore extends Organism {
 		img = DrawArea.cImg;
 	}
 
+	/**
+	 * draw green oval around carnivore image
+	 * @param b if carnivore is selected by user
+	 */
 	public void setSelected(boolean b) {
 		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
 		Graphics g = img.getGraphics();
@@ -49,10 +71,10 @@ public class Carnivore extends Organism {
 		this.img = img;
 	}
 
-	
-
+	/**
+	 * detect closest herbivore within detection radius
+	 */
 	public double detectItem() {
-
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
@@ -114,7 +136,10 @@ public class Carnivore extends Organism {
 
 		}
 	}
-
+	
+	/**
+	 * deletes a herbivore if a carnivore eats it
+	 */
 	public void eat() {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
@@ -132,6 +157,9 @@ public class Carnivore extends Organism {
 		}
 	}
 	
+	/**
+	 * carnivore lays an egg with a set hatchtime
+	 */
 	public void layEgg(){
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
@@ -143,6 +171,9 @@ public class Carnivore extends Organism {
 		}
 	}
 
+	/**
+	 * return arraylist of stats with html formatting
+	 */
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tCarnivore</span></pre><html>");
@@ -159,6 +190,9 @@ public class Carnivore extends Organism {
 		return stats;
 	}
 	
+	/**
+	 * return arraylist of stats without html formatting
+	 */
 	public ArrayList<String> getFinalStats(){
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("Type:  Carnivore");
