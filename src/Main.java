@@ -23,8 +23,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -55,6 +57,12 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
 
+<<<<<<< HEAD
+	//int startingCarnivores = 5;
+	//int startingHerbivores = 50;
+	int startingCarnivores = 1;
+	int startingHerbivores = 0;
+=======
 	int startingCarnivores = 3; 
 	int startingHerbivores = 20; 
 	int startMinSpeed = 2, startMaxSpeed = 9; 
@@ -63,6 +71,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 	
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -236,8 +245,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 		
 		public void mousePressed(MouseEvent e){
-			
 		}
+<<<<<<< HEAD
+=======
 		/**
 		@Override
 		public void mousePressed(MouseEvent e) {
@@ -250,6 +260,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		}
 		**/
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
@@ -965,11 +976,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		// TODO Auto-generated method stub
 
 	}
-
-	public static void run() {
-
-	}
-
+	
+	
 	public static void main(String[] args) {
 		Main simulation = new Main();
 

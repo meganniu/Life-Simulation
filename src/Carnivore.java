@@ -130,7 +130,11 @@ public class Carnivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 
+<<<<<<< HEAD
+		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tCarnivore</span></pre><html>");
+=======
 		stats.add("<html><pre><span style=\"font-family: arial\">Carnivore</span></pre></html>");
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
@@ -141,6 +145,22 @@ public class Carnivore extends Organism {
 		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Chase Length\t" + chaseLength + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Time Alive\t" + (GamePane.timeElapsed - timeBorn) + "</span></pre></html>");
+		return stats;
+	}
+	
+	public ArrayList<String> getFinalStats(){
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("Type:  Carnivore");
+		stats.add("Position:  (" + pos.x + ", " + pos.y + ")");
+		stats.add("Angle:  " + (int) angle + " deg");
+		stats.add("Speed:  " + speed);
+		stats.add("R. Detection:  " +  detectRadius);
+		stats.add("Egg Counter:  " + eggCycle);
+		stats.add("Carnivorism:  " + carnivorePoints);
+		stats.add("Energy:  " + new DecimalFormat("#.##").format(energy));
+		stats.add("Metabolism:  " + new DecimalFormat("#.##").format(metabolism) );
+		stats.add("Chase Length:  " + chaseLength);
+		stats.add("Time Alive:  " + (GamePane.timeElapsed - timeBorn));
 		return stats;
 	}
 

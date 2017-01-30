@@ -1,5 +1,6 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.AffineTransform;
@@ -10,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class DrawArea extends BufferedImage {
 
@@ -312,4 +316,32 @@ public class DrawArea extends BufferedImage {
 		}
 		drawSelected();		
 	}
+	
+	Organism finalOrg;
+	
+	public Organism checkEnd(){
+		if(carnivores.size() + herbivores.size() == 1){
+			if(herbivores.size() == 1){
+				return finalOrg = herbivores.get(0);
+			}
+			return finalOrg = carnivores.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	public void endGame(Organism finalOrg){
+		System.out.println("HERE");
+		g.setColor(Color.black);
+		g.fillRect((width - 300) / 2, (height - 400) / 2, 300, height);
+		g.drawString("Simulation Over!", (width - 300) / 2 + 10, (height - 400) / 2 + 10);
+		g.drawString("Only one organism left", (width - 300) / 2 + 10, (height - 400) / 2 + 20);
+		ArrayList<String> rawStats = finalOrg.getStats();
+		
+		for (int i = 0; i < rawStats.size(); i++){
+			g.drawString(rawStats.get(i), (width - 300) / 2 + 10, (height - 400) / 2 + (20 + 10 * i));
+		}
+	}
+	**/
+	
 }
