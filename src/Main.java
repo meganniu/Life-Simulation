@@ -526,7 +526,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			setTitle("Customization");
 			setSize(650, 800);
-			setVisible(true);
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			setLocationRelativeTo(null);
 			setLayout(new GridBagLayout());
