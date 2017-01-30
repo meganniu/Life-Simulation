@@ -27,7 +27,7 @@ public class Food
     }
     
     public void decayNutrition(){
-    	nutrition-=1;
+    	nutrition-= Main.foodDecayRate;
     	if(nutrition<0)
     		nutrition = 0;
     }

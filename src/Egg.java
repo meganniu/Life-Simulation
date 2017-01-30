@@ -24,12 +24,9 @@ public class Egg {
 	double metabolism;
 	
 	int carnivorePoints;
-	
-	int accumulatedPoints;
+
 	long chaseLength;
-	/**
-	 * Constructor for objects of class Egg
-	 */
+
 	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism, long chaseLength) {
 		
 		this.speed = speed;
@@ -37,7 +34,6 @@ public class Egg {
 		this.pos = pos;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
-		//this.accumulatedPoints = accumulatedPoints;
 		this.timeBorn= GamePane.timeElapsed;
 		this.carnivorePoints = carnivorePoints;
 		this.metabolism = metabolism;
@@ -113,13 +109,12 @@ public class Egg {
 	}
 
 	public boolean hatch() {
-		if (timeBorn + 10000 <= GamePane.timeElapsed) {
+		if (timeBorn + Main.hatchTime <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 4000, metabolism, chaseLength));
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, Main.newbornEnergy, metabolism, chaseLength));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, 4000, metabolism, 5000));
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, Main.newbornEnergy, metabolism, 5000));
 			}
-			System.out.println("Egg hatched at" + GamePane.timeElapsed / 1000.0);
 			return true;
 		}
 		return false;
