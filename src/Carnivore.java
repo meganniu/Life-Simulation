@@ -121,7 +121,7 @@ public class Carnivore extends Organism {
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
-			energy-=4000;
+			energy-=Main.energyReq*2/3;
 			if (energy < 0)
 				energy = 0;
 
