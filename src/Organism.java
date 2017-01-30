@@ -210,6 +210,6 @@ public abstract class Organism {
 	
 	
 	public abstract void layEgg();
-
+	public abstract ArrayList<String> getFinalStats();
 	public abstract ArrayList<String> getStats();
 }
