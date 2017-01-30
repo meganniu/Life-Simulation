@@ -23,11 +23,14 @@ public abstract class Organism {
 	protected long sinceLastEgg;
 	protected long chaseLength;
 	protected int eggCycle;
+	
+	protected int generation;
 
 	public ArrayList<Point> prevPoints = new ArrayList<Point>();
 
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+	public Organism(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double energy, double metabolism, long chaseLength) {
+		this.generation = generation;
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;

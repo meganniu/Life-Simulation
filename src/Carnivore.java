@@ -28,8 +28,8 @@ public class Carnivore extends Organism {
 	 * @param metabolism Double speed of energy use, metabolism
 	 * @param chaseLength Time until carnivore gives up chase of a herbivore
 	 */
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
+	public Carnivore(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
+		super(generation, pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
 		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.cImg;
 	}
@@ -119,7 +119,7 @@ public class Carnivore extends Organism {
 	public void layEgg(){
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
+			DrawArea.eggs.add(new Egg(generation + 1, new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			energy-=Main.energyReq*2/3;
 			if (energy < 0)
 				energy = 0;
@@ -130,6 +130,7 @@ public class Carnivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tCarnivore</span></pre><html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + generation + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");

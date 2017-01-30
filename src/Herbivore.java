@@ -8,8 +8,8 @@ import java.util.ArrayList;
 public class Herbivore extends Organism {
 
 	private long timeBorn;
-	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, 5000);
+	public Herbivore(int generation,Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism) {
+		super(generation, pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, 5000);
 		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.hImg;
 	}
@@ -73,7 +73,7 @@ public class Herbivore extends Organism {
 	public void layEgg(){
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
+			DrawArea.eggs.add(new Egg(generation + 1, new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 			energy-=Main.energyReq*2/3;
 			if (energy < 0)
@@ -84,6 +84,7 @@ public class Herbivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tHerbivore</span></pre><html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + generation + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
