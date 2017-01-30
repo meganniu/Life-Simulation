@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * Egg object which hatched into an organism with evolved traits
  */
 public class Egg {
+<<<<<<< HEAD
 	/**
 	 * egg image
 	 */
@@ -75,62 +76,101 @@ public class Egg {
 	 */
 	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism, long chaseLength) {
 		
+=======
+	private BufferedImage img;
+
+	private Point pos;
+
+	private Rectangle hitbox;
+
+	private double angle;
+
+	private int speed;// ticks/pixel
+	protected int detectRadius;
+
+	private int eggCycle;
+
+	private long timeBorn;
+
+	private double metabolism;
+
+	private int carnivorePoints;
+
+	private long chaseLength;
+	
+	private int dSpeed, dDR, dMetabolism, dCP, dCL, dEC;
+
+	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+			double metabolism, long chaseLength) {
+
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
 		this.detectRadius = detectRadius;
 		this.eggCycle = eggCycle;
-		this.timeBorn= GamePane.timeElapsed;
+		this.timeBorn = GamePane.timeElapsed;
 		this.carnivorePoints = carnivorePoints;
 		this.metabolism = metabolism;
 		this.chaseLength = chaseLength;
 		mutate();
+		
+		dSpeed = this.speed - speed;
+		dDR = this.detectRadius - detectRadius;
+		dMetabolism = (int) (this.metabolism - metabolism);
+		dCP = this.carnivorePoints - carnivorePoints;
+		dCL = (int) (this.chaseLength - chaseLength);
+		dEC = this.eggCycle - eggCycle;
+		
 		img = DrawArea.eImg;
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * evolved the stats of egg based on stats of parent
 	 */
 	public void mutate(){
 		while(Math.random()>.5){
+=======
+	public void mutate() {
+		while (Math.random() > .5) {
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 			speed++;
 		}
-		while(Math.random()>.5){
+		while (Math.random() > .5) {
 			speed--;
 		}
-		while(Math.random()>.05){
-			detectRadius ++;
+		while (Math.random() > .05) {
+			detectRadius++;
 		}
-		while(Math.random()>.05){
-			detectRadius --;
+		while (Math.random() > .05) {
+			detectRadius--;
 		}
-		while(Math.random()>.2){
-			metabolism ++;
+		while (Math.random() > .2) {
+			metabolism++;
 		}
-		while(Math.random()>.2){
-			metabolism --;
+		while (Math.random() > .2) {
+			metabolism--;
 		}
-		while(Math.random()>.6){
+		while (Math.random() > .6) {
 			carnivorePoints++;
 		}
-		while(Math.random()>.6){
+		while (Math.random() > .6) {
 			carnivorePoints--;
 		}
-		while(Math.random()>.2){
+		while (Math.random() > .03) {
 			chaseLength += 10;
 		}
-		while(Math.random()>.2){
+		while (Math.random() > .03) {
 			chaseLength -= 10;
 		}
-		while(Math.random()>.2){
+		while (Math.random() > .2) {
 			eggCycle += 50;
 		}
-		while(Math.random()>.2){
+		while (Math.random() > .2) {
 			eggCycle -= 50;
 		}
-		if (speed >= 10)
-			detectRadius =  detectRadius / 3;
 		if (speed < 2)
 			speed = 2;
 		if (detectRadius < 50)
@@ -144,11 +184,15 @@ public class Egg {
 		if (chaseLength < 3500)
 			chaseLength = 3500;
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * get image of egg
 	 * @return image of egg
 	 */
+=======
+
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public BufferedImage getImage() {
 		return img;
 	}
@@ -168,6 +212,10 @@ public class Egg {
 	public double getAngle() {
 		return angle;
 	}
+	
+	public Rectangle getHitbox(){
+		return hitbox;
+	}
 
 	/**
 	 * hatch egg when incubation time is over
@@ -176,31 +224,46 @@ public class Egg {
 	public boolean hatch() {
 		if (timeBorn + Main.hatchTime <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, Main.newbornEnergy, metabolism, chaseLength));
+				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle,
+						carnivorePoints, Main.newbornEnergy, metabolism, chaseLength));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, Main.newbornEnergy, metabolism, 5000));
+				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle,
+						carnivorePoints, Main.newbornEnergy, metabolism, 5000));
 			}
 			return true;
 		}
 		return false;
 	}
+<<<<<<< HEAD
 	
 	/**
 	 * stats of egg in html formatting
 	 * @return stats of egg in html
 	 */
+=======
+
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public ArrayList<String> getStats() {
+		
+		DecimalFormat df = new DecimalFormat("+#;-#");
+		
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Egg\t\t");
-		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y
+				+ ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">R. Detection\t" +  detectRadius + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Egg Counter\t" + eggCycle + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t" + new DecimalFormat("#.##").format(metabolism) + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Chase Length\t" + chaseLength + "</span></pre></html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Time Until Hatch\t" + (timeBorn + 10000 - GamePane.timeElapsed) + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + " ("+df.format(dSpeed)+")</span></pre></html>");
+		stats.add(
+				"<html><pre><span style=\"font-family: arial\">R. Detection\t" + detectRadius + " ("+df.format(dDR)+")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Egg Counter\t" + eggCycle + " ("+df.format(dEC)+")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Carnivorism\t" + carnivorePoints
+				+ " ("+df.format(dCP)+")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Metabolism\t"
+				+ new DecimalFormat("#.##").format(metabolism) + " ("+df.format(dMetabolism)+")</span></pre></html>");
+		stats.add(
+				"<html><pre><span style=\"font-family: arial\">Chase Length\t" + chaseLength + " ("+df.format(dCL)+")</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Time Until Hatch\t"
+				+ (timeBorn + 10000 - GamePane.timeElapsed) + "</span></pre></html>");
 		return stats;
 	}
 }

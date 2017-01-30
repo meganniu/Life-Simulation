@@ -52,6 +52,7 @@ public class Carnivore extends Organism {
 		img = DrawArea.cImg;
 	}
 
+<<<<<<< HEAD
 	/**
 	 * draw green oval around carnivore image
 	 * @param b if carnivore is selected by user
@@ -74,6 +75,9 @@ public class Carnivore extends Organism {
 	/**
 	 * detect closest herbivore within detection radius
 	 */
+=======
+
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public double detectItem() {
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
@@ -145,7 +149,7 @@ public class Carnivore extends Organism {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
 			double distance = Math.hypot(pos.x - hPoint.x, pos.y - hPoint.y);
 			if (distance <= 24) {
-				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10.0 + 2000.0) * metabolism )/ 100.0);
+				energy += (((DrawArea.herbivores.get(i).getEnergy() / 10.0 + 5000.0) * metabolism )/ 100.0);
 				if (energy > Main.maximumEnergy)
 					energy = Main.maximumEnergy;
 				if(DrawArea.herbivores.get(i)==StatsPanel.selectedOrg)

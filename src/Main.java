@@ -73,12 +73,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	int startingCarnivores = 3;
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
-	int startMinRad = 80, startMaxRad = 100;
+	int startMinRad = 80, startMaxRad = 150;
 	int startMinEgg = 20000, startMaxEgg = 40000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
+<<<<<<< HEAD
 	long chaseLength = 5000;
+=======
+	long chaseLength = 15000;
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -646,13 +650,13 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
 			GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
-			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 100");
+			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150");
 			GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
 			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
 			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
 			GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
 			
-			GhostText ghostTextChase = new GhostText(chaseTF, "Default 5000, range 2000 - 6000");
+			GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000");
 			GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
 			GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
 			GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
@@ -1033,6 +1037,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		
 		setContentPane(gameScreen);
 		revalidate();
+		pack();
 		gameStatus = true;
 		System.out.println(getWidth() + " " + getHeight());
 	}
@@ -1093,8 +1098,8 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		if (startMinRad < 80)
 			startMinRad = 80;
-		if (startMaxRad > 100)
-			startMaxRad = 100;
+		if (startMaxRad > 200)
+			startMaxRad = 200;
 
 		if (startMinEgg < 20000)
 			startMinEgg = 20000;
@@ -1116,10 +1121,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		if (startMaxFood > 800.0)
 			startMaxFood = 800.0;
 		
-		if (chaseLength < 2000)
-			chaseLength = 2000;
-		else if (chaseLength > 6000)
-			chaseLength = 6000;
+		if (chaseLength < 5000)
+			chaseLength = 5000;
+		else if (chaseLength > 20000)
+			chaseLength = 20000;
 		
 		if (chaseCD < 2000)
 			chaseCD = 2000;

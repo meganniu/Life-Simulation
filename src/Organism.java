@@ -6,10 +6,20 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public abstract class Organism {
+<<<<<<< HEAD
 	Rectangle hitbox;
 	protected boolean selected = false;
 
 	protected BufferedImage img;
+=======
+	private Rectangle hitbox;
+
+	protected BufferedImage img;
+
+	protected Point pos;
+
+	protected double angle;
+>>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 
 	protected Point pos;
 	protected double angle;
@@ -196,11 +206,15 @@ public abstract class Organism {
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
+	
+	public Rectangle getHitbox(){
+		return hitbox;
+	}
 
 	
 	public void energyUse(){
 		energy-=1; // Passive energy loss
-		energy-=((Math.pow(speed, 2)/8.0)*metabolism /80.0);
+		energy-=(speed*metabolism /80.0);
 		if (energy < 0)
 			energy = 0;
 	}
