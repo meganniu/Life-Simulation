@@ -24,11 +24,45 @@ public class DrawArea extends BufferedImage {
 	static BufferedImage hImg = null, cImg = null, eImg = null, fImg = null;
 	private Graphics2D g = null;
 	static int width, height;
+	private int startingCarnivores, startingHerbivores;
+	private int startMinSpeed, startMaxSpeed; 
+	private int startMinRad, startMaxRad;
+	private int startMinEgg, startMaxEgg;
+	private double startMinEnergy, startMaxEnergy;
+	private double startMinMetabolism, startMaxMetabolism;
+	private double startMinFood, startMaxFood;
 
-	public DrawArea(int startingCarnivores, int startingHerbivores) {
+	public DrawArea(int startingCarnivores, int startingHerbivores, 
+			int startMinSpeed, int startMaxSpeed, 
+			int startMinRad, int startMaxRad, 
+			int startMinEgg, int startMaxEgg, 
+			double startMinEnergy, double startMaxEnergy, 
+			double startMinMetabolism, double startMaxMetabolism, 
+			double startMinFood, double startMaxFood) {
 	//public DrawArea() {
 		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
-
+		
+		this.startingCarnivores = startingCarnivores;
+		this.startingHerbivores = startingHerbivores;
+		
+		this.startMinSpeed = startMinSpeed;
+		this.startMaxSpeed = startMaxSpeed;
+		
+		this.startMinRad = startMinRad;
+		this.startMaxRad = startMaxRad;
+		
+		this.startMinEgg = startMinEgg;
+		this.startMaxEgg = startMaxEgg;
+		
+		this.startMinEnergy = startMinEnergy;
+		this.startMaxEnergy = startMaxEnergy;
+		
+		this.startMinMetabolism = startMinMetabolism;
+		this.startMaxMetabolism = startMaxMetabolism;
+		
+		this.startMinFood = startMinFood;
+		this.startMaxFood = startMaxFood;
+		
 		width = getWidth();
 		height = getHeight();
 
@@ -52,19 +86,19 @@ public class DrawArea extends BufferedImage {
 		 * Carnivore(new Point(100, 100), 100, 10, 500); Carnivore car2 = new
 		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
 		 */
-
+		
 
 		for (int i = 0; i < startingHerbivores; i++) {
 			herbivores.add(new Herbivore(
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
-					(int) ((Math.random() * 7) + 4), // speed
-					(int) ((Math.random() * 100) + 80), // dRadius
-					(int) ((Math.random() * 30000) + 25000), // EggCycle
+					(int)(Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // speed
+					(int)(Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
+					(int)(Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // EggCycle
 					(int) ((Math.random() * 8) + 2), // carnivorepoints
-					7000.0, // energy
-					Math.random() * 120.0 + 80.0,// metabolism
+					(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
+					(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism),// metabolism
 					5000));//chase length
 
 		}
@@ -74,12 +108,12 @@ public class DrawArea extends BufferedImage {
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
-					(int) ((Math.random() * 8) + 5), // spd
-					(int) ((Math.random() * 100) + 80), // dRadius
-					(int) ((Math.random() * 40000) + 35000), // eggCycle
+					(int)(Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
+					(int)(Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
+					(int)(Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // eggCycle
 					10, // carnivorePoints
-					7000.0, // energy
-					Math.random() * 120.0 + 80.0,// metabolism
+					(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
+					(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism),// metabolism
 					5000));//chase length
 		}
 
@@ -131,6 +165,8 @@ public class DrawArea extends BufferedImage {
 		for(int i = 0; i<food.size(); i++){
 			food.get(i).decayNutrition();
 			if(food.get(i).getNutrition()==0){
+				if (DrawArea.food.get(i) == StatsPanel.selectedFood)
+					StatsPanel.selectedFood = null;
 				food.remove(i);
 				i--;
 			}
@@ -162,7 +198,7 @@ public class DrawArea extends BufferedImage {
 	
 	public void spawnFood() {
 		if (GamePane.tickCounter%3==0) {
-			food.add(new Food(new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)), Math.random()*200+300));
+			food.add(new Food(new Point((int) (Math.random() * (width - 16) + 8), (int) (Math.random() * (height - 16) + 8)), (Math.random() * ((startMaxFood - startMinFood) + 1.0) + startMinFood)));
 		}
 	}
 

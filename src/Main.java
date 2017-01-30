@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -16,6 +15,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
@@ -29,23 +30,22 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.JTextField;
-import javax.swing.Timer;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import javafx.scene.media.AudioClip;
-import javafx.scene.shape.Ellipse;
 
 public class Main extends JFrame implements KeyListener, ActionListener {
 
 	JPanel gameScreen = new JPanel(new GridBagLayout());
 	StartScreen startScreen = new StartScreen();
 	InstructionScreen instructionScreen = new InstructionScreen();
+	GetPreferences getPreferences = new GetPreferences();
+
 	boolean gameStatus = false;
+	boolean settingsOpen = false;
 
 	boolean startSim; // true to start sim, false to pause sim
 	private static int drawWidth = 600, drawHeight = 600;
@@ -57,22 +57,33 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	JButton go = new JButton("Go");
 	static JButton startBtn = new JButton("Start");
 
+<<<<<<< HEAD
 	//int startingCarnivores = 5;
 	//int startingHerbivores = 50;
 	int startingCarnivores = 1;
 	int startingHerbivores = 0;
+=======
+	int startingCarnivores = 3; 
+	int startingHerbivores = 20; 
+	int startMinSpeed = 2, startMaxSpeed = 9; 
+	int startMinRad = 80, startMaxRad = 100;
+	int startMinEgg = 20000, startMaxEgg = 40000;
+	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
+	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
+	double startMinFood = 200.0, startMaxFood = 800.0;
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 	
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
 		int shiftx = 500, shifty = 300;
-		
-		
-		// Parallax factors (B = back, F = front, Btn = buttons --- X is x factor, Y is y factor)
-		
+
+		// Parallax factors (B = back, F = front, Btn = buttons --- X is x
+		// factor, Y is y factor)
+
 		// Background moves faster than foreground
-		//double PBX = 10, PBY = 6, PFX = 20, PFY = 16, PBtnX = 13, PBtnY = 10;
-		
-		//Background moves slower than foreground
+		// double PBX = 10, PBY = 6, PFX = 20, PFY = 16, PBtnX = 13, PBtnY = 10;
+
+		// Background moves slower than foreground
 		double PBX = 20, PBY = 16, PFX = 10, PFY = 6, PBtnX = 13, PBtnY = 10;
 
 		BufferedImage front = null, frontSel = null, btn1 = null, btn1Sel = null, btn2 = null, btn2Sel = null;
@@ -82,18 +93,18 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		AudioClip click = new AudioClip(new File("sounds/click.wav").toURI().toString());
 
-		Shape r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int)((shiftx - 500) / PFX) + 175+12,
-				(getHeight() - 420) / 2 - (int)((shifty - 400) / PFY) - 75+32, 355, 355);
-		Shape r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int)((shiftx - 500) / PBtnX) + 63,
-				10 + 400 - (int)((shifty - 400) / PBtnY), 125, 125);
-		Shape r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int)((shiftx - 500) / PBtnX) + 63, 10 + 400 - (int)((shifty - 400) / PBtnY),
-				125, 125);
+		Shape r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int) ((shiftx - 500) / PFX) + 175 + 12,
+				(getHeight() - 420) / 2 - (int) ((shifty - 400) / PFY) - 75 + 32, 355, 355);
+		Shape r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+				10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
+		Shape r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+				10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
 
 		public StartScreen() {
 
 			addMouseMotionListener(this);
 			addMouseListener(this);
-			
+
 			try {
 				back = ImageIO.read(new File("images/backgroundw.png"));
 				System.out.println("Loaded background");
@@ -118,26 +129,29 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 
 		public void paintComponent(Graphics g) {
-			g.drawImage(back.getSubimage((int)(shiftx / PBX), (int)(shifty / PBY), getWidth()+50, getHeight()), 0, 0, null);
+			g.drawImage(back.getSubimage((int) (shiftx / PBX), (int) (shifty / PBY), getWidth() + 50, getHeight()), 0,
+					0, null);
 
 			if (selected1)
-				g.drawImage(frontSel, (getWidth() - 730) / 2 - (int)((shiftx - 500) / PFX),
-						(getHeight() - 420) / 2 - (int)((shifty - 400) / PFY) - 75, null);
+				g.drawImage(frontSel, (getWidth() - 730) / 2 - (int) ((shiftx - 500) / PFX),
+						(getHeight() - 420) / 2 - (int) ((shifty - 400) / PFY) - 75, null);
 			else
-				g.drawImage(front, (getWidth() - 700) / 2 - (int)((shiftx - 500) / PFX),
-						(getHeight() - 400) / 2 - (int)((shifty - 400) / PFY) - 75, null);
+				g.drawImage(front, (getWidth() - 700) / 2 - (int) ((shiftx - 500) / PFX),
+						(getHeight() - 400) / 2 - (int) ((shifty - 400) / PFY) - 75, null);
 
 			if (selected2)
-				g.drawImage(btn1Sel, getWidth() / 2 - 250 - 50 - (int)((shiftx - 500) / PBtnX) - 6, 400 - (int)((shifty - 400) / PBtnY) - 4,
-						null);
+				g.drawImage(btn1Sel, getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX) - 6,
+						400 - (int) ((shifty - 400) / PBtnY) - 4, null);
 			else
-				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (int)((shiftx - 500) / PBtnX), 400 - (int)((shifty - 400) / PBtnY), null);
+				g.drawImage(btn1, getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX),
+						400 - (int) ((shifty - 400) / PBtnY), null);
 
 			if (selected3)
-				g.drawImage(btn2Sel, getWidth() / 2 + 50 - (int)((shiftx - 500) / PBtnX) - 6, 400 - (int)((shifty - 400) / PBtnY) - 4,
-						null);
+				g.drawImage(btn2Sel, getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX) - 6,
+						400 - (int) ((shifty - 400) / PBtnY) - 4, null);
 			else
-				g.drawImage(btn2, getWidth() / 2 + 50 - (int)((shiftx - 500) / PBtnX), 400 - (int)((shifty - 400) / PBtnY), null);
+				g.drawImage(btn2, getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX),
+						400 - (int) ((shifty - 400) / PBtnY), null);
 		}
 
 		@Override
@@ -165,12 +179,12 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			shiftx = e.getX();
 			shifty = e.getY();
 
-			r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int)((shiftx - 500) / PFX) + 175+12,
-					(getHeight() - 420) / 2 - (int)((shifty - 400) / PFY) - 75+32, 355, 355);
-			r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int)((shiftx - 500) / PBtnX) + 63,
-					10 + 400 - (int)((shifty - 400) / PBtnY), 125, 125);
-			r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int)((shiftx - 500) / PBtnX) + 63, 10 + 400 - (int)((shifty - 400) / PBtnY),
-					125, 125);
+			r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int) ((shiftx - 500) / PFX) + 175 + 12,
+					(getHeight() - 420) / 2 - (int) ((shifty - 400) / PFY) - 75 + 32, 355, 355);
+			r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+					10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
+			r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+					10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
 			repaint();
 		}
 
@@ -199,12 +213,12 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			shiftx = e.getX();
 			shifty = e.getY();
 
-			r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int)((shiftx - 500) / PFX) + 175+12,
-					(getHeight() - 420) / 2 - (int)((shifty - 400) / PFY) - 75+32, 355, 355);
-			r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int)((shiftx - 500) / PBtnX) + 63,
-					10 + 400 - (int)((shifty - 400) / PBtnY), 125, 125);
-			r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int)((shiftx - 500) / PBtnX) + 63, 10 + 400 - (int)((shifty - 400) / PBtnY),
-					125, 125);
+			r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int) ((shiftx - 500) / PFX) + 175 + 12,
+					(getHeight() - 420) / 2 - (int) ((shifty - 400) / PFY) - 75 + 32, 355, 355);
+			r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+					10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
+			r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX) + 63,
+					10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
 			repaint();
 
 		}
@@ -213,9 +227,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseClicked(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
-			else if(r2.contains(e.getPoint()))
-				instructions();
-			else if(r3.contains(e.getPoint()))
+			else if (r2.contains(e.getPoint()))
+				instructions(shifty);
+			else if (r3.contains(e.getPoint()))
 				getPreferences();
 
 		}
@@ -232,30 +246,44 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		
 		public void mousePressed(MouseEvent e){
 		}
+<<<<<<< HEAD
+=======
+		/**
+		@Override
+		public void mousePressed(MouseEvent e) {
+			if (r1.contains(e.getPoint()))
+				generateGame();
+			else if (r2.contains(e.getPoint()))
+				instructions();
+			else if (r3.contains(e.getPoint()))
+				getPreferences();
+
+		}
+		**/
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
-			else if(r2.contains(e.getPoint()))
-				instructions();
-			else if(r3.contains(e.getPoint()))
+			else if (r2.contains(e.getPoint()))
+				instructions(shifty);
+			else if (r3.contains(e.getPoint()))
 				getPreferences();
 		}
 	}
 
-	public class InstructionScreen extends JPanel implements MouseMotionListener, MouseListener{
+	public class InstructionScreen extends JPanel implements MouseMotionListener, MouseListener {
 
-		int shifty = 300;
+		int shifty = 420;
 
 		BufferedImage front = null, back = null;
-
 
 		public InstructionScreen() {
 
 			addMouseMotionListener(this);
 			addMouseListener(this);
-			
+
 			try {
 				back = ImageIO.read(new File("images/backInstructions.png"));
 				System.out.println("Loaded background");
@@ -268,19 +296,19 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			setPreferredSize(new Dimension(1000, 600));
 			setLayout(new GridBagLayout());
 		}
-		
+
 		@Override
-		public void paintComponent(Graphics g){
-			g.drawImage(back.getSubimage(0, shifty/3, getWidth(), getHeight()), 0, 0, null);
+		public void paintComponent(Graphics g) {
+			g.drawImage(back.getSubimage(0, shifty / 3, getWidth(), getHeight()), 0, 0, null);
 			int y = shifty;
-			if(y>500)
-				y=500;
-			if(y<50)
-				y=50;
-			BufferedImage bi = front.getSubimage(0, y-50, 1000, 600);
-			g.drawImage(bi, (getWidth()-front.getWidth())/2, (getHeight()-600)/2, null);
+			if (y > 500)
+				y = 500;
+			if (y < 50)
+				y = 50;
+			BufferedImage bi = front.getSubimage(0, y - 50, 1000, 600);
+			g.drawImage(bi, (getWidth() - front.getWidth()) / 2, (getHeight() - 600) / 2, null);
 		}
-		
+
 		public void mouseClicked(MouseEvent e) {
 			leaveInstructions();
 		}
@@ -288,25 +316,25 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mousePressed(MouseEvent e) {
 			leaveInstructions();
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			leaveInstructions();
-			
+
 		}
 
 		@Override
@@ -319,11 +347,16 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void mouseMoved(MouseEvent e) {
 			shifty = e.getY();
 			repaint();
+
+		}
+
+		public void setShiftY(int shifty) {
+			this.shifty = shifty;
 			
 		}
-		
+
 	}
-	
+
 	/*
 	 * public class StartScreen extends JPanel { JTextField carnivoresTF = new
 	 * JTextField(); JTextField herbivoresTF = new JTextField();
@@ -421,114 +454,366 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 		requestFocus();
 	}
-	
-	public void instructions(){
+
+	public void instructions(int shifty) {
+		instructionScreen.setShiftY(shifty);
 		setContentPane(instructionScreen);
 		revalidate();
 	}
-	
-	public void leaveInstructions(){
+
+	public void leaveInstructions() {
 		setContentPane(startScreen);
 		revalidate();
 	}
-	
-	public class GetPreferences extends JFrame{
-		JFrame frame = new JFrame();
+
+	public class GetPreferences extends JFrame implements WindowListener {
 		JButton set = new JButton("Set");
 		JButton cancel = new JButton("Cancel");
 		
-		JLabel carnivoresLbl = new JLabel("Carnivores:");
+		JLabel carnivoresLbl = new JLabel("Carnivores");
+		JLabel minSpeedLbl = new JLabel("Minimum Starting Speed");
+		JLabel minRadLbl = new JLabel("Minimum Starting Detect Radius:");
+		JLabel minEggLbl = new JLabel("Minimum Starting Egg Cycle Length:");
+		JLabel minEnergyLbl = new JLabel("Minimum Starting Energy:");
+		JLabel minMetabolismLbl = new JLabel("Minimum Starting Metabolism:");
+		
 		JLabel herbivoresLbl = new JLabel("Herbivores:");
+		JLabel maxSpeedLbl = new JLabel("Maximum Starting Speed");
+		JLabel maxRadLbl = new JLabel("Maximum Starting Detect Radius:");
+		JLabel maxEggLbl = new JLabel("Maximum Starting Egg Cycle Length:");
+		JLabel maxEnergyLbl = new JLabel("Maximum Starting Energy:");
+		JLabel maxMetabolismLbl = new JLabel("Maximum Starting Metabolism:");
+		
+		JLabel minFoodLbl = new JLabel("Minimum Food nutrition");
+		JLabel maxFoodLbl = new JLabel("Maximum Food nutrition");
+		
 		JTextField carnivoresTF = new JTextField();
+		JTextField minSpeedTF = new JTextField();
+		JTextField minRadTF = new JTextField();
+		JTextField minEggTF = new JTextField();
+		JTextField minEnergyTF = new JTextField();
+		JTextField minMetabolismTF = new JTextField();
+		JTextField minFoodTF = new JTextField();
+		
 		JTextField herbivoresTF = new JTextField();
+		JTextField maxSpeedTF = new JTextField();
+		JTextField maxRadTF = new JTextField();
+		JTextField maxEggTF = new JTextField();
+		JTextField maxEnergyTF = new JTextField();
+		JTextField maxMetabolismTF = new JTextField();
+		JTextField maxFoodTF = new JTextField();
 		
 		
-		public GetPreferences(){
-			frame.setSize(450,300);
-			frame.setVisible(true);
-			frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-			frame.setLocationRelativeTo(null);
-			frame.setLayout(new GridBagLayout());
+
+		public GetPreferences() {
+
+			System.out.println("Created settings");
+
+			setSize(450, 500);
+			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			setLocationRelativeTo(null);
+			setLayout(new GridBagLayout());
+
+			addWindowListener(this);
 			
 			GridBagConstraints gbc = new GridBagConstraints();
-			
+
 			gbc.anchor = GridBagConstraints.PAGE_END;
-			
+
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			gbc.weighty = 0.4;
-			gbc.insets = new Insets(0, 0, 10, 10);
-			frame.add(carnivoresLbl, gbc);
+			gbc.weighty = 0;
+			gbc.insets = new Insets(0, 0, 0, 10);
+			add(carnivoresLbl, gbc);
+			
+			gbc.gridy = 2;
+			add(minSpeedLbl, gbc);
+			
+			gbc.gridy = 4;
+			add(minRadLbl, gbc);
+			
+			gbc.gridy = 6;
+			add(minEggLbl, gbc);
+			
+			gbc.gridy = 8;
+			add(minEnergyLbl, gbc);
+			
+			gbc.gridy = 10;
+			add(minMetabolismLbl, gbc);
+			
+			gbc.gridy = 12;
+			add(minFoodLbl, gbc);
+			
 			
 			gbc.gridx = 1;
-			gbc.insets = new Insets(0, 10, 10, 0);
-			frame.add(herbivoresLbl, gbc);
+			gbc.gridy = 0;
+			gbc.insets = new Insets(0, 10, 0, 0);
+			add(herbivoresLbl, gbc);
+			
+			gbc.gridy = 2;
+			add(maxSpeedLbl, gbc);
+			
+			gbc.gridy = 4;
+			add(maxRadLbl, gbc);
+			
+			gbc.gridy = 6;
+			add(maxEggLbl, gbc);
+			
+			gbc.gridy = 8;
+			add(maxEnergyLbl, gbc);
+			
+			gbc.gridy = 10;
+			add(maxMetabolismLbl, gbc);
+			
+			gbc.gridy = 12;
+			add(maxFoodLbl, gbc);
 			
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
+			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
+			GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80");
+			GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 20000");
+			GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0");
+			GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0");
+			GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0");
+			
 			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+			GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
+			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 100");
+			GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
+			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
+			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
+			GhostText ghostTextMaxCarn = new GhostText(maxFoodTF, "Default 800.0");
+			
 			
 			gbc.gridx = 0;
 			gbc.gridy = 1;
-			gbc.weighty = 0.3;
-			gbc.insets = new Insets(10, 0, 0, 10);
+			gbc.weighty = 0.7;
+			gbc.insets = new Insets(0, 0, 10, 10);
 			carnivoresTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(carnivoresTF, gbc);
+			add(carnivoresTF, gbc);
+			
+			gbc.gridy = 3;
+			minSpeedTF.setPreferredSize(new Dimension(200, 20));
+			add(minSpeedTF, gbc);
+			
+			gbc.gridy = 5;
+			minRadTF.setPreferredSize(new Dimension(200, 20));
+			add(minRadTF, gbc);
+			
+			gbc.gridy = 7;
+			minEggTF.setPreferredSize(new Dimension(200, 20));
+			add(minEggTF, gbc);
+			
+			gbc.gridy = 9;
+			minEnergyTF.setPreferredSize(new Dimension(200, 20));
+			add(minEnergyTF, gbc);
+			
+			gbc.gridy = 11;
+			minMetabolismTF.setPreferredSize(new Dimension(200, 20));
+			add(minMetabolismTF, gbc);
+			
+			gbc.gridy = 13;
+			minFoodTF.setPreferredSize(new Dimension(200, 20));
+			add(minFoodTF, gbc);
 			
 			gbc.gridx = 1;
-			gbc.insets = new Insets(10, 10, 0, 0);
+			gbc.gridy = 1;
+			gbc.insets = new Insets(0, 10, 10, 0);
 			herbivoresTF.setPreferredSize(new Dimension(200, 20));
-			frame.add(herbivoresTF, gbc);
+			add(herbivoresTF, gbc);
+			
+			gbc.gridy = 3;
+			maxSpeedTF.setPreferredSize(new Dimension(200, 20));
+			add(maxSpeedTF, gbc);
+			
+			gbc.gridy = 5;
+			maxRadTF.setPreferredSize(new Dimension(200, 20));
+			add(maxRadTF, gbc);
+			
+			gbc.gridy = 7;
+			maxEggTF.setPreferredSize(new Dimension(200, 20));
+			add(maxEggTF, gbc);
+			
+			gbc.gridy = 9;
+			maxEnergyTF.setPreferredSize(new Dimension(200, 20));
+			add(maxEnergyTF, gbc);
+			
+			gbc.gridy = 11;
+			maxMetabolismTF.setPreferredSize(new Dimension(200, 20));
+			add(maxMetabolismTF, gbc);
+			
+			gbc.gridy = 13;
+			maxFoodTF.setPreferredSize(new Dimension(200, 20));
+			add(maxFoodTF, gbc);
 			
 			cancel.addActionListener(new MouseListener());
 			set.addActionListener(new MouseListener());
-			
+
 			cancel.setPreferredSize(new Dimension(80, 30));
 			set.setPreferredSize(new Dimension(80, 30));
-			
+
 			gbc.gridx = 0;
-			gbc.gridy = 2;
+			gbc.gridy = 14;
 			gbc.weighty = 0.3;
-			frame.add(cancel, gbc);
-			
+			add(cancel, gbc);
+
 			gbc.gridx = 1;
-			frame.add(set, gbc);
+			add(set, gbc);
 		}
-		
-		class MouseListener implements ActionListener{
-			public void actionPerformed(ActionEvent e){
-				if(e.getSource() == cancel){
-					frame.setVisible(false);
-					frame.dispose();
-				}
-				else if(e.getSource() == set){
-					try{
+
+		class MouseListener implements ActionListener {
+			public void actionPerformed(ActionEvent e) {
+				if (e.getSource() == cancel) {
+					setVisible(false);
+					dispose();
+				} else if (e.getSource() == set) {
+					try {
 						startingCarnivores = Integer.parseInt(carnivoresTF.getText());
+					} catch (NumberFormatException ev) {
+					}
+
+					try {
+						startingHerbivores = Integer.parseInt(herbivoresTF.getText());
+					} 
+					catch (NumberFormatException ev) {
+					}
+
+					try{
+						startMinSpeed = Integer.parseInt(minSpeedTF.getText());
 					}
 					catch(NumberFormatException ev){
 					}
 					
 					try{
-						startingHerbivores = Integer.parseInt(herbivoresTF.getText());
+						startMaxSpeed = Integer.parseInt(maxSpeedTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMinRad = Integer.parseInt(minRadTF.getText());
 					}
 					catch(NumberFormatException ev){
 					}
 					
-					frame.setVisible(false);
-					frame.dispose();
+					try{
+						startMaxRad = Integer.parseInt(maxRadTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMinEgg = Integer.parseInt(minEggTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					
+					try{
+						startMaxEgg = Integer.parseInt(maxEggTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMinEnergy = Integer.parseInt(minEnergyTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					
+					try{
+						startMaxEnergy = Integer.parseInt(maxEnergyTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMinMetabolism = Integer.parseInt(minMetabolismTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					
+					try{
+						startMaxMetabolism = Integer.parseInt(maxMetabolismTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMinFood = Integer.parseInt(minFoodTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					try{
+						startMaxFood = Integer.parseInt(maxFoodTF.getText());
+					}
+					catch(NumberFormatException ev){
+					}
+					setVisible(false);
+					settingsOpen = false;
 				}
 			}
 		}
+
+		@Override
+		public void windowActivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowClosed(WindowEvent e) {
+			setVisible(false);
+			settingsOpen = false;
+		}
+
+		@Override
+		public void windowClosing(WindowEvent e) {
+			setVisible(false);
+			settingsOpen = false;
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowIconified(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowOpened(WindowEvent e) {
+			// TODO Auto-generated method stub
+
+		}
 	}
 
-	public void getPreferences(){
-		GetPreferences getPreferences = new GetPreferences();
+
+	public void getPreferences() {
+		System.out.println(settingsOpen);
+		if (!settingsOpen) {
+			getPreferences.setVisible(true);
+			settingsOpen = true;
+		}
 	}
-	
+
 	public void generateGame() {
-		System.out.println("startingCarnivores: " + startingCarnivores);
-		System.out.println("startingHerbivores: " + startingHerbivores);
-		gamePane = new GamePane(drawWidth, drawHeight, startingCarnivores, startingHerbivores);
+		
+		sort();
+		gamePane = new GamePane(drawWidth, drawHeight, 
+				startingCarnivores, startingHerbivores, 
+				startMinSpeed, startMaxSpeed, 
+				startMinRad, startMaxRad, 
+				startMinEgg, startMaxEgg, 
+				startMinEnergy, startMaxEnergy, 
+				startMinMetabolism, startMaxMetabolism, 
+				startMinFood, startMaxFood);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		startSim = false;
@@ -575,6 +860,87 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		System.out.println(getWidth() + " " + getHeight());
 	}
 
+	public void sort(){
+		int temp;
+		double temp2;
+		if (startingCarnivores < 0)
+			startingCarnivores = 0;
+		else if (startingCarnivores > 50)
+			startingCarnivores = 50;
+		
+		if (startingHerbivores < 0)
+			startingHerbivores = 0;
+		else if (startingHerbivores > 50)
+			startingHerbivores = 50;
+		
+		if (startMinSpeed > startMaxSpeed){
+			temp = startMinSpeed;
+			startMinSpeed = startMaxSpeed;
+			startMaxSpeed = temp;
+		}
+		
+		if (startMinRad > startMaxRad){
+			temp = startMinRad;
+			startMinRad = startMaxRad;
+			startMaxRad = temp;
+		}
+		
+		if (startMinEgg> startMaxEgg){
+			temp = startMinEgg;
+			startMinEgg= startMaxEgg;
+			startMaxEgg= temp;
+		}
+		
+		if (startMinEnergy > startMaxEnergy){
+			temp2 = startMinEnergy;
+			startMinEnergy = startMaxEnergy;
+			startMaxEnergy = temp2;
+		}
+		
+		if (startMinMetabolism > startMaxMetabolism){
+			temp2 = startMinMetabolism;
+			startMinMetabolism = startMaxMetabolism;
+			startMaxMetabolism = temp2;
+		}
+		
+		if (startMinFood > startMaxFood){
+			temp2 = startMinFood;
+			startMinFood = startMaxFood;
+			startMaxFood = temp2;
+		}
+		
+		if (startMinSpeed < 2)
+			startMinSpeed = 2;
+		if (startMaxSpeed > 9)
+			startMaxSpeed = 9;
+		
+		if (startMinRad < 80)
+			startMinRad = 80;
+		if (startMaxRad > 100)
+			startMaxRad = 100;
+		
+		if (startMinEgg < 20000)
+			startMinEgg = 20000;
+		if (startMaxEgg > 40000)
+			startMaxEgg = 40000;
+		
+		if (startMinEnergy < 6000.0)
+			startMinEnergy = 6000.0;
+		if (startMaxEnergy > 9000.0)
+			startMaxEnergy = 9000.0;
+		
+		if (startMinMetabolism < 80.0)
+			startMinMetabolism = 80.0;
+		if (startMaxMetabolism > 120.0)
+			startMaxMetabolism = 120.0;
+		
+		if (startMinFood < 200.0)
+			startMinFood = 200.0;
+		if (startMaxFood > 800.0)
+			startMaxFood = 800.0;
+			
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (gameStatus) {
@@ -616,7 +982,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		Main simulation = new Main();
 
 	}
-	
+
 	class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
 		private final JTextField textfield;
 		private boolean isEmpty;

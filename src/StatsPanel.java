@@ -50,7 +50,7 @@ public class StatsPanel extends JPanel {
 			temp = selectedOrg.getStats();
 		}
 
-		
+/*		
 		if(temp != null){
 			for (int i = 0; i < statLabel.size(); i++) {
 				if (i < temp.size())
@@ -58,7 +58,7 @@ public class StatsPanel extends JPanel {
 				else
 					statLabel.get(i).setText(" ");
 			}
-		}
+		}*/
 		else if (selectedEgg != null){
 			temp = selectedEgg.getStats();
 		}

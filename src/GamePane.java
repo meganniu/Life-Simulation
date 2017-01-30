@@ -29,12 +29,61 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	int width;
 	int height;
+	int startingCarnivores, startingHerbivores;
+	int startMinSpeed, startMaxSpeed; 
+	int startMinRad, startMaxRad;
+	int startMinEgg, startMaxEgg;
+	double startMinEnergy, startMaxEnergy;
+	double startMinMetabolism, startMaxMetabolism;
+	double startMinFood, startMaxFood;
 	private DrawArea drawArea;
 
+<<<<<<< HEAD
 	Organism finalOrg;
 	
 	public GamePane(int width, int height, int startingCarnivores, int startingHerbivores) {
 		drawArea = new DrawArea(startingCarnivores, startingHerbivores);
+=======
+	public GamePane(int width, int height, 
+			int startingCarnivores, int startingHerbivores, 
+			int startMinSpeed, int startMaxSpeed, 
+			int startMinRad, int startMaxRad, 
+			int startMinEgg, int startMaxEgg, 
+			double startMinEnergy, double startMaxEnergy, 
+			double startMinMetabolism, double startMaxMetabolism, 
+			double startMinFood, double startMaxFood) {
+		this.startingCarnivores = startingCarnivores;
+		this.startingHerbivores = startingHerbivores;
+		
+		this.startMinSpeed = startMinSpeed;
+		this.startMaxSpeed = startMaxSpeed;
+		
+		this.startMinRad = startMinRad;
+		this.startMaxRad = startMaxRad;
+		
+		this.startMinEgg = startMinEgg;
+		this.startMaxEgg = startMaxEgg;
+		
+		this.startMinEnergy = startMinEnergy;
+		this.startMaxEnergy = startMaxEnergy;
+		
+		this.startMinMetabolism = startMinMetabolism;
+		this.startMaxMetabolism = startMaxMetabolism;
+		
+		this.startMinFood = startMinFood;
+		this.startMaxFood = startMaxFood;
+		
+		drawArea = new DrawArea(startingCarnivores, startingHerbivores, 
+				startMinSpeed, startMaxSpeed, 
+				startMinRad, startMaxRad, 
+				startMinEgg, startMaxEgg, 
+				startMinEnergy, startMaxEnergy, 
+				startMinMetabolism, startMaxMetabolism, 
+				startMinFood, startMaxFood);
+		
+	//public GamePane(int width, int height) {
+		//drawArea = new DrawArea();
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 		this.width = width;
 		this.height = height;
 
@@ -100,6 +149,10 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	public void tick() { // Per tick
 		drawArea.updatePositions();
 		drawArea.decayFood();
+<<<<<<< HEAD
+=======
+		drawArea.eat();
+>>>>>>> 57b166f281690745f66847b996cd36aaa9b5d006
 		drawArea.spawnFood();
 		drawArea.layEggs();
 		drawArea.hatchEggs();
@@ -149,21 +202,6 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	public void paint(Graphics g) {
 		render();
-	}
-
-	public BufferedImage blur(BufferedImage img) {
-		int radius = 11;
-		int size = radius * 2 + 1;
-		float weight = 1.0f / (size * size);
-		float[] data = new float[size * size];
-
-		for (int i = 0; i < data.length; i++) {
-			data[i] = weight;
-		}
-
-		Kernel kernel = new Kernel(size, size, data);
-		BufferedImageOp op = new ConvolveOp(kernel, ConvolveOp.EDGE_ZERO_FILL, null);
-		return op.filter(img, null);
 	}
 
 	@Override
