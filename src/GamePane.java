@@ -1,4 +1,5 @@
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImageOp;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.text.DecimalFormat;
-
+import java.util.ArrayList;
 import java.awt.Rectangle;
 
 public class GamePane extends Canvas implements MouseListener, Runnable {
@@ -37,6 +38,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	double startMinFood, startMaxFood;
 	long chaseLength;
 	private DrawArea drawArea;
+
+	Organism finalOrg;
 
 	public GamePane(int width, int height, 
 			int startingCarnivores, int startingHerbivores, 
@@ -78,9 +81,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinMetabolism, startMaxMetabolism, 
 				startMinFood, startMaxFood,
 				chaseLength);
-		
-	//public GamePane(int width, int height) {
-		//drawArea = new DrawArea();
+
 		this.width = width;
 		this.height = height;
 
@@ -152,6 +153,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.hatchEggs();
 		drawArea.energyCheck();
 		drawArea.eatCheck();
+		if((finalOrg = drawArea.checkEnd()) != null && timeElapsed > 10){
+			stop();
+		}
 		Main.statsPanel.updateStats();
 	}
 
@@ -167,6 +171,23 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				drawRegion.width / 2, drawRegion.height / 2, null);
 		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: "
 				+ new DecimalFormat("#.###").format(timeElapsed / 1000.0) + "s", 5, 15);
+		
+		if(finalOrg != null){
+			g.setColor(Color.white);
+			g.fillRect((450) / 2, 150 / 2, 150, 250);
+			
+			g.setColor(Color.black);
+			g.drawRect((450) / 2, 150 / 2, 150, 250);
+			
+			g.drawString("Simulation Over!", (500) / 2 + 6, (height - 400) / 2 + 10);
+			g.drawString("Only one organism left", (500) / 2 - 12, (height - 400) / 2 + 25);
+			ArrayList<String> rawStats = finalOrg.getFinalStats();
+			
+			for (int i = 0; i < rawStats.size(); i++){
+				g.drawString(rawStats.get(i), (500) / 2 - 12, (height - 400) / 2 + (40 + 15 * i));
+			}
+		}
+		
 		g.dispose();
 		bs.show();
 	}

@@ -106,7 +106,7 @@ public class Herbivore extends Organism {
 	
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
-		stats.add("<html><pre><span style=\"font-family: arial\">Herbivore");
+		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tHerbivore</span></pre><html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
@@ -119,6 +119,22 @@ public class Herbivore extends Organism {
 
 		return stats;
 
+	}
+	
+	public ArrayList<String> getFinalStats(){
+		ArrayList<String> stats = new ArrayList<String>();
+		stats.add("Type:  Herbivore");
+		stats.add("Position:  (" + pos.x + ", " + pos.y + ")");
+		stats.add("Angle:  " + (int) angle + " deg");
+		stats.add("Speed:  " + speed);
+		stats.add("R. Detection:  " +  detectRadius);
+		stats.add("Egg Counter:  " + eggCycle);
+		stats.add("Carnivorism:  " + carnivorePoints);
+		stats.add("Energy:  " + new DecimalFormat("#.##").format(energy));
+		stats.add("Metabolism:  " + new DecimalFormat("#.##").format(metabolism) );
+		stats.add("Chase Length:  " + chaseLength);
+		stats.add("Time Alive:  " + (GamePane.timeElapsed - timeBorn));
+		return stats;
 	}
 	
 	public void eat() {

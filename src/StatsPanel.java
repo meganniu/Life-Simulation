@@ -45,7 +45,6 @@ public class StatsPanel extends JPanel {
 	}
 
 	public void updateStats() {
-		
 		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();
 		}
