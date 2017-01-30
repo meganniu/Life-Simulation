@@ -36,15 +36,15 @@ public class Carnivore extends Organism {
 	
 	/**
 	 * Carnivore constructor
-	 * @param pos Point position
-	 * @param angle Double angle
-	 * @param speed	Int speed
-	 * @param detectRadius radius of detection for herbivores
+	 * @param pos position
+	 * @param angle angle
+	 * @param speed	speed
+	 * @param detectRadius radius of detection to search for hebivores
 	 * @param eggCycle time till hatching of eggs layed
 	 * @param carnivorePoints 
-	 * @param energy Double energy of carnivore
-	 * @param metabolism Double speed of energy use, metabolism
-	 * @param chaseLength Time until carnivore gives up chase of a herbivore
+	 * @param energy energy of carnivore
+	 * @param metabolism speed of energy use, metabolism
+	 * @param chaseLength time until carnivore gives up chase of a herbivore
 	 */
 	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
@@ -52,32 +52,11 @@ public class Carnivore extends Organism {
 		img = DrawArea.cImg;
 	}
 
-<<<<<<< HEAD
-	/**
-	 * draw green oval around carnivore image
-	 * @param b if carnivore is selected by user
-	 */
-	public void setSelected(boolean b) {
-		BufferedImage img = new BufferedImage(32, 32, BufferedImage.TYPE_INT_ARGB);
-		Graphics g = img.getGraphics();
-		g.drawImage(DrawArea.cImg, 0, 0, null);
-		selected = b;
-		if (b) {
-			Color green = new Color(0, 255, 0, 100);
-			g.setColor(green);
-			g.fillOval(0, 0, 48, 48);
-			g.setColor(Color.green);
-			g.drawOval(0, 0, 48, 48);
-		}
-		this.img = img;
-	}
+
 
 	/**
 	 * detect closest herbivore within detection radius
 	 */
-=======
-
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public double detectItem() {
 		double shortestDistance = -1;
 		int indexOfClosest = -1;

@@ -9,16 +9,36 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Displays stats of selected object in simulation
+ */
 public class StatsPanel extends JPanel {
+	/**
+	 * title
+	 */
 	private JLabel title = new JLabel("Organsim Stats");
+	
+	/**
+	 * ArrayList holding stat labels
+	 */
 	private ArrayList<JLabel> statLabel = new ArrayList<JLabel>();
 
+	/**
+	 * ArrayLIst holding stat strings
+	 */
 	protected static ArrayList<String> temp = new ArrayList<String>();
 
+	/**
+	 * selected obj for which to display stats
+	 */
 	protected static Organism selectedOrg = null;
 	protected static Egg selectedEgg = null;
 	protected static Food selectedFood = null;
 	
+	
+	/**
+	 * StatsPanel constructor
+	 */
 	public StatsPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
@@ -42,6 +62,9 @@ public class StatsPanel extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Update stats of object during simulation
+	 */
 	public void updateStats() {
 		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();

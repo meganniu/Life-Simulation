@@ -5,15 +5,37 @@ import java.awt.image.BufferedImage;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+/**
+ * Herbivore organism object
+ */
 public class Herbivore extends Organism {
 
+	/**
+	 * time at which herbivore was born
+	 */
 	private long timeBorn;
+	
+	/**
+	 * Herbivore constructor
+	 * @param pos position
+	 * @param angle angle
+	 * @param speed	speed
+	 * @param detectRadius radius of detection to search for food
+	 * @param eggCycle time till hatching of eggs layed
+	 * @param carnivorePoints 
+	 * @param energy energy of herbivore
+	 * @param metabolism speed of energy use, metabolism
+	 * @param chaseLength time until carnivore gives up chase of a herbivore
+	 */
 	public Herbivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
 		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, 5000);
 		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.hImg;
 	}
 
+	/**
+	 * Detect closest food object withing detection radius
+	 */
 	public double detectItem() {
 
 		double shortestDistance = -1;
@@ -70,6 +92,9 @@ public class Herbivore extends Organism {
 		}
 	}
 
+	/**
+	 * Lay egg if ready
+	 */
 	public void layEgg(){
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
@@ -81,6 +106,10 @@ public class Herbivore extends Organism {
 		}
 	}
 	
+	/**
+	 * Create arraylist of stats in html format for display in statsPanel
+	 * @return Arraylist of stats in html format
+	 */
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tHerbivore</span></pre><html>");
@@ -98,6 +127,10 @@ public class Herbivore extends Organism {
 
 	}
 	
+	/**
+	 * Create arraylist of stats in plain strings
+	 * @return ArrayList of stats 
+	 */
 	public ArrayList<String> getFinalStats(){
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("Type:  Herbivore");
@@ -114,6 +147,9 @@ public class Herbivore extends Organism {
 		return stats;
 	}
 	
+	/**
+	 * If encountered, eat food
+	 */
 	public void eat() {
 		for (int i = 0; i < DrawArea.food.size(); i++) {
 			Point hPoint = DrawArea.food.get(i).getPoint();

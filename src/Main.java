@@ -37,39 +37,131 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import javafx.scene.media.AudioClip;
-
+/**
+ * Driver class of simulation
+ */
 public class Main extends JFrame implements KeyListener, ActionListener {
-
+	
+	/**
+	 * displayed when simulation starts
+	 */
 	JPanel gameScreen = new JPanel(new GridBagLayout());
+	
+	/**
+	 * displayed when program begins, before simulation
+	 */
 	StartScreen startScreen = new StartScreen();
+	
+	/**
+	 * displayed when instructions requested
+	 */
 	InstructionScreen instructionScreen = new InstructionScreen();
+	
+	/**
+	 * displayed when user wished to set beginning stats
+	 */
 	GetPreferences getPreferences = new GetPreferences();
 
+	
+	/**
+	 * if the simulation is running
+	 */
 	boolean gameStatus = false;
 	boolean settingsOpen = false;
+	
+	/**
+	 * if user wishes to add a carnivore
+	 */
 	static boolean addingCarnivore = false;
+	
+	/**
+	 * if user wishes to add a herbivore
+	 */
 	static boolean addingHerbivore = false;
 
-	boolean startSim; // true to start sim, false to pause sim
+	/**
+	 * true to start sim, false to pause sim
+	 */
+	boolean startSim;
+	
+	/**
+	 * width and height of display area for simulation graphics
+	 */
 	private static int drawWidth = 600, drawHeight = 600;
+	
+	/**
+	 * chasing time of organisms
+	 */
 	public static int chaseCD = 4000;
+	
+	/**
+	 * rate at which food spawns
+	 */
 	public static int foodSpawnRate = 3;
+	
+	/**
+	 * rate at which food decays
+	 */
 	public static double foodDecayRate = 1.0;
+	
+	/**
+	 * rate at which energy decreases
+	 */
 	public static double energyDecayRate = 1.0;
+	
+	/**
+	 * minimum energy required
+	 */
 	public static double energyReq = 6000.0;
+	
+	/**
+	 * default energy of a newborn
+	 */
 	public static double newbornEnergy = 4000.0;
+	
+	/**
+	 * maximum energy of an organism
+	 */
 	public static double maximumEnergy = 15000.0;
+	
+	/**
+	 * hatch time of an egg
+	 */
 	public static long hatchTime = 10000;
+	
+	/**
+	 * GamePane for controlling the passage of ticks and updating of simulation graphics
+	 */
 	GamePane gamePane;
+	
+	/**
+	 * control panel to move around simulation graphics
+	 */
 	JButton up = new JButton("^");
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
 	JButton left = new JButton("<");
+	
+	/**
+	 * start button for simulation
+	 * switched to pause button when simulation is running
+	 */
 	JButton go = new JButton("Start");
 	static JButton startBtn = new JButton("Start");
+	
+	/**
+	 * button to add carnivore
+	 */
 	static JButton addCarnivore = new JButton("Add Carnivore");
+	
+	/**
+	 * button to add herbivore
+	 */
 	static JButton addHerbivore = new JButton("Add Herbivore");
 
+	/**
+	 * default starting stats
+	 */
 	int startingCarnivores = 3;
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
@@ -78,14 +170,15 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
-<<<<<<< HEAD
-	long chaseLength = 5000;
-=======
 	long chaseLength = 15000;
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 
+	/**
+	 * Display start screen
+	 */
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
-
+		/**
+		 * tracks dynamic shifting of backmost image layer
+		 */
 		int shiftx = 500, shifty = 300;
 
 		// Parallax factors (B = back, F = front, Btn = buttons --- X is x
@@ -97,13 +190,25 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		// Background moves slower than foreground
 		double PBX = 20, PBY = 16, PFX = 10, PFY = 6, PBtnX = 13, PBtnY = 10;
 
+		/**
+		 * images to be displayed
+		 */
 		BufferedImage front = null, frontSel = null, btn1 = null, btn1Sel = null, btn2 = null, btn2Sel = null;
 		BufferedImage back = null;
 
+		/**
+		 * get which areas are selected
+		 */
 		boolean selected1, selected2, selected3;
 
+		/**
+		 * audio effect for when mouse is dragged across component
+		 */
 		AudioClip click = new AudioClip(new File("sounds/click.wav").toURI().toString());
 
+		/**
+		 * areas that subsitute buttons
+		 */
 		Shape r1 = new Ellipse2D.Double((getWidth() - 730) / 2 - (int) ((shiftx - 500) / PFX) + 175 + 12,
 				(getHeight() - 420) / 2 - (int) ((shifty - 400) / PFY) - 75 + 32, 355, 355);
 		Shape r2 = new Ellipse2D.Double(getWidth() / 2 - 250 - 50 - (int) ((shiftx - 500) / PBtnX) + 63,
@@ -111,6 +216,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		Shape r3 = new Ellipse2D.Double(getWidth() / 2 + 50 - (int) ((shiftx - 500) / PBtnX) + 63,
 				10 + 400 - (int) ((shifty - 400) / PBtnY), 125, 125);
 
+		/**
+		 * StartScreen constructor
+		 */
 		public StartScreen() {
 
 			addMouseMotionListener(this);
@@ -139,6 +247,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			setLayout(new GridBagLayout());
 		}
 
+		/**
+		 * Update graphics of start screen
+		 */
 		public void paintComponent(Graphics g) {
 			g.drawImage(back.getSubimage((int) (shiftx / PBX), (int) (shifty / PBY), getWidth() + 50, getHeight()), 0,
 					0, null);
@@ -165,6 +276,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 						400 - (int) ((shifty - 400) / PBtnY), null);
 		}
 
+		/**
+		 * Detects movement of mouse and mouse clicks
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 
@@ -199,6 +313,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			repaint();
 		}
 
+		/**
+		 * Detects movement of mouse and mouse clicks
+		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
 
@@ -234,6 +351,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		}
 
+		/**
+		 * Detects mouse clicks and loads different screens accordingly
+		 */
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
@@ -255,6 +375,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			// TODO Auto-generated
 		}
 
+		/**
+		 * Detects mouse clicks and loads different screens accordingly
+		 */		
 		public void mousePressed(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
@@ -264,6 +387,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				getPreferences();
 		}
 
+		/**
+		 * Detects mouse clicks and loads different screens accordingly
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
@@ -275,12 +401,18 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
+	/**
+	 * Displays instruction screen
+	 */
 	public class InstructionScreen extends JPanel implements MouseMotionListener, MouseListener {
 
 		int shifty = 420;
 
 		BufferedImage front = null, back = null;
 
+		/**
+		 * Instruction screen constructor
+		 */
 		public InstructionScreen() {
 
 			addMouseMotionListener(this);
@@ -299,6 +431,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			setLayout(new GridBagLayout());
 		}
 
+		/**
+		 * Display graphics of instruction screen
+		 */
 		@Override
 		public void paintComponent(Graphics g) {
 			g.drawImage(back.getSubimage(0, shifty / 3, getWidth(), getHeight()), 0, 0, null);
@@ -326,25 +461,37 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			// TODO Auto-generated method stub
 
 		}
-
+		
+		/**
+		 * Leave instructions if mouse is pressed
+		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
 			leaveInstructions();
 
 		}
 
+		/**
+		 * Leave instructions if mouse is pressed
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			leaveInstructions();
 
 		}
 
+		/**
+		 * Scroll down instructions when mouse is moved
+		 */
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			shifty = e.getY();
 			repaint();
 		}
 
+		/**
+		 * Scroll down instructions when mouse is moved
+		 */
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			shifty = e.getY();
@@ -352,6 +499,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		}
 
+		/**
+		 * Scroll down instructions when mouse is moved
+		 */
 		public void setShiftY(int shifty) {
 			this.shifty = shifty;
 
@@ -359,50 +509,14 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	}
 
-	/*
-	 * public class StartScreen extends JPanel { JTextField carnivoresTF = new
-	 * JTextField(); JTextField herbivoresTF = new JTextField();
-	 * 
-	 * JLabel carnivoresLbl = new JLabel("Carnivores:"); JLabel herbivoresLbl =
-	 * new JLabel("Herbivores:");
-	 * 
-	 * public StartScreen() { this.setPreferredSize(new Dimension(1000, 800));
-	 * this.setLayout(new GridBagLayout());
-	 * 
-	 * GridBagConstraints gbc = new GridBagConstraints();
-	 * 
-	 * gbc.anchor = GridBagConstraints.PAGE_END;
-	 * 
-	 * gbc.gridx = 0; gbc.gridy = 0; gbc.weighty = 0.7; gbc.insets = new
-	 * Insets(0, 0, 10, 10); this.add(carnivoresLbl, gbc);
-	 * 
-	 * gbc.gridx = 1; gbc.insets = new Insets(0, 10, 10, 0);
-	 * this.add(herbivoresLbl, gbc);
-	 * 
-	 * gbc.anchor = GridBagConstraints.PAGE_START; GhostText ghostTextC = new
-	 * GhostText(carnivoresTF, "Carnivores to start"); GhostText ghostTextH =
-	 * new GhostText(herbivoresTF, "Herbivores to start");
-	 * 
-	 * gbc.gridx = 0; gbc.gridy = 1; gbc.weighty = 0.05; gbc.insets = new
-	 * Insets(0, 0, 0, 10); carnivoresTF.setPreferredSize(new Dimension(200,
-	 * 20)); this.add(carnivoresTF, gbc);
-	 * 
-	 * gbc.gridx = 1; gbc.insets = new Insets(0, 10, 0, 0);
-	 * herbivoresTF.setPreferredSize(new Dimension(200, 20));
-	 * this.add(herbivoresTF, gbc);
-	 * 
-	 * gbc.insets = new Insets(0, 0, 0, 0); gbc.gridx = 0; gbc.gridy = 2;
-	 * gbc.gridwidth = 2; gbc.weighty = 0.1; gbc.anchor =
-	 * GridBagConstraints.PAGE_START; gbc.fill = GridBagConstraints.HORIZONTAL;
-	 * this.add(Main.startBtn, gbc);
-	 * 
-	 * }
-	 * 
-	 * }
+	/**
+	 * Panel on which to display stats of objects
 	 */
-
 	static StatsPanel statsPanel = new StatsPanel();
 
+	/**
+	 * Main constructor
+	 */
 	public Main() {
 
 		addKeyListener(this);
@@ -410,7 +524,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		this.requestFocusInWindow();
 
 		GamePane.drawRegion = new Rectangle(0, 0, drawWidth * 2, drawHeight * 2);
-
 		startBtn.addActionListener(this);
 
 		setContentPane(startScreen);
@@ -425,6 +538,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
+	/**
+	 * Receive user inputs to scroll across simulation drawing 
+	 */
 	public void actionPerformed(ActionEvent e) {
 		if (gameStatus) {
 			if (e.getSource() == go) {
@@ -479,21 +595,41 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		requestFocus();
 	}
 
+	/**
+	 * Display instruction screen
+	 * @param shifty section of instructions to display from
+	 */
 	public void instructions(int shifty) {
 		instructionScreen.setShiftY(shifty);
 		setContentPane(instructionScreen);
 		revalidate();
 	}
 
+	/**
+	 * Leave instructions screen
+	 */
 	public void leaveInstructions() {
 		setContentPane(startScreen);
 		revalidate();
 	}
 
+	/**
+	 * Get starting stats from user
+	 */
 	public class GetPreferences extends JFrame implements WindowListener {
+		/**
+		 * set beginning stats
+		 */
 		JButton set = new JButton("Set");
+		
+		/**
+		 * cancel begining stats
+		 */
 		JButton cancel = new JButton("Cancel");
 
+		/**
+		 * stat labels
+		 */
 		JLabel carnivoresLbl = new JLabel("Carnivores");
 		JLabel minSpeedLbl = new JLabel("Minimum Starting Speed");
 		JLabel minRadLbl = new JLabel("Minimum Starting Detect Radius");
@@ -521,6 +657,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JLabel maximumEnergyLbl = new JLabel("Maximum possible energy");
 		JLabel eggHatchLbl = new JLabel("Egg hatch time");
 		
+		/**
+		 * stat text fields
+		 */
 		JTextField carnivoresTF = new JTextField();
 		JTextField minSpeedTF = new JTextField();
 		JTextField minRadTF = new JTextField();
@@ -549,6 +688,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField maximumEnergyTF = new JTextField();
 		JTextField eggHatchTF = new JTextField();
 		
+		/**
+		 * GetPreferences constructor
+		 */
 		public GetPreferences() {
 
 			System.out.println("Created settings");
@@ -779,6 +921,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			add(set, gbc);
 		}
 
+		/**
+		 * Read in user input if user "sets" stats
+		 */
 		class MouseListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == cancel) {
@@ -938,6 +1083,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
+	/**
+	 * Get user preferences 
+	 */
 	public void getPreferences() {
 		System.out.println(settingsOpen);
 		if (!settingsOpen) {
@@ -946,6 +1094,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 	}
 
+	/**
+	 * Populate game pane with components necessary to display simulation
+	 */
 	public void generateGame() {
 
 		sort();
@@ -1012,25 +1163,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gameScreen.add(sidePanel, gbc);
-		/**
-		gbc.gridheight = 1;
-		gbc.gridx = 2;
-		gbc.gridy = 0;
-		gbc.weightx = 0;
-		gbc.weighty = 0;
-		gameScreen.add(go, gbc);
-		
-		gbc.gridy = 1;
-		gameScreen.add(controlPanel, gbc);
-
-
-		
-		gbc.gridy = 2;
-		gameScreen.add(addCarnivore, gbc);
-		
-		gbc.gridy = 3;
-		gameScreen.add(addHerbivore, gbc);
-		**/
 		
 		addCarnivore.setIcon(new ImageIcon(DrawArea.cImg));
 		addHerbivore.setIcon(new ImageIcon(DrawArea.hImg));
@@ -1042,6 +1174,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		System.out.println(getWidth() + " " + getHeight());
 	}
 
+	/**
+	 * check that starting stats entered by user are valid
+	 */
 	public void sort() {
 		int temp;
 		double temp2;
@@ -1167,6 +1302,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			hatchTime = 30000;
 	}
 
+	/**
+	 * Alternative keyboard controls for moving around simulation display
+	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (gameStatus) {
@@ -1208,6 +1346,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 	}
 
+	/**
+	 * GhostText implemented in textfields of preferences menu
+	 * Code taken from http://stackoverflow.com/questions/10506789/how-to-display-faint-gray-ghost-text-in-a-jtextfield
+	 */
 	class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
 		private final JTextField textfield;
 		private boolean isEmpty;

@@ -15,21 +15,65 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.awt.Rectangle;
 
+/**
+ * Control ticks and actions performed each tick
+ */
 public class GamePane extends Canvas implements MouseListener, Runnable {
 
+	/**
+	 * is the simulation running
+	 */
 	static boolean running = false;
+	
+	/**
+	 * thread on which simulation is running
+	 */
 	private Thread thread;
+	
+	/**
+	 * tick count per second
+	 */
 	private int tickCount;
+	
+	/**
+	 * frame count per second
+	 */
 	private int frameCount;
 
+	/**
+	 * region on which to draw the simulation
+	 */
 	static Rectangle drawRegion;
 
-	static long timeElapsed = 0; // In milliseconds
+	/**
+	 * time elapsed in milliseconds
+	 */
+	static long timeElapsed = 0;
+	
+	/**
+	 * time to add to timeElapsed
+	 */
 	private long timeToAdd = 0;
+	
+	/**
+	 * ticks elapsed
+	 */
 	static long tickCounter = 0;
 
+	/**
+	 * width of drawRegion
+	 */
 	int width;
+	
+	/**
+	 * height of drawRegion
+	 */
 	int height;
+	
+	/**
+	 * conditions set force by user
+	 * automatically generated if not set
+	 */
 	int startingCarnivores, startingHerbivores;
 	int startMinSpeed, startMaxSpeed; 
 	int startMinRad, startMaxRad;
@@ -40,8 +84,31 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	long chaseLength;
 	private DrawArea drawArea;
 
+	/**
+	 * last organism remaining
+	 */
 	Organism finalOrg;
 
+	/**
+	 * GamePane constructor
+	 * @param width width of drawRegion
+	 * @param height height of drawRegion
+	 * @param startingCarnivores amount of carnivores to start
+	 * @param startingHerbivores amount of herbivores to start
+	 * @param startMinSpeed minimum starting speed
+	 * @param startMaxSpeed maximum starting speed
+	 * @param startMinRad minimum starting radius of detection
+	 * @param startMaxRad maximum starting radius of detection
+	 * @param startMinEgg minimum starting amount of eggs
+	 * @param startMaxEgg maximum starting amount of eggs
+	 * @param startMinEnergy minimum starting amount of energy
+	 * @param startMaxEnergy maximum starting amount of energy
+	 * @param startMinMetabolism minimum starting metabolism speed
+	 * @param startMaxMetabolism maximum starting matabolism speed
+	 * @param startMinFood minimum amount of starting food
+	 * @param startMaxFood maximum amount of starting food
+	 * @param chaseLength chase length for all organisms
+	 */
 	public GamePane(int width, int height, 
 			int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 
@@ -80,13 +147,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEgg, startMaxEgg, 
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
-<<<<<<< HEAD
-				startMinFood, startMaxFood, chaseLength);
-
-=======
 				startMinFood, startMaxFood,
 				chaseLength);
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 
 		this.width = width;
 		this.height = height;
@@ -96,6 +158,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	}
 
+	/**
+	 * Start or resume simulation
+	 */
 	public synchronized void start() {
 		if (running)
 			return;
@@ -105,6 +170,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		thread.start();
 	}
 
+	/**
+	 * End or pause simulation
+	 */
 	public synchronized void stop() {
 		if (!running)
 			return;
@@ -117,6 +185,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		}
 	}
 
+	/**
+	 * Accumulates counters concerning ticks and time
+	 */
 	@Override
 	public void run() {
 		long lastTime = System.nanoTime();
@@ -150,6 +221,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		}
 	}
 
+	/**
+	 * Actions performed every tick, updates the data of the simulation
+	 */
 	public void tick() { // Per tick
 		drawArea.updatePositions();
 		drawArea.decayFood();
@@ -165,6 +239,9 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		Main.statsPanel.updateStats();
 	}
 
+	/**
+	 * Updates the graphics of the simulation
+	 */
 	public void render() {
 		BufferStrategy bs = getBufferStrategy();
 		if (bs == null) {
@@ -198,10 +275,16 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		bs.show();
 	}
 
+	/**
+	 * Updating the graphics
+	 */
 	public void paint(Graphics g) {
 		render();
 	}
 
+	/**
+	 * Detect when object of simulation is selected by player
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		boolean orgFound = false;

@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * Egg object which hatched into an organism with evolved traits
  */
 public class Egg {
-<<<<<<< HEAD
 	/**
 	 * egg image
 	 */
@@ -63,6 +62,8 @@ public class Egg {
 	 */
 	private long chaseLength;
 
+	private int dSpeed, dDR, dMetabolism, dCP, dCL, dEC;
+	
 	/**
 	 * Egg constructor
 	 * @param pos position of parent
@@ -74,36 +75,9 @@ public class Egg {
 	 * @param metabolism metabolism of parent
 	 * @param chaseLength chase length of paretn
 	 */
-	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double metabolism, long chaseLength) {
-		
-=======
-	private BufferedImage img;
-
-	private Point pos;
-
-	private Rectangle hitbox;
-
-	private double angle;
-
-	private int speed;// ticks/pixel
-	protected int detectRadius;
-
-	private int eggCycle;
-
-	private long timeBorn;
-
-	private double metabolism;
-
-	private int carnivorePoints;
-
-	private long chaseLength;
-	
-	private int dSpeed, dDR, dMetabolism, dCP, dCL, dEC;
 
 	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double metabolism, long chaseLength) {
-
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
@@ -126,16 +100,12 @@ public class Egg {
 		hitbox = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
 	}
 	
-<<<<<<< HEAD
+
 	/**
 	 * evolved the stats of egg based on stats of parent
 	 */
 	public void mutate(){
 		while(Math.random()>.5){
-=======
-	public void mutate() {
-		while (Math.random() > .5) {
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 			speed++;
 		}
 		while (Math.random() > .5) {
@@ -184,15 +154,11 @@ public class Egg {
 		if (chaseLength < 3500)
 			chaseLength = 3500;
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * get image of egg
 	 * @return image of egg
 	 */
-=======
-
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public BufferedImage getImage() {
 		return img;
 	}
@@ -234,15 +200,11 @@ public class Egg {
 		}
 		return false;
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * stats of egg in html formatting
 	 * @return stats of egg in html
 	 */
-=======
-
->>>>>>> 9a2062504872f0fe9495a6be02eab863f0457a3b
 	public ArrayList<String> getStats() {
 		
 		DecimalFormat df = new DecimalFormat("+#;-#");
