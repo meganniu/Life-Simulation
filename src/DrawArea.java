@@ -15,16 +15,30 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Stores and updates stats of objects present in simulation
+ */
 public class DrawArea extends BufferedImage {
 
+	/**
+	 * images of objects in simulation
+	 */
 	static ArrayList<Carnivore> carnivores = new ArrayList<Carnivore>();
 	static ArrayList<Herbivore> herbivores = new ArrayList<Herbivore>();
 	static ArrayList<Food> food = new ArrayList<Food>();
 	static ArrayList<Egg> eggs = new ArrayList<Egg>();
 	static BufferedImage hImg = null, cImg = null, eImg = null, fImg = null;
+	
 	private Graphics2D g = null;
+	
+	/**
+	 * width and height of area where simulation is drawn
+	 */
 	static int width, height;
 
+	/**
+	 * starting preferences for stats entered by user
+	 */
 	static private int startingCarnivores, startingHerbivores;
 	static private int startMinSpeed, startMaxSpeed;
 	static private int startMinRad, startMaxRad;
@@ -34,11 +48,28 @@ public class DrawArea extends BufferedImage {
 	static private double startMinFood, startMaxFood;
 	static private long chaseLength;
 
+	/**
+	 * DrawArea constructor
+	 * @param startingCarnivores amount of carnivores to start
+	 * @param startingHerbivores amount of herbivores to start
+	 * @param startMinSpeed minimum starting speed
+	 * @param startMaxSpeed maximum starting speed
+	 * @param startMinRad minimum starting radius of detection
+	 * @param startMaxRad maximum starting radius of detection
+	 * @param startMinEgg minimum starting amount of eggs
+	 * @param startMaxEgg maximum starting amount of eggs
+	 * @param startMinEnergy minimum starting amount of energy
+	 * @param startMaxEnergy maximum starting amount of energy
+	 * @param startMinMetabolism minimum starting metabolism speed
+	 * @param startMaxMetabolism maximum starting matabolism speed
+	 * @param startMinFood minimum amount of starting food
+	 * @param startMaxFood maximum amount of starting food
+	 * @param chaseLength chase length for all organisms
+	 */
 	public DrawArea(int startingCarnivores, int startingHerbivores, int startMinSpeed, int startMaxSpeed,
 			int startMinRad, int startMaxRad, int startMinEgg, int startMaxEgg, double startMinEnergy,
 			double startMaxEnergy, double startMinMetabolism, double startMaxMetabolism, double startMinFood,
 			double startMaxFood, long chaseLength) {
-		// public DrawArea() {
 		super(2000, 2000, BufferedImage.TYPE_INT_ARGB);
 
 		this.startingCarnivores = startingCarnivores;
@@ -80,14 +111,6 @@ public class DrawArea extends BufferedImage {
 			e.printStackTrace();
 		}
 
-		/*
-		 * Herbivore her1 = new Herbivore(new Point(240, 100), 200, 20, 10);
-		 * Herbivore her2 = new Herbivore(new Point(50, 200), 200, 15, 10);
-		 * herbivores.add(her1); herbivores.add(her2); Carnivore car1 = new
-		 * Carnivore(new Point(100, 100), 100, 10, 500); Carnivore car2 = new
-		 * Carnivore(new Point(80, 32), 100, 18, 150); carnivores.add(car1);
-		 */
-
 		for (int i = 0; i < startingHerbivores; i++) {
 			herbivores.add(new Herbivore( 1,
 					new Point((int) (Math.random() * (width - 16) + 8), // x
@@ -118,6 +141,9 @@ public class DrawArea extends BufferedImage {
 
 	}
 
+	/**
+	 * Update positions of organisms
+	 */
 	public void updatePositions() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).move(width, height);
@@ -128,6 +154,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Check if organisms are able to eat
+	 */
 	public void eat() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).eat();
@@ -138,6 +167,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Check if organisms are ready to lay eggs
+	 */
 	public void layEggs() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).layEgg();
@@ -148,6 +180,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Check if eggs are ready to hatch
+	 */
 	public void hatchEggs() {
 		for (int i = 0; i < eggs.size(); i++) {
 			if (eggs.get(i).hatch()) {
@@ -160,6 +195,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Incrementally decay the nutrition of food that is not eaten
+	 */
 	public void decayFood() {
 		for (int i = 0; i < food.size(); i++) {
 			food.get(i).decayNutrition();
@@ -172,6 +210,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Check if organisms have sufficient energy to remain alive
+	 */
 	public void energyCheck() {
 		for (int i = 0; i < carnivores.size(); i++) {
 			carnivores.get(i).energyUse();
@@ -195,6 +236,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Spawn food randomly every 3 ticks
+	 */
 	public void spawnFood() {
 		if (GamePane.tickCounter % 3 == 0) {
 			food.add(new Food(
@@ -203,6 +247,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Check if organism is able to eat
+	 */
 	public void eatCheck() {
 		for (int i = 0; i < carnivores.size(); i++)
 			carnivores.get(i).eat();
@@ -210,6 +257,9 @@ public class DrawArea extends BufferedImage {
 			herbivores.get(i).eat();
 	}
 
+	/**
+	 * Draw trails behind organisms when the move
+	 */
 	public synchronized void drawTrails() {
 		g.setColor(new Color(0, 255, 0, 100));
 		for (int i = 0; i < carnivores.size(); i++) {
@@ -243,6 +293,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Draw oval around selected organism
+	 */
 	public synchronized void drawSelected() {
 		if (StatsPanel.selectedOrg != null && StatsPanel.selectedEgg == null) {
 			g.setColor(Color.green);
@@ -265,6 +318,9 @@ public class DrawArea extends BufferedImage {
 		}
 	}
 
+	/**
+	 * Update buffered image depicting the simulation
+	 */
 	public void updateImage() {
 		/**
 		 * Draws and paints background
@@ -289,12 +345,6 @@ public class DrawArea extends BufferedImage {
 				g.drawImage(food.get(i).getImage(), food.get(i).getPoint().x - 8, food.get(i).getPoint().y - 8, null);
 		}
 
-		/**
-		 * for (int i = 0; i < food.size(); i++) { if
-		 * (GamePane.drawRegion.contains(food.get(i).getPoint().x,
-		 * food.get(i).getPoint().y)) g.drawImage(food.get(i).getImage(),
-		 * food.get(i).getPoint().x - 8, food.get(i).getPoint().y - 8, null); }
-		 **/
 		drawTrails();
 		for (int i = 0; i < carnivores.size(); i++) {
 			if (GamePane.drawRegion.contains(carnivores.get(i).getPoint())) {
@@ -319,6 +369,10 @@ public class DrawArea extends BufferedImage {
 		drawSelected();
 	}
 
+	/**
+	 * Add a carnivore to user-specified position
+	 * @param pos position to spawn new carnivore
+	 */
 	public static void addCarnivore(Point pos) {
 		System.out.print("here");
 		carnivores.add(new Carnivore(1, pos, Math.random() * 360.0, // angle
@@ -331,6 +385,10 @@ public class DrawArea extends BufferedImage {
 				15000));
 	}
 
+	/**
+	 * Add a herbivore to user-specified position
+	 * @param pos position to spawn new herbivore
+	 */
 	public static void addHerbivore(Point pos) {
 		herbivores.add(new Herbivore(1, pos, Math.random() * 360.0, // angle
 				(int) (Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd

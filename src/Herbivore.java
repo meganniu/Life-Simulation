@@ -84,7 +84,7 @@ public class Herbivore extends Organism {
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tHerbivore</span></pre><html>");
-		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + generation + "</span></pre></html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + String.valueOf(generation) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");

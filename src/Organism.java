@@ -5,20 +5,30 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+/**
+ * Parent class of herbivores and carnivores
+ */
 public abstract class Organism {
+
+	/**
+	 * hitbox of organism used to detect when objects overlap
+	 */
 	private Rectangle hitbox;
-
+	
+	/**
+	 * image of organism
+	 */
 	protected BufferedImage img;
-
+	
+	/**
+	 * stats of organism
+	 */
 	protected Point pos;
-
 	protected double angle;
-
 	protected int speed;// ticks/pixel
 	protected int detectRadius;
 	protected double metabolism;
 	protected int carnivorePoints;
-	
 	protected double energy;
 	protected long sinceLastEgg;
 	protected long chaseLength;
@@ -26,8 +36,24 @@ public abstract class Organism {
 	
 	protected int generation;
 
+	/**
+	 * previous few positions of organism, used for drawing trails
+	 */
 	public ArrayList<Point> prevPoints = new ArrayList<Point>();
 
+	/**
+	 * Organism constructor
+	 * @param generation of organism
+	 * @param pos position of organism
+	 * @param angle angle of movement
+	 * @param speed speed of organism
+	 * @param detectRadius detection radius of organism
+	 * @param eggCycle egg cycle time of organism
+	 * @param carnivorePoints carnivore points of organism
+	 * @param energy energy of organism
+	 * @param metabolism matabolism rate of organism
+	 * @param chaseLength maximum chase length of organism
+	 */
 	public Organism(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double energy, double metabolism, long chaseLength) {
 		this.generation = generation;
@@ -47,30 +73,43 @@ public abstract class Organism {
 		prevPoints.add(pos);
 	}
 
+	/**
+	 * Returns image of organism
+	 * @return image of organism
+	 */
 	public BufferedImage getImage() {
 		return img;
 	}
 
+	/**
+	 * Detection of objects based on detection radius and relative proximity 
+	 * @return detected item
+	 */
 	public abstract double detectItem();
 
+	/**
+	 * Eat object if encountered
+	 */
 	public abstract void eat();
 
+	/**
+	 * Calculate next position of organism and change angle if wall is ecountered
+	 * @param width width of display area of simulation
+	 * @param height height of display area of simulation
+	 */
 	public void move(int width, int height) {
 		angle = detectItem();
 		Point nextPos = nextPos(pos, angle);
 
 		if (nextPos.x + 16 >= width) {
-			// System.out.println("border encountered X");
 			if (angle >= 270 && angle <= 360) {
 				nextPos = nextPos(pos, 540 - angle);
 				angle = 540 - angle;
 			} else if (angle <= 90 && angle >= 0) {
-				// System.out.print("HERE");
 				nextPos = nextPos(pos, 180 - angle);
 				angle = 180 - angle;
 			}
 		} else if (nextPos.x - 16 <= 0) {
-			// System.out.println("border encountered X");
 			if (angle >= 180 && angle <= 270) {
 				nextPos = nextPos(pos, 540 - angle);
 				angle = 540 - angle;
@@ -84,16 +123,7 @@ public abstract class Organism {
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 
-			// nextPos.y = pos.y + (nextPos.y - pos.y) * -1;// disregarding cast
-			// rule in this case
-			// messes up the
-			// path of org
-			// Restore the cast
-			// rule
-
 		} else if (nextPos.y - 16 <= 0) {
-			// System.out.println("border encountered Y, rejX:" + nextPos.x + "
-			// rejY:" + nextPos.y);
 			nextPos = nextPos(pos, 360 - angle);
 			angle = 360 - angle;
 
@@ -113,11 +143,14 @@ public abstract class Organism {
 		hitbox.y = nextPos.y - 8;
 	}
 
+	/**
+	 * Calculate next position of organism
+	 * @param past last position
+	 * @param angle current angle
+	 * @return next position
+	 */
 	public Point nextPos(Point past, double angle) {
-		// System.out.println("speed: " + speed);
 		double run = speed * Math.cos(Math.toRadians(angle));
-		// double run = speed * Math.cos(Math.toRadians(angle));
-		// System.out.println("run: " + run);
 
 		if (run < 0 && ((angle >= 0 && angle <= 90) || angle <= 360 && angle >= 270)) {
 			run *= -1;
@@ -132,28 +165,14 @@ public abstract class Organism {
 		 */
 
 		double nextYDouble = speed * Math.sin(Math.toRadians(angle));
-		// double nextYDouble = Math.sin(Math.toRadians(angle)) * speed;//
-		// expression
-		// of
-		// rise
-		// in
-		// terms
-		// of
-		// angle
 		int nextY = (int) Math.round(nextYDouble);
-
-		// System.out.println("nextY: " + nextY);
 
 		if (nextY < 0 && (angle > 0 && angle < 180)) {// meaning bug will go
 														// down
-			// System.out.println("nextY: " + nextY);
 			nextY = nextY * -1;
-			// System.out.println("nextY: " + nextY);
 		} else if (nextY > 0 && (angle > 180 && angle < 360)) {// meaning bug
 																// will go down
-			// System.out.println("nextY: " + nextY);
 			nextY = nextY * -1;
-			// System.out.println("nextY: " + nextY);
 		}
 
 		if (angle == 270.0) {
@@ -163,14 +182,6 @@ public abstract class Organism {
 		}
 
 		Point nextPos = new Point(); // {nextX, nextY}
-		/**
-		 * if(angle == 90.0 || angle == 270.0){ nextPos.x = past.x;//traveling
-		 * vertically, no change in x } else if((angle >= 0 && angle < 90.0) ||
-		 * (angle >270.0 && angle <= 360.0)){ nextPos.x = past.x + 2; //moving 2
-		 * pixels horizontally to the right } else{ nextPos.x = past.x - 2;
-		 * //moving 2 pixels horizontally to the left }
-		 **/
-		// System.out.println("Rise: " + nextY + " Run: " + run);
 		nextPos.x = past.x + (int) run;
 		nextPos.y = past.y - nextY;// moving the organism vertically (direction
 									// dep on earlier calcs)
@@ -178,35 +189,65 @@ public abstract class Organism {
 		return nextPos;
 	}
 
+	/**
+	 * Get position of organism
+	 * @return position of organism
+	 */
 	public Point getPoint() {
 		return pos;
 	}
 
+	/**
+	 * Get speed of organism
+	 * @return speed of organism
+	 */
 	public int getSpeed() {
 		return speed;
 	}
 
+	/**
+	 * Get detection radius of organism
+	 * @return detection radius of organism
+	 */
 	public int getDetectRadius() {
 		return detectRadius;
 	}
 
+	/**
+	 * Get angle of organism
+	 * @return angle of organism
+	 */
 	public double getAngle() {
 		return angle;
 	}
 
+	/**
+	 * Get energy of organism
+	 * @return energy of organism
+	 */
 	public double getEnergy() {
 		return energy;
 	}
 
+	/**
+	 * Change angle of organism
+	 * @param angle angle to change to
+	 */
 	public void setAngle(double angle) {
 		this.angle = angle % 360;
 	}
 	
+	/**
+	 * Get hitbox of organism
+	 * @return hitbox of organism
+	 */
 	public Rectangle getHitbox(){
 		return hitbox;
 	}
 
-	
+	/**
+	 * Decrease energy based on energy use
+	 */
 	public void energyUse(){
 		energy-=1; // Passive energy loss
 		energy-=(speed*metabolism /80.0);
@@ -214,8 +255,20 @@ public abstract class Organism {
 			energy = 0;
 	}
 	
-	
+	/**
+	 * Lay egg if ready
+	 */
 	public abstract void layEgg();
+	
+	/**
+	 * Return ArrayList of stats formatted in html
+	 * @return ArrayList of stats formatted in html
+	 */
 	public abstract ArrayList<String> getFinalStats();
+	
+	/**
+	 * Return ArrayList of stats
+	 * @return ArrayList of stats
+	 */
 	public abstract ArrayList<String> getStats();
 }

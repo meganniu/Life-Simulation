@@ -9,18 +9,36 @@ import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
+/**
+ * Displays stats of selected object in simulation
+ */
 public class StatsPanel extends JPanel {
-	JLabel title = new JLabel("Organsim Stats");
-	ArrayList<JLabel> statLabel = new ArrayList<JLabel>();
-
-	static ArrayList<String> temp = new ArrayList<String>();
-
-	static Organism selectedOrg = null;
+	/**
+	 * title
+	 */
+	private JLabel title = new JLabel("Organsim Stats");
 	
-	static Egg selectedEgg = null;
+	/**
+	 * ArrayList holding stat labels
+	 */
+	private ArrayList<JLabel> statLabel = new ArrayList<JLabel>();
 
-	static Food selectedFood = null;
+	/**
+	 * ArrayLIst holding stat strings
+	 */
+	protected static ArrayList<String> temp = new ArrayList<String>();
+
+	/**
+	 * selected obj for which to display stats
+	 */
+	protected static Organism selectedOrg = null;
+	protected static Egg selectedEgg = null;
+	protected static Food selectedFood = null;
 	
+	
+	/**
+	 * StatsPanel constructor
+	 */
 	public StatsPanel() {
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
@@ -44,20 +62,13 @@ public class StatsPanel extends JPanel {
 		repaint();
 	}
 
+	/**
+	 * Update stats of object during simulation
+	 */
 	public void updateStats() {
 		if (selectedOrg != null) {
 			temp = selectedOrg.getStats();
 		}
-
-/*		
-		if(temp != null){
-			for (int i = 0; i < statLabel.size(); i++) {
-				if (i < temp.size())
-					statLabel.get(i).setText(temp.get(i));
-				else
-					statLabel.get(i).setText(" ");
-			}
-		}*/
 		else if (selectedEgg != null){
 			temp = selectedEgg.getStats();
 		}
@@ -68,7 +79,6 @@ public class StatsPanel extends JPanel {
 			temp = new ArrayList<String>();
 			temp.add("No organsism, egg, or food selected");
 		}
-		
 		for (int i = 0; i < statLabel.size(); i++) {
 			if (i < temp.size())
 				statLabel.get(i).setText(temp.get(i));
@@ -76,7 +86,6 @@ public class StatsPanel extends JPanel {
 				statLabel.get(i).setText(" ");
 			
 		}
-
 		revalidate();
 		repaint();
 	}
