@@ -32,7 +32,11 @@ public class DrawArea extends BufferedImage {
 	static private double startMinEnergy, startMaxEnergy;
 	static private double startMinMetabolism, startMaxMetabolism;
 	static private double startMinFood, startMaxFood;
+<<<<<<< HEAD
 	private long chaseLength;
+=======
+	static private long chaseLength;
+>>>>>>> 0bcb76551eaf8dd904b8df206887df4e0c988e6c
 
 	public DrawArea(int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 

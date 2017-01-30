@@ -24,10 +24,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,7 +79,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
 	long chaseLength = 5000;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0bcb76551eaf8dd904b8df206887df4e0c988e6c
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -259,10 +262,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
-<<<<<<< HEAD
-
-=======
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 		}
 
 		@Override
@@ -1032,6 +1031,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		gbc.gridy = 3;
 		gameScreen.add(addHerbivore, gbc);
 		**/
+		
+		addCarnivore.setIcon(new ImageIcon(DrawArea.cImg));
+		addHerbivore.setIcon(new ImageIcon(DrawArea.hImg));
+		
 		setContentPane(gameScreen);
 		revalidate();
 		gameStatus = true;
