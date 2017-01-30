@@ -501,6 +501,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		/**
 		 * Scroll down instructions when mouse is moved
+		 * @param shifty to start display of instruction image in respect to y axis
 		 */
 		public void setShiftY(int shifty) {
 			this.shifty = shifty;

@@ -40,8 +40,8 @@ public class Carnivore extends Organism {
 	 * @param angle angle
 	 * @param speed	speed
 	 * @param detectRadius radius of detection to search for hebivores
-	 * @param eggCycle time till hatching of eggs layed
-	 * @param carnivorePoints 
+	 * @param eggCycle time till hatching of eggs laid
+	 * @param carnivorePoints carnivore points of carnivore
 	 * @param energy energy of carnivore
 	 * @param metabolism speed of energy use, metabolism
 	 * @param chaseLength time until carnivore gives up chase of a herbivore

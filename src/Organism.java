@@ -79,7 +79,7 @@ public abstract class Organism {
 
 	/**
 	 * Detection of objects based on detection radius and relative proximity 
-	 * @return
+	 * @return detected item
 	 */
 	public abstract double detectItem();
 
@@ -90,8 +90,8 @@ public abstract class Organism {
 
 	/**
 	 * Calculate next position of organism and change angle if wall is ecountered
-	 * @param width
-	 * @param height
+	 * @param width width of display area of simulation
+	 * @param height height of display area of simulation
 	 */
 	public void move(int width, int height) {
 		angle = detectItem();
