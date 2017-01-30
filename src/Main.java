@@ -24,10 +24,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -70,24 +70,15 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	static JButton addCarnivore = new JButton("Add Carnivore");
 	static JButton addHerbivore = new JButton("Add Herbivore");
 
-<<<<<<< HEAD
 	int startingCarnivores = 3;
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
-=======
-	int startingCarnivores = 3; 
-	int startingHerbivores = 20; 
-	int startMinSpeed = 2, startMaxSpeed = 9; 
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 	int startMinRad = 80, startMaxRad = 100;
 	int startMinEgg = 20000, startMaxEgg = 40000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
-<<<<<<< HEAD
-=======
 	long chaseLength = 5000;
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 
 	public class StartScreen extends JPanel implements MouseMotionListener, MouseListener {
 
@@ -267,10 +258,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 				instructions(shifty);
 			else if (r3.contains(e.getPoint()))
 				getPreferences();
-<<<<<<< HEAD
-
-=======
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
 		}
 
 		@Override
@@ -1040,6 +1027,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		gbc.gridy = 3;
 		gameScreen.add(addHerbivore, gbc);
 		**/
+		
+		addCarnivore.setIcon(new ImageIcon(DrawArea.cImg));
+		addHerbivore.setIcon(new ImageIcon(DrawArea.hImg));
+		
 		setContentPane(gameScreen);
 		revalidate();
 		gameStatus = true;

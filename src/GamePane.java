@@ -80,12 +80,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 				startMinEgg, startMaxEgg, 
 				startMinEnergy, startMaxEnergy, 
 				startMinMetabolism, startMaxMetabolism, 
-<<<<<<< HEAD
-				startMinFood, startMaxFood);
-=======
-				startMinFood, startMaxFood,
-				chaseLength);
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
+				startMinFood, startMaxFood, chaseLength);
 
 		this.width = width;
 		this.height = height;

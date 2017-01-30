@@ -24,7 +24,7 @@ public class DrawArea extends BufferedImage {
 	static BufferedImage hImg = null, cImg = null, eImg = null, fImg = null;
 	private Graphics2D g = null;
 	static int width, height;
-<<<<<<< HEAD
+
 	static private int startingCarnivores, startingHerbivores;
 	static private int startMinSpeed, startMaxSpeed; 
 	static private int startMinRad, startMaxRad;
@@ -32,16 +32,7 @@ public class DrawArea extends BufferedImage {
 	static private double startMinEnergy, startMaxEnergy;
 	static private double startMinMetabolism, startMaxMetabolism;
 	static private double startMinFood, startMaxFood;
-=======
-	private int startingCarnivores, startingHerbivores;
-	private int startMinSpeed, startMaxSpeed; 
-	private int startMinRad, startMaxRad;
-	private int startMinEgg, startMaxEgg;
-	private double startMinEnergy, startMaxEnergy;
-	private double startMinMetabolism, startMaxMetabolism;
-	private double startMinFood, startMaxFood;
-	private long chaseLength;
->>>>>>> 28c4a15294fc3596e4691a5f5ab8de344855df57
+	static private long chaseLength;
 
 	public DrawArea(int startingCarnivores, int startingHerbivores, 
 			int startMinSpeed, int startMaxSpeed, 
