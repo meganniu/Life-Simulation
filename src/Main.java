@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -31,7 +32,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -40,9 +40,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
 import javax.swing.JToggleButton;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -51,7 +52,7 @@ import javafx.scene.media.AudioClip;
 /**
  * Driver class of simulation
  */
-public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener {
+public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener, WindowListener {
 
 	/**
 	 * displayed when simulation starts
@@ -550,6 +551,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 		addKeyListener(this);
 		addComponentListener(this);
+		addWindowListener(this);
 		setFocusable(true);
 		this.requestFocusInWindow();
 
@@ -1304,6 +1306,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	private JToggleButton addH;
 	private JToggleButton addE;
 	private JToggleButton addF;
+	private JLabel optLbl = new JLabel("Sandbox Mode");
 	static JToggleButton addBtn = new JToggleButton("Add (Click the draw area)");
 	JButton clear = new JButton("Clear Board");
 	JComponent[][] optionsGrid = null;
@@ -1311,6 +1314,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	public void createSandbox() {
 
+		Border border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		optLbl.setBorder(border);
+		optLbl.setFont(optLbl.getFont().deriveFont(20f));
+		optLbl.setHorizontalAlignment(JLabel.CENTER);
+		
 		addC = new JToggleButton("Add Carnivore",
 				new ImageIcon(DrawArea.cImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
 		addH = new JToggleButton("Add Herbivore",
@@ -1327,9 +1335,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		if (sandbox.isSelected()) {
 			s.setTitle("Sandbox Options");
 			s.addComponentListener(this);
-			s.setLayout(new GridBagLayout());
+			s.addWindowListener(this);
+			s.setLayout(new BorderLayout());
 			s.setSize(300, this.getHeight());
 			s.setVisible(true);
+			s.setResizable(false);
 			s.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			s.setLocation(this.getX() + this.getWidth(), this.getY());
 
@@ -1340,12 +1350,13 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	public void addToSandbox() {
 		GridBagConstraints c = new GridBagConstraints();
+		s.getContentPane().removeAll();
 		JPanel cp = new JPanel(new GridBagLayout());
-
+		
 		c.insets = new Insets(2, 2, 2, 2);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridwidth = 2;
-		cp.add(new JLabel("Options"), c);
+		cp.add(optLbl, c);
 		c.gridy = 1;
 		cp.add(clear, c);
 		c.gridwidth = 1;
@@ -1364,8 +1375,10 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		cp.add(options, c);
 		c.gridy = 6;
 		cp.add(addBtn, c);
-		s.setContentPane(cp);
+		
+		s.add(cp, BorderLayout.NORTH);
 		s.revalidate();
+		s.repaint();
 	}
 
 	ActionListener sandboxListener = new ActionListener() {
@@ -1714,7 +1727,56 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		if (e.getSource() == this) {
+			s.setState(JFrame.NORMAL);
+		} else {
+			this.setState(JFrame.NORMAL);
+		}
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		if (e.getSource() == this) {
+			s.setState(JFrame.ICONIFIED);
+		} else {
+			this.setState(JFrame.ICONIFIED);
+		}
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
