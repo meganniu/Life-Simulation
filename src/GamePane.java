@@ -1,9 +1,7 @@
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
@@ -12,11 +10,10 @@ import java.awt.image.BufferStrategy;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.SpinnerModel;
 import javax.swing.SpinnerNumberModel;
 
 /**
@@ -380,28 +377,29 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 	
 	public JComponent[][] generatePanel(String text) {
 		JComponent[][] temp = null;
-		if(text.equals("Carnivore")){
+		System.out.println(text);
+		if(text.equals("Add Carnivore")){
 			temp = new JComponent[16][2];
-			temp[0][0]=new JLabel("Angle");										temp[0][1]=new JLabel();
-			temp[1][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[1][1]=new JLabel();
-			temp[2][0]=new JLabel("Speed");										temp[2][1]=new JLabel();
-			temp[3][0]=new JSpinner(new SpinnerNumberModel(1, 0, 360, 30));		temp[3][1]=new JLabel();
-			temp[4][0]=new JLabel("D. Radius");									temp[4][1]=new JLabel();
-			temp[5][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[5][1]=new JLabel();
-			temp[6][0]=new JLabel("Egg Cycle");									temp[6][1]=new JLabel();
-			temp[7][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[7][1]=new JLabel();
-			temp[8][0]=new JLabel("Carnivorism");								temp[8][1]=new JLabel();
-			temp[9][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[9][1]=new JLabel();
-			temp[10][0]=new JLabel("Energy");									temp[10][1]=new JLabel();
-			temp[11][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[11][1]=new JLabel();
-			temp[12][0]=new JLabel("Metabolism");								temp[12][1]=new JLabel();
-			temp[13][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[13][1]=new JLabel();
-			temp[14][0]=new JLabel("Chase Length");								temp[14][1]=new JLabel();
-			temp[15][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[15][1]=new JLabel();
+			temp[0][0]=new JLabel("Angle", JLabel.CENTER);			temp[0][1]=new JLabel();
+			temp[1][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[1][1]=new JButton("Random");
+			temp[2][0]=new JLabel("Speed", JLabel.CENTER);						temp[2][1]=new JLabel();
+			temp[3][0]=new JSpinner(new SpinnerNumberModel(1, 0, 360, 30));		temp[3][1]=new JButton("Random");
+			temp[4][0]=new JLabel("D. Radius", JLabel.CENTER);					temp[4][1]=new JLabel();
+			temp[5][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[5][1]=new JButton("Random");
+			temp[6][0]=new JLabel("Egg Cycle", JLabel.CENTER);					temp[6][1]=new JLabel();
+			temp[7][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[7][1]=new JButton("Random");
+			temp[8][0]=new JLabel("Carnivorism", JLabel.CENTER);				temp[8][1]=new JLabel();
+			temp[9][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[9][1]=new JButton("Random");
+			temp[10][0]=new JLabel("Energy", JLabel.CENTER);					temp[10][1]=new JLabel();
+			temp[11][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[11][1]=new JButton("Random");
+			temp[12][0]=new JLabel("Metabolism", JLabel.CENTER);				temp[12][1]=new JLabel();
+			temp[13][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[13][1]=new JButton("Random");
+			temp[14][0]=new JLabel("Chase Length", JLabel.CENTER);				temp[14][1]=new JLabel();
+			temp[15][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[15][1]=new JButton("Random");
 		}
-		else if(text.equals("Herbivore")){}
-		else if(text.equals("Egg")){}
-		else if(text.equals("Food")){}
+		else if(text.equals("Add Herbivore")){}
+		else if(text.equals("Add Egg")){}
+		else if(text.equals("Add Food")){}
 		
 		sandbox = temp;
 		return temp;

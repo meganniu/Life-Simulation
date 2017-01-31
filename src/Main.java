@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
@@ -36,7 +37,6 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRootPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.event.DocumentEvent;
@@ -1242,7 +1242,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			c.gridx=1;
 			s.add(addF, c);
 			c.gridwidth=2;
-			c.gridy=4;
+			c.gridy=5;
 			s.add(options, c);
 			
 		}
@@ -1267,8 +1267,23 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 				s.remove(options);
 			}
 			if (src instanceof JToggleButton) {
+				
+				GridBagConstraints c = new GridBagConstraints();
+				
 				deselectButtons((JToggleButton) src);
 				optionsGrid = gamePane.generatePanel(((JToggleButton) src).getText());
+				s.remove(options);
+				options = new JPanel(new GridLayout(optionsGrid.length, optionsGrid[0].length));
+				for(int i = 0; i < optionsGrid.length; i++)
+					for(int j = 0; j < optionsGrid[0].length; j++){
+						options.add(optionsGrid[i][j]);
+					}
+				c.insets = new Insets(2, 2, 2, 2);
+				c.fill = GridBagConstraints.BOTH;
+				c.gridwidth=2;
+				c.gridy=5;
+				s.add(options, c);
+				s.revalidate();
 			}
 		}
 
