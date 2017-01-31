@@ -32,6 +32,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1268,7 +1269,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		controlPanel.add(left, c2);
 		c2.gridx = 2;
 		controlPanel.add(right, c2);
-		c2.gridy = 2;
 		c2.gridx = 1;
 		controlPanel.add(down, c2);
 		
@@ -1280,9 +1280,15 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		overviewPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		sidePanel.add(go);
+		sidePanel.add(Box.createRigidArea(new Dimension(0,7)));
 		sidePanel.add(controlPanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0,7)));
 		sidePanel.add(overviewPnl);
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> 3e87e54848dcb12785c323dfc4775e00f74d9cbe
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;

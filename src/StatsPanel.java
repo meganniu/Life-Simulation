@@ -55,7 +55,6 @@ public class StatsPanel extends JPanel {
 		((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
 		this.setBorder(border);
 		
-		
 		this.setPreferredSize(new Dimension(220, 350));
 
 		revalidate();
