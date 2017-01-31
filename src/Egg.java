@@ -76,8 +76,11 @@ public class Egg {
 	 * @param chaseLength chase length of paretn
 	 */
 
-	public Egg(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+	private int generation;
+
+	public Egg(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double metabolism, long chaseLength) {
+		this.generation = generation;
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;
@@ -123,7 +126,7 @@ public class Egg {
 		while (Math.random() > .2) {
 			metabolism--;
 		}
-		while (Math.random() > .6) {
+		while (Math.random() > .4) {
 			carnivorePoints++;
 		}
 		while (Math.random() > .6) {
@@ -190,11 +193,11 @@ public class Egg {
 	public boolean hatch() {
 		if (timeBorn + Main.hatchTime <= GamePane.timeElapsed) {
 			if (carnivorePoints >= 10) {
-				DrawArea.carnivores.add(new Carnivore(new Point(pos), angle, speed, detectRadius, eggCycle,
+				DrawArea.carnivores.add(new Carnivore(generation, new Point(pos), angle, speed, detectRadius, eggCycle,
 						carnivorePoints, Main.newbornEnergy, metabolism, chaseLength));
 			} else {
-				DrawArea.herbivores.add(new Herbivore(new Point(pos), angle, speed, detectRadius, eggCycle,
-						carnivorePoints, Main.newbornEnergy, metabolism, 5000));
+				DrawArea.herbivores.add(new Herbivore(generation, new Point(pos), angle, speed, detectRadius, eggCycle,
+						carnivorePoints, Main.newbornEnergy, metabolism));
 			}
 			return true;
 		}
@@ -211,6 +214,7 @@ public class Egg {
 		
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Egg\t\t");
+		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + generation + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y
 				+ ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");

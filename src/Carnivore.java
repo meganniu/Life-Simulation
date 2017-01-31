@@ -9,55 +9,34 @@ import java.util.ArrayList;
  */
 public class Carnivore extends Organism {
 
-	/**
-	 * boolean indicating chasing status
-	 */
 	private boolean chasing = false;
-	
-	/**
-	 * boolean indicating chasing availability
-	 */
 	private boolean canChase = true;
 
-	/**
-	 * time when chase started
-	 */
 	private long chaseStart;
-	
-	/**
-	 * time when cooldown period starting
-	 */
 	private long cooldownStart;
-	
-	/**
-	 * time since birth
-	 */
 	private long timeBorn;
 	
 	/**
 	 * Carnivore constructor
-	 * @param pos position
-	 * @param angle angle
-	 * @param speed	speed
-	 * @param detectRadius radius of detection to search for hebivores
-	 * @param eggCycle time till hatching of eggs laid
-	 * @param carnivorePoints carnivore points of carnivore
-	 * @param energy energy of carnivore
-	 * @param metabolism speed of energy use, metabolism
-	 * @param chaseLength time until carnivore gives up chase of a herbivore
+	 * @param pos Point position
+	 * @param angle Double angle
+	 * @param speed	Int speed
+	 * @param detectRadius radius of detection for herbivores
+	 * @param eggCycle time till hatching of eggs layed
+	 * @param carnivorePoints 
+	 * @param energy Double energy of carnivore
+	 * @param metabolism Double speed of energy use, metabolism
+	 * @param chaseLength Time until carnivore gives up chase of a herbivore
 	 */
-	public Carnivore(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
-		super(pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
+	public Carnivore(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints, double energy, double metabolism, long chaseLength) {
+		super(generation, pos, angle, speed, detectRadius, eggCycle, carnivorePoints, energy, metabolism, chaseLength);
 		timeBorn = GamePane.timeElapsed;
 		img = DrawArea.cImg;
 	}
 
 
-
-	/**
-	 * detect closest herbivore within detection radius
-	 */
 	public double detectItem() {
+
 		double shortestDistance = -1;
 		int indexOfClosest = -1;
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
@@ -119,10 +98,7 @@ public class Carnivore extends Organism {
 
 		}
 	}
-	
-	/**
-	 * deletes a herbivore if a carnivore eats it
-	 */
+
 	public void eat() {
 		for (int i = 0; i < DrawArea.herbivores.size(); i++) {
 			Point hPoint = DrawArea.herbivores.get(i).getPoint();
@@ -140,13 +116,10 @@ public class Carnivore extends Organism {
 		}
 	}
 	
-	/**
-	 * carnivore lays an egg with a set hatchtime
-	 */
 	public void layEgg(){
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
-			DrawArea.eggs.add(new Egg(new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
+			DrawArea.eggs.add(new Egg(generation + 1, new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
 			energy-=Main.energyReq*2/3;
 			if (energy < 0)
 				energy = 0;
@@ -154,12 +127,10 @@ public class Carnivore extends Organism {
 		}
 	}
 
-	/**
-	 * return arraylist of stats with html formatting
-	 */
 	public ArrayList<String> getStats() {
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("<html><pre><span style=\"font-family: arial\">Type\t\tCarnivore</span></pre><html>");
+		stats.add("<html><pre><span style=\"font-family: arial\">Generation\t\t" + String.valueOf(generation) + "</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Position\t\t(" + pos.x + ", " + pos.y + ")</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Angle\t\t" + (int) angle + " deg</span></pre></html>");
 		stats.add("<html><pre><span style=\"font-family: arial\">Speed\t\t" + speed + "</span></pre></html>");
@@ -173,9 +144,6 @@ public class Carnivore extends Organism {
 		return stats;
 	}
 	
-	/**
-	 * return arraylist of stats without html formatting
-	 */
 	public ArrayList<String> getFinalStats(){
 		ArrayList<String> stats = new ArrayList<String>();
 		stats.add("Type:  Carnivore");

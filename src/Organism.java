@@ -33,6 +33,8 @@ public abstract class Organism {
 	protected long sinceLastEgg;
 	protected long chaseLength;
 	protected int eggCycle;
+	
+	protected int generation;
 
 	/**
 	 * previous few positions of organism, used for drawing trails
@@ -41,6 +43,7 @@ public abstract class Organism {
 
 	/**
 	 * Organism constructor
+	 * @param generation of organism
 	 * @param pos position of organism
 	 * @param angle angle of movement
 	 * @param speed speed of organism
@@ -51,8 +54,9 @@ public abstract class Organism {
 	 * @param metabolism matabolism rate of organism
 	 * @param chaseLength maximum chase length of organism
 	 */
-	public Organism(Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
+	public Organism(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double energy, double metabolism, long chaseLength) {
+		this.generation = generation;
 		this.speed = speed;
 		this.angle = angle;
 		this.pos = pos;

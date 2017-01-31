@@ -2,18 +2,21 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.awt.image.BufferedImageOp;
-import java.awt.image.ConvolveOp;
-import java.awt.image.Kernel;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.awt.Rectangle;
+
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 /**
  * Control ticks and actions performed each tick
@@ -235,6 +238,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.eatCheck();
 		if((finalOrg = drawArea.checkEnd()) != null && timeElapsed > 10){
 			Main.go.setEnabled(false);
+			Main.addCarnivore.setEnabled(false);
+			Main.addHerbivore.setEnabled(false);
 			render();
 			stop();
 		}
@@ -376,4 +381,54 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		// TODO Auto-generated method stub
 
 	}
+
+	JComponent[][] sandbox;
+	
+	public JComponent[][] generatePanel(String text) {
+		JComponent[][] temp = null;
+		System.out.println(text);
+		if(text.equals("Add Carnivore")){
+			temp = new JComponent[16][2];
+			temp[0][0]=new JLabel("Angle", JLabel.CENTER);						temp[0][1]=new JLabel();
+			temp[1][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[1][1]=new JButton("Random");
+			temp[2][0]=new JLabel("Speed", JLabel.CENTER);						temp[2][1]=new JLabel();
+			temp[3][0]=new JSpinner(new SpinnerNumberModel(1, 0, 360, 30));		temp[3][1]=new JButton("Random");
+			temp[4][0]=new JLabel("D. Radius", JLabel.CENTER);					temp[4][1]=new JLabel();
+			temp[5][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[5][1]=new JButton("Random");
+			temp[6][0]=new JLabel("Egg Cycle", JLabel.CENTER);					temp[6][1]=new JLabel();
+			temp[7][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[7][1]=new JButton("Random");
+			temp[8][0]=new JLabel("Carnivorism", JLabel.CENTER);				temp[8][1]=new JLabel();
+			temp[9][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[9][1]=new JButton("Random");
+			temp[10][0]=new JLabel("Energy", JLabel.CENTER);					temp[10][1]=new JLabel();
+			temp[11][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[11][1]=new JButton("Random");
+			temp[12][0]=new JLabel("Metabolism", JLabel.CENTER);				temp[12][1]=new JLabel();
+			temp[13][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[13][1]=new JButton("Random");
+			temp[14][0]=new JLabel("Chase Length", JLabel.CENTER);				temp[14][1]=new JLabel();
+			temp[15][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));	temp[15][1]=new JButton("Random");
+		}
+		else if(text.equals("Add Herbivore")){}
+		else if(text.equals("Add Egg")){}
+		else if(text.equals("Add Food")){}
+		
+		sandbox = temp;
+		return this.sandbox;
+	}
+	public ActionListener randomListener = new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("hi");
+			int index = 1;
+			for(int i = 1; i <= 15; i+=2){
+				if(e.getSource() == sandbox[i][1]){
+					index = i;
+					break;
+				}
+			}
+			if(sandbox[index][0] instanceof JSpinner){
+				JSpinner js = ((JSpinner)sandbox[index][0]);
+				js.setValue((int)(Math.random()*(361)));
+			}
+		}
+	};
+	
 }

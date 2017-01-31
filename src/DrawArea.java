@@ -112,7 +112,7 @@ public class DrawArea extends BufferedImage {
 		}
 
 		for (int i = 0; i < startingHerbivores; i++) {
-			herbivores.add(new Herbivore(
+			herbivores.add(new Herbivore( 1,
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
@@ -121,13 +121,12 @@ public class DrawArea extends BufferedImage {
 					(int) (Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // EggCycle
 					(int) ((Math.random() * 8) + 2), // carnivorepoints
 					(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
-					(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism), // metabolism
-					chaseLength));// chase length
+					(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism)));// chase length
 
 		}
 
 		for (int i = 0; i < startingCarnivores; i++) {
-			carnivores.add(new Carnivore(
+			carnivores.add(new Carnivore( 1,
 					new Point((int) (Math.random() * (width - 16) + 8), // x
 							(int) (Math.random() * (height - 16) + 8)), // y
 					Math.random() * 360.0, // angle
@@ -371,31 +370,12 @@ public class DrawArea extends BufferedImage {
 	}
 
 	/**
-	 * final organism remaining
-	 */
-	Organism finalOrg;
-
-	/**
-	 * Check if simulation should end by checking how many organisms remain
-	 * @return whether or not there is one organism left
-	 */
-	public Organism checkEnd() {
-		if (carnivores.size() + herbivores.size() == 1) {
-			if (herbivores.size() == 1) {
-				return finalOrg = herbivores.get(0);
-			}
-			return finalOrg = carnivores.get(0);
-		}
-		return null;
-	}
-
-	/**
 	 * Add a carnivore to user-specified position
 	 * @param pos position to spawn new carnivore
 	 */
 	public static void addCarnivore(Point pos) {
 		System.out.print("here");
-		carnivores.add(new Carnivore(pos, Math.random() * 360.0, // angle
+		carnivores.add(new Carnivore(1, pos, Math.random() * 360.0, // angle
 				(int) (Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
 				(int) (Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
 				(int) (Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // eggCycle
@@ -410,14 +390,27 @@ public class DrawArea extends BufferedImage {
 	 * @param pos position to spawn new herbivore
 	 */
 	public static void addHerbivore(Point pos) {
-		herbivores.add(new Herbivore(pos, Math.random() * 360.0, // angle
+		herbivores.add(new Herbivore(1, pos, Math.random() * 360.0, // angle
 				(int) (Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
 				(int) (Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius
 				(int) (Math.random() * ((startMaxEgg - startMinEgg) + 1) + startMinEgg), // eggCycle
 				10, // carnivorePoints
 				(Math.random() * ((startMaxEnergy - startMinEnergy) + 1.0) + startMinEnergy), // energy
-				(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism), // metabolism
-				15000));
+				(Math.random() * ((startMaxMetabolism - startMinMetabolism) + 1.0) + startMinMetabolism)));
+	}
+
+	/**
+	 * Return last organism if only one organism left
+	 * @return last organism
+	 */
+	public Organism checkEnd() {
+		if(herbivores.size() + carnivores.size() == 1){
+			if(herbivores.size() != 0){
+				return herbivores.get(0);
+			}
+			return carnivores.get(0);
+		}
+		return null;
 	}
 
 }

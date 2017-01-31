@@ -4,11 +4,15 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -27,23 +31,27 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
+import javax.swing.JToggleButton;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import javafx.scene.media.AudioClip;
+
 /**
  * Driver class of simulation
  */
-public class Main extends JFrame implements KeyListener, ActionListener {
+public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener {
 	
 	/**
 	 * displayed when simulation starts
@@ -54,11 +62,22 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	 * displayed when program begins, before simulation
 	 */
 	StartScreen startScreen = new StartScreen();
+
+	/**
+	 * Sandbox screen
+	 */
+	JFrame s = new JFrame();
+
 	
 	/**
 	 * displayed when instructions requested
 	 */
 	InstructionScreen instructionScreen = new InstructionScreen();
+	
+	/**
+	 * toggles sandbox mode
+	 */
+	JToggleButton sandbox = new JToggleButton("Sandbox Mode");
 	
 	/**
 	 * displayed when user wished to set beginning stats
@@ -169,7 +188,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	int startingHerbivores = 20;
 	int startMinSpeed = 2, startMaxSpeed = 9;
 	int startMinRad = 80, startMaxRad = 150;
-	int startMinEgg = 20000, startMaxEgg = 40000;
+	int startMinEgg = 4000, startMaxEgg = 20000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
 	double startMinFood = 200.0, startMaxFood = 800.0;
@@ -512,7 +531,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		}
 
 	}
-
 	/**
 	 * Panel on which to display stats of objects
 	 */
@@ -524,6 +542,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	public Main() {
 
 		addKeyListener(this);
+		addComponentListener(this);
 		setFocusable(true);
 		this.requestFocusInWindow();
 
@@ -640,27 +659,27 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JLabel minEggLbl = new JLabel("Minimum Starting Egg Cycle Length");
 		JLabel minEnergyLbl = new JLabel("Minimum Starting Energy");
 		JLabel minMetabolismLbl = new JLabel("Minimum Starting Metabolism");
-		
+
 		JLabel herbivoresLbl = new JLabel("Herbivores");
 		JLabel maxSpeedLbl = new JLabel("Maximum Starting Speed");
 		JLabel maxRadLbl = new JLabel("Maximum Starting Detect Radius");
 		JLabel maxEggLbl = new JLabel("Maximum Starting Egg Cycle Length");
 		JLabel maxEnergyLbl = new JLabel("Maximum Starting Energy");
 		JLabel maxMetabolismLbl = new JLabel("Maximum Starting Metabolism");
-		
+
 		JLabel minFoodLbl = new JLabel("Minimum Food nutrition");
 		JLabel maxFoodLbl = new JLabel("Maximum Food nutrition");
-		
+
 		JLabel chaseLbl = new JLabel("Starting chase length");
 		JLabel chaseCdLbl = new JLabel("Chase cooldown length");
 		JLabel foodSpawnLbl = new JLabel("Food spawn rate");
 		JLabel foodDecayLbl = new JLabel("Food decay rate");
 		JLabel energyDecayLbl = new JLabel("Energy decay rate");
-		JLabel eggReqLbl = new JLabel ("Energy required for an egg");
+		JLabel eggReqLbl = new JLabel("Energy required for an egg");
 		JLabel eggHatchEnergyLbl = new JLabel("Newborn Starting Energy");
 		JLabel maximumEnergyLbl = new JLabel("Maximum possible energy");
 		JLabel eggHatchLbl = new JLabel("Egg hatch time");
-		
+
 		/**
 		 * stat text fields
 		 */
@@ -672,7 +691,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField minMetabolismTF = new JTextField();
 		JTextField minFoodTF = new JTextField();
 		JTextField minChaseTF = new JTextField();
-		
+
 		JTextField herbivoresTF = new JTextField();
 		JTextField maxSpeedTF = new JTextField();
 		JTextField maxRadTF = new JTextField();
@@ -681,45 +700,45 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField maxMetabolismTF = new JTextField();
 		JTextField maxFoodTF = new JTextField();
 		JTextField maxChaseTF = new JTextField();
-		
+
 		JTextField chaseTF = new JTextField();
 		JTextField chaseCdTF = new JTextField();
 		JTextField foodSpawnTF = new JTextField();
 		JTextField foodDecayTF = new JTextField();
 		JTextField energyDecayTF = new JTextField();
-		JTextField eggReqTF = new JTextField ();
+		JTextField eggReqTF = new JTextField();
 		JTextField eggHatchEnergyTF = new JTextField();
 		JTextField maximumEnergyTF = new JTextField();
 		JTextField eggHatchTF = new JTextField();
-		
+
 		/**
 		 * displays default values in light gray
 		 */
-		GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start", Color.LIGHT_GRAY);
-		GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2", Color.LIGHT_GRAY);
-		GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80", Color.LIGHT_GRAY);
-		GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 20000", Color.LIGHT_GRAY);
-		GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0", Color.LIGHT_GRAY);
-		GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0", Color.LIGHT_GRAY);
-		GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0", Color.LIGHT_GRAY);
+		GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
+		GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
+		GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80");
+		GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 20000");
+		GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0");
+		GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0");
+		GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0");
 
-		GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0", Color.LIGHT_GRAY);
-		GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0", Color.LIGHT_GRAY);
+		GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+		GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
+		GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150");
+		GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
+		GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
+		GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
+		GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
 		
-		GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000", Color.LIGHT_GRAY);
-		GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000", Color.LIGHT_GRAY);
-		GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9", Color.LIGHT_GRAY);
-		GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0", Color.LIGHT_GRAY);
-		GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0", Color.LIGHT_GRAY);
-		GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy", Color.LIGHT_GRAY);
-		GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy", Color.LIGHT_GRAY);
-		GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0", Color.LIGHT_GRAY);
-		GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0", Color.LIGHT_GRAY);
+		GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000");
+		GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
+		GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
+		GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
+		GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0");
+		GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy");
+		GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy");
+		GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0");
+		GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0");
 		
 		/**
 		 * buttons for preloaded stats
@@ -771,22 +790,22 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			gbc.gridy = 12;
 			add(minFoodLbl, gbc);
-			
+
 			gbc.gridy = 14;
 			add(chaseLbl, gbc);
-			
+
 			gbc.gridy = 16;
 			add(foodSpawnLbl, gbc);
-			
+
 			gbc.gridy = 18;
 			add(energyDecayLbl, gbc);
-			
+
 			gbc.gridy = 20;
 			add(eggHatchEnergyLbl, gbc);
-			
+
 			gbc.gridy = 22;
 			add(eggHatchLbl, gbc);
-			
+
 			gbc.gridx = 1;
 			gbc.gridy = 0;
 			gbc.insets = new Insets(0, 10, 0, 0);
@@ -809,21 +828,58 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 			gbc.gridy = 12;
 			add(maxFoodLbl, gbc);
-			
+
 			gbc.gridy = 14;
 			add(chaseCdLbl, gbc);
-			
+
 			gbc.gridy = 16;
 			add(foodDecayLbl, gbc);
-			
+
 			gbc.gridy = 18;
 			add(eggReqLbl, gbc);
-			
+
 			gbc.gridy = 20;
 			add(maximumEnergyLbl, gbc);
-			
+
+			gbc.gridheight = 2;
+			gbc.fill = GridBagConstraints.BOTH;
+			gbc.insets = new Insets(5, 5, 5, 5);
+			gbc.gridy = 22;
+			add(sandbox, gbc);
+
+			gbc.gridheight = 1;
+			gbc.fill = GridBagConstraints.NONE;
+
 			gbc.anchor = GridBagConstraints.PAGE_START;
 			
+			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
+			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
+			GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80");
+			GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 4000");
+			GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0");
+			GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0");
+			GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0");
+
+			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
+			GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
+			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150");
+			GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
+			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
+			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
+			GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
+
+			GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000");
+			GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
+			GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
+			GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
+			GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0");
+			GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy");
+			GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF,
+					"Default 4000.0, range 0.0 - Maximum Energy");
+			GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF,
+					"Default 15000.0, range 2000.0 - 30000.0");
+			GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0");
+
 			gbc.gridx = 0;
 			gbc.gridy = 1;
 			gbc.weighty = 0.7;
@@ -854,27 +910,27 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.gridy = 13;
 			minFoodTF.setPreferredSize(new Dimension(300, 20));
 			add(minFoodTF, gbc);
-			
+
 			gbc.gridy = 15;
 			chaseTF.setPreferredSize(new Dimension(300, 20));
 			add(chaseTF, gbc);
-			
+
 			gbc.gridy = 17;
 			foodSpawnTF.setPreferredSize(new Dimension(300, 20));
 			add(foodSpawnTF, gbc);
-			
+
 			gbc.gridy = 19;
 			energyDecayTF.setPreferredSize(new Dimension(300, 20));
 			add(energyDecayTF, gbc);
-			
+
 			gbc.gridy = 21;
 			eggHatchEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(eggHatchEnergyTF, gbc);
-			
+
 			gbc.gridy = 23;
 			eggHatchTF.setPreferredSize(new Dimension(300, 20));
 			add(eggHatchTF, gbc);
-			
+
 			gbc.gridx = 1;
 			gbc.gridy = 1;
 			gbc.insets = new Insets(0, 10, 10, 0);
@@ -904,19 +960,19 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.gridy = 13;
 			maxFoodTF.setPreferredSize(new Dimension(300, 20));
 			add(maxFoodTF, gbc);
-			
+
 			gbc.gridy = 15;
 			chaseCdTF.setPreferredSize(new Dimension(300, 20));
 			add(chaseCdTF, gbc);
-			
+
 			gbc.gridy = 17;
 			foodDecayTF.setPreferredSize(new Dimension(300, 20));
 			add(foodDecayTF, gbc);
-			
+
 			gbc.gridy = 19;
 			eggReqTF.setPreferredSize(new Dimension(300, 20));
 			add(eggReqTF, gbc);
-			
+
 			gbc.gridy = 21;
 			maximumEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(maximumEnergyTF, gbc);
@@ -1069,45 +1125,37 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 						startMaxFood = Integer.parseInt(maxFoodTF.getText());
 					} catch (NumberFormatException ev) {
 					}
-					try{
+					try {
 						chaseLength = Integer.parseInt(chaseTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						chaseCD = Integer.parseInt(chaseCdTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						foodSpawnRate = Integer.parseInt(foodSpawnTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						foodDecayRate = Integer.parseInt(foodDecayTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						energyDecayRate = Integer.parseInt(energyDecayTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						energyReq = Integer.parseInt(eggReqTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						newbornEnergy = Integer.parseInt(eggHatchEnergyTF.getText());
+					} catch (NumberFormatException ev) {
 					}
-					catch(NumberFormatException ev){
-					}
-					try{
+					try {
 						hatchTime = Integer.parseInt(eggHatchTF.getText());
-					}
-					catch(NumberFormatException ev){
+					} catch (NumberFormatException ev) {
 					}
 					setVisible(false);
 					settingsOpen = false;
@@ -1176,14 +1224,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	public void generateGame() {
 
 		sort();
-		gamePane = new GamePane(drawWidth, drawHeight, 
-				startingCarnivores, startingHerbivores, 
-				startMinSpeed, startMaxSpeed, 
-				startMinRad, startMaxRad, 
-				startMinEgg, startMaxEgg, 
-				startMinEnergy, startMaxEnergy, 
-				startMinMetabolism, startMaxMetabolism, 
-				startMinFood, startMaxFood, chaseLength);
+		gamePane = new GamePane(drawWidth, drawHeight, startingCarnivores, startingHerbivores, startMinSpeed,
+				startMaxSpeed, startMinRad, startMaxRad, startMinEgg, startMaxEgg, startMinEnergy, startMaxEnergy,
+				startMinMetabolism, startMaxMetabolism, startMinFood, startMaxFood, chaseLength);
 		GridBagConstraints gbc = new GridBagConstraints();
 
 		startSim = false;
@@ -1221,20 +1264,20 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		addCarnivore.addActionListener(this);
 		addHerbivore.addActionListener(this);
-		
+
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
-		
+
 		go.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
 		addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
-		
+
 		sidePanel.add(go);
 		sidePanel.add(controlPanel);
 		sidePanel.add(addCarnivore);
 		sidePanel.add(addHerbivore);
-		
+
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
@@ -1242,12 +1285,124 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		
 		addCarnivore.setIcon(new ImageIcon(DrawArea.cImg));
 		addHerbivore.setIcon(new ImageIcon(DrawArea.hImg));
-		
+
 		setContentPane(gameScreen);
 		revalidate();
 		pack();
 		gameStatus = true;
-		System.out.println(getWidth() + " " + getHeight());
+
+		createSandbox();
+	}
+
+	static JToggleButton addC;
+	static JToggleButton addH;
+	static JToggleButton addE;
+	static JToggleButton addF;
+	JButton clear = new JButton("Clear Board");
+	JComponent[][] optionsGrid = null;
+	JPanel options = new JPanel();
+
+	public void createSandbox() {
+		
+		addC = new JToggleButton("Add Carnivore", new ImageIcon(DrawArea.cImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addH = new JToggleButton("Add Herbivore",new ImageIcon(DrawArea.hImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addE = new JToggleButton("Add Egg",new ImageIcon(DrawArea.eImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addF = new JToggleButton("Add Food",new ImageIcon(DrawArea.fImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		
+		 
+		
+		addC.addActionListener(sandboxListener);
+		addH.addActionListener(sandboxListener);
+		addE.addActionListener(sandboxListener);
+		addF.addActionListener(sandboxListener);
+		clear.addActionListener(sandboxListener);
+		
+		if (!sandbox.isSelected()) {
+			s.setTitle("Sandbox Options");
+			s.addComponentListener(this);
+			s.setLayout(new GridBagLayout());
+			s.setSize(300, this.getHeight());
+			s.setVisible(true);
+			s.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			s.setLocation(this.getX() + this.getWidth(), this.getY());
+
+			GridBagConstraints c = new GridBagConstraints();
+
+			c.insets = new Insets(2, 2, 2, 2);
+			c.fill = GridBagConstraints.BOTH;
+			c.gridwidth = 2;
+			s.add(new JLabel("Options"), c);
+			c.gridy=1;
+			s.add(clear, c);
+			c.gridwidth=1;
+			c.gridy = 2;
+			s.add(addC, c);
+			c.gridx=1;
+			s.add(addH, c);
+			c.gridy = 4;
+			c.gridx=0;
+			s.add(addE, c);
+			c.gridx=1;
+			s.add(addF, c);
+			c.gridwidth=2;
+			c.gridy=5;
+			s.add(options, c);
+			
+		}
+	}
+
+	ActionListener sandboxListener = new ActionListener() {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			Object src = e.getSource();
+			
+			if(e.getSource() == clear){
+				DrawArea.herbivores.clear();
+				DrawArea.carnivores.clear();
+				DrawArea.food.clear();
+				DrawArea.eggs.clear();
+				gamePane.render();
+				return;
+			}
+			
+			if (!addC.isSelected() && !addH.isSelected() && !addE.isSelected() && !addF.isSelected()) {
+				s.remove(options);
+			}
+			if (src instanceof JToggleButton) {
+				
+				GridBagConstraints c = new GridBagConstraints();
+				
+				deselectButtons((JToggleButton) src);
+				optionsGrid = gamePane.generatePanel(((JToggleButton) src).getText());
+				s.remove(options);
+				options = new JPanel(new GridLayout(optionsGrid.length, optionsGrid[0].length));
+				for(int i = 0; i < optionsGrid.length; i++)
+					for(int j = 0; j < optionsGrid[0].length; j++){
+						options.add(optionsGrid[i][j]);
+						if(i%2==1 && j==1 && optionsGrid[i][j] instanceof JButton){
+							((JButton) optionsGrid[i][j]).addActionListener(gamePane.randomListener);
+						}
+					}
+				c.insets = new Insets(2, 2, 2, 2);
+				c.fill = GridBagConstraints.BOTH;
+				c.gridwidth=2;
+				c.gridy=5;
+				s.add(options, c);
+				s.revalidate();
+			}
+		}
+	};
+
+	public void deselectButtons(JToggleButton jtb) {
+		if (addC != jtb)
+			addC.setSelected(false);
+		if (addH != jtb)
+			addH.setSelected(false);
+		if (addE != jtb)
+			addE.setSelected(false);
+		if (addF != jtb)
+			addF.setSelected(false);
 	}
 
 	/**
@@ -1312,10 +1467,10 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		if (startMaxRad > 200)
 			startMaxRad = 200;
 
-		if (startMinEgg < 20000)
-			startMinEgg = 20000;
-		if (startMaxEgg > 40000)
-			startMaxEgg = 40000;
+		if (startMinEgg < 4000)
+			startMinEgg = 4000;
+		if (startMaxEgg > 20000)
+			startMaxEgg = 20000;
 
 		if (startMinEnergy < 6000.0)
 			startMinEnergy = 6000.0;
@@ -1331,47 +1486,47 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			startMinFood = 200.0;
 		if (startMaxFood > 800.0)
 			startMaxFood = 800.0;
-		
+
 		if (chaseLength < 5000)
 			chaseLength = 5000;
 		else if (chaseLength > 20000)
 			chaseLength = 20000;
-		
+
 		if (chaseCD < 2000)
 			chaseCD = 2000;
 		else if (chaseCD > 6000)
 			chaseCD = 6000;
-	
+
 		if (foodSpawnRate < 0)
 			foodSpawnRate = 0;
 		else if (foodSpawnRate > 9)
 			foodSpawnRate = 9;
-		
+
 		if (foodDecayRate < 0.0)
 			foodDecayRate = 0.0;
 		else if (foodDecayRate > 4.0)
 			foodDecayRate = 4.0;
-		
+
 		if (energyDecayRate < 0.0)
 			energyDecayRate = 0.0;
 		else if (energyDecayRate > 4.0)
 			energyDecayRate = 4.0;
-		
+
 		if (maximumEnergy < 2000.0)
 			maximumEnergy = 2000.0;
 		else if (maximumEnergy > 30000.0)
 			maximumEnergy = 30000.0;
-		
+
 		if (energyReq < 0.0)
 			energyReq = 0.0;
 		else if (energyReq > maximumEnergy)
 			energyReq = maximumEnergy;
-		
+
 		if (newbornEnergy < 2000.0)
 			newbornEnergy = 2000.0;
 		else if (newbornEnergy > maximumEnergy)
 			newbornEnergy = maximumEnergy;
-		
+
 		if (hatchTime < 2000)
 			hatchTime = 2000;
 		else if (hatchTime > 30000)
@@ -1433,11 +1588,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		private Color foregroundColor;
 		private final String ghostText;
 
-		protected GhostText(final JTextField textfield, String ghostText, Color ghostColor) {
+		protected GhostText(final JTextField textfield, String ghostText) {
 			super();
 			this.textfield = textfield;
 			this.ghostText = ghostText;
-			this.ghostColor = ghostColor;
+			this.ghostColor = Color.LIGHT_GRAY;
 			textfield.addFocusListener(this);
 			registerListeners();
 			updateState();
@@ -1518,6 +1673,33 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		public void removeUpdate(DocumentEvent e) {
 			updateState();
 		}
+
+	}
+
+	@Override
+	public void componentHidden(ComponentEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {
+		if (e.getSource() == this) {
+			s.setLocation(this.getX() + this.getWidth(), this.getY());
+		} else {
+			this.setLocation(s.getX() - this.getWidth(), s.getY());
+		}
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+		// TODO Auto-generated method stub
 
 	}
 }
