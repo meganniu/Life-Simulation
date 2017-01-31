@@ -1284,11 +1284,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		sidePanel.add(controlPanel);
 		sidePanel.add(Box.createRigidArea(new Dimension(0,7)));
 		sidePanel.add(overviewPnl);
-<<<<<<< HEAD
 
-=======
-		
->>>>>>> 3e87e54848dcb12785c323dfc4775e00f74d9cbe
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;
