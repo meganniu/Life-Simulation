@@ -74,7 +74,6 @@ public class Herbivore extends Organism {
 		if(GamePane.timeElapsed>sinceLastEgg+eggCycle && energy > Main.energyReq){
 			sinceLastEgg=GamePane.timeElapsed;
 			DrawArea.eggs.add(new Egg(generation + 1, new Point(pos), angle, speed, detectRadius, eggCycle, carnivorePoints, metabolism, chaseLength));
-			System.out.println("Layed egg at " +GamePane.timeElapsed/1000.0);
 			energy-=Main.energyReq*2/3;
 			if (energy < 0)
 				energy = 0;

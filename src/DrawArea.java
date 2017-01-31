@@ -98,9 +98,6 @@ public class DrawArea extends BufferedImage {
 		width = getWidth();
 		height = getHeight();
 
-		System.out.println("width: " + width);
-		System.out.println("height: " + height);
-
 		g = (Graphics2D) createGraphics();
 		try {
 			hImg = ImageIO.read(new File("images/herbivore.png"));
@@ -221,7 +218,6 @@ public class DrawArea extends BufferedImage {
 					StatsPanel.selectedOrg = null;
 				carnivores.remove(i);
 				i--;
-				System.out.println("Carnivore died");
 			}
 		}
 		for (int i = 0; i < herbivores.size(); i++) {
@@ -231,7 +227,6 @@ public class DrawArea extends BufferedImage {
 					StatsPanel.selectedOrg = null;
 				herbivores.remove(i);
 				i--;
-				System.out.println("Herbivore died");
 			}
 		}
 	}
@@ -374,7 +369,6 @@ public class DrawArea extends BufferedImage {
 	 * @param pos position to spawn new carnivore
 	 */
 	public static void addCarnivore(Point pos) {
-		System.out.print("here");
 		carnivores.add(new Carnivore(1, pos, Math.random() * 360.0, // angle
 				(int) (Math.random() * ((startMaxSpeed - startMinSpeed) + 1) + startMinSpeed), // spd
 				(int) (Math.random() * ((startMaxRad - startMinRad) + 1) + startMinRad), // dRadius

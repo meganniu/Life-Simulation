@@ -423,7 +423,6 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	public JComponent[][] generatePanel(String text) {
 		JComponent[][] temp = null;
-		System.out.println(text);
 		if (text.equals("Add Carnivore")) {
 			temp = new JComponent[16][2];
 			temp[0][0] = new JLabel("Angle", JLabel.CENTER);
@@ -545,7 +544,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 					JSpinner js = ((JSpinner) sandbox[index][0]);
 					if (index == 1)
-						js.setValue(Math.round(Math.random() * (361) * 10) / 10.0);
+						js.setValue((int)(Math.random() * (361)));
 					else {
 						SpinnerNumberModel nm = (SpinnerNumberModel) js.getModel();
 						js.setValue((int) (Math.random() * ((int) nm.getMaximum() - (int) nm.getMinimum() + 1)

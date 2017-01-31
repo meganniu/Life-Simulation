@@ -55,7 +55,6 @@ public class Carnivore extends Organism {
 
 			if (!chasing){
 				chaseStart = GamePane.timeElapsed;
-				System.out.println("Chase has begun!" + GamePane.timeElapsed);
 			}
 			chasing = true;
 
@@ -82,13 +81,11 @@ public class Carnivore extends Organism {
 				if (canChase){
 					canChase = false;
 					cooldownStart = GamePane.timeElapsed;
-					System.out.println("End of chase" + GamePane.timeElapsed);
 					return (this.angle + Math.random() * 91 - 45) % 360;
 				}
 				else{
 					if(GamePane.timeElapsed > cooldownStart + Main.chaseCD){
 						canChase = true;
-						System.out.println("Can chase" + GamePane.timeElapsed);
 					}
 					return this.angle;
 				}
