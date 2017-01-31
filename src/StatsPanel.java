@@ -56,7 +56,7 @@ public class StatsPanel extends JPanel {
 		this.setBorder(border);
 		
 		
-		this.setPreferredSize(new Dimension(220, 400));
+		this.setPreferredSize(new Dimension(220, 310));
 
 		revalidate();
 		repaint();

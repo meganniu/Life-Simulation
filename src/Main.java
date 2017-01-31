@@ -32,6 +32,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1263,12 +1264,8 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		controlPanel.add(left, c2);
 		c2.gridx = 2;
 		controlPanel.add(right, c2);
-		c2.gridy = 2;
 		c2.gridx = 1;
 		controlPanel.add(down, c2);
-
-		//addCarnivore.addActionListener(this);
-		//addHerbivore.addActionListener(this);
 		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
@@ -1276,15 +1273,13 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		go.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		overviewPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		sidePanel.add(go);
+		sidePanel.add(Box.createRigidArea(new Dimension(0,7)));
 		sidePanel.add(controlPanel);
+		sidePanel.add(Box.createRigidArea(new Dimension(0,7)));
 		sidePanel.add(overviewPnl);
-		//sidePanel.add(addCarnivore);
-		//sidePanel.add(addHerbivore);
-
+		
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
 		gbc.gridy = 0;

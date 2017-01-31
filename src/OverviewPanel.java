@@ -39,7 +39,7 @@ public class OverviewPanel extends JPanel{
 		update();
 		
 		Border blackline = BorderFactory.createLineBorder(Color.black);
-		Border border = BorderFactory.createTitledBorder(blackline, "Stats");
+		Border border = BorderFactory.createTitledBorder(blackline, "Overview");
 		((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
 		this.setBorder(border);
 
