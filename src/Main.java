@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1277,6 +1278,9 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 				for(int i = 0; i < optionsGrid.length; i++)
 					for(int j = 0; j < optionsGrid[0].length; j++){
 						options.add(optionsGrid[i][j]);
+						if(i%2==1 && j==1 && optionsGrid[i][j] instanceof JButton){
+							((JButton) optionsGrid[i][j]).addActionListener(gamePane.randomListener);
+						}
 					}
 				c.insets = new Insets(2, 2, 2, 2);
 				c.fill = GridBagConstraints.BOTH;
@@ -1286,7 +1290,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 				s.revalidate();
 			}
 		}
-
 	};
 
 	public void deselectButtons(JToggleButton jtb) {

@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
@@ -380,7 +382,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		System.out.println(text);
 		if(text.equals("Add Carnivore")){
 			temp = new JComponent[16][2];
-			temp[0][0]=new JLabel("Angle", JLabel.CENTER);			temp[0][1]=new JLabel();
+			temp[0][0]=new JLabel("Angle", JLabel.CENTER);						temp[0][1]=new JLabel();
 			temp[1][0]=new JSpinner(new SpinnerNumberModel(0, 0, 360, 30));		temp[1][1]=new JButton("Random");
 			temp[2][0]=new JLabel("Speed", JLabel.CENTER);						temp[2][1]=new JLabel();
 			temp[3][0]=new JSpinner(new SpinnerNumberModel(1, 0, 360, 30));		temp[3][1]=new JButton("Random");
@@ -402,6 +404,24 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		else if(text.equals("Add Food")){}
 		
 		sandbox = temp;
-		return temp;
+		return this.sandbox;
 	}
+	public ActionListener randomListener = new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			System.out.println("hi");
+			int index = 1;
+			for(int i = 1; i <= 15; i+=2){
+				if(e.getSource() == sandbox[i][1]){
+					index = i;
+					break;
+				}
+			}
+			if(sandbox[index][0] instanceof JSpinner){
+				JSpinner js = ((JSpinner)sandbox[index][0]);
+				js.setValue((int)(Math.random()*(361)));
+			}
+		}
+	};
+	
 }
