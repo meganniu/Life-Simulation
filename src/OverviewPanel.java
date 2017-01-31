@@ -27,7 +27,7 @@ public class OverviewPanel extends JPanel{
 	 * OverviewPanel constructor
 	 */
 	public OverviewPanel(){
-		this.setPreferredSize(new Dimension(220, 100));
+		this.setPreferredSize(new Dimension(220, 150));
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		
 		for (int i = 0; i < 5; i++) {

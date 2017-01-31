@@ -65,6 +65,11 @@ public class Egg {
 	private int dSpeed, dDR, dMetabolism, dCP, dCL, dEC;
 	
 	/**
+	 * generation of organism from egg
+	 */
+	private int generation;
+	
+	/**
 	 * Egg constructor
 	 * @param pos position of parent
 	 * @param angle angle of parent
@@ -75,8 +80,6 @@ public class Egg {
 	 * @param metabolism metabolism of parent
 	 * @param chaseLength chase length of paretn
 	 */
-
-	private int generation;
 
 	public Egg(int generation, Point pos, double angle, int speed, int detectRadius, int eggCycle, int carnivorePoints,
 			double metabolism, long chaseLength) {
