@@ -244,7 +244,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.hatchEggs();
 		drawArea.energyCheck();
 		drawArea.eatCheck();
-		if ((finalOrg = drawArea.checkEnd()) != null && timeElapsed > 10) {
+		System.out.println(Main.sandboxOn);
+		if ((finalOrg = drawArea.checkEnd()) != null && timeElapsed > 10 && !Main.sandboxOn) {
 			Main.go.setEnabled(false);
 			Main.addCarnivore.setEnabled(false);
 			Main.addHerbivore.setEnabled(false);
@@ -271,7 +272,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		g.drawString("FPS: " + frameCount + " | Ticks: " + tickCount + " | Time Elapsed: "
 				+ new DecimalFormat("#.###").format(timeElapsed / 1000.0) + "s", 5, 15);
 
-		if (finalOrg != null) {
+		if (finalOrg != null && !Main.sandboxOn) {
 			g.setColor(Color.white);
 			g.fillRect((450) / 2, 150 / 2, 150, 250);
 

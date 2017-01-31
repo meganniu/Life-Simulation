@@ -80,6 +80,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	JToggleButton sandbox = new JToggleButton("Sandbox Mode");
 
 	/**
+	 * whether or not sandbox mode is engaged
+	 */
+	protected static boolean sandboxOn = false; 
+	
+	/**
 	 * displayed when user wished to set beginning stats
 	 */
 	GetPreferences getPreferences = new GetPreferences();
@@ -1266,9 +1271,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		c2.gridy = 2;
 		c2.gridx = 1;
 		controlPanel.add(down, c2);
-
-		//addCarnivore.addActionListener(this);
-		//addHerbivore.addActionListener(this);
 		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
@@ -1276,14 +1278,10 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		go.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		overviewPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
-		//addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		sidePanel.add(go);
 		sidePanel.add(controlPanel);
 		sidePanel.add(overviewPnl);
-		//sidePanel.add(addCarnivore);
-		//sidePanel.add(addHerbivore);
 
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
@@ -1312,7 +1310,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	JPanel options = new JPanel();
 
 	public void createSandbox() {
-
 		Border border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		optLbl.setBorder(border);
 		optLbl.setFont(optLbl.getFont().deriveFont(20f));
@@ -1332,6 +1329,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		clear.addActionListener(sandboxListener);
 
 		if (sandbox.isSelected()) {
+			sandboxOn = true;
 			s.setTitle("Sandbox Options");
 			s.addComponentListener(this);
 			s.addWindowListener(this);
