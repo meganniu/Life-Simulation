@@ -26,6 +26,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,6 +34,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -146,7 +149,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 	 * start button for simulation
 	 * switched to pause button when simulation is running
 	 */
-	JButton go = new JButton("Start");
+	static JButton go = new JButton("Start");
 	static JButton startBtn = new JButton("Start");
 	
 	/**
@@ -690,6 +693,43 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		JTextField eggHatchTF = new JTextField();
 		
 		/**
+		 * displays default values in light gray
+		 */
+		GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start", Color.LIGHT_GRAY);
+		GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2", Color.LIGHT_GRAY);
+		GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80", Color.LIGHT_GRAY);
+		GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 20000", Color.LIGHT_GRAY);
+		GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0", Color.LIGHT_GRAY);
+		GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0", Color.LIGHT_GRAY);
+		GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0", Color.LIGHT_GRAY);
+
+		GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0", Color.LIGHT_GRAY);
+		GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0", Color.LIGHT_GRAY);
+		
+		GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000", Color.LIGHT_GRAY);
+		GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000", Color.LIGHT_GRAY);
+		GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9", Color.LIGHT_GRAY);
+		GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0", Color.LIGHT_GRAY);
+		GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0", Color.LIGHT_GRAY);
+		GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy", Color.LIGHT_GRAY);
+		GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy", Color.LIGHT_GRAY);
+		GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0", Color.LIGHT_GRAY);
+		GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0", Color.LIGHT_GRAY);
+		
+		/**
+		 * buttons for preloaded stats
+		 */
+		JButton dawnOfTimeBtn = new JButton("Dawn of Time");
+		JButton extinctionBtn = new JButton("Extinction");
+		JButton bouncebackBtn = new JButton("Bouncback");
+		JButton quickEndBtn = new JButton("Quick End");
+		
+		/**
 		 * GetPreferences constructor
 		 */
 		public GetPreferences() {
@@ -697,7 +737,7 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			System.out.println("Created settings");
 
 			setTitle("Customization");
-			setSize(650, 800);
+			setSize(650, 875);
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			setLocationRelativeTo(null);
 			setLayout(new GridBagLayout());
@@ -783,32 +823,6 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			add(maximumEnergyLbl, gbc);
 			
 			gbc.anchor = GridBagConstraints.PAGE_START;
-			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
-			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
-			GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80");
-			GhostText ghostTextMinEgg = new GhostText(minEggTF, "Default 20000");
-			GhostText ghostTextMinEnergy = new GhostText(minEnergyTF, "Default 6000.0");
-			GhostText ghostTextMinMetabolism = new GhostText(minMetabolismTF, "Default 80.0");
-			GhostText ghostTextMinFood = new GhostText(minFoodTF, "Default 200.0");
-
-			GhostText ghostTextH = new GhostText(herbivoresTF, "Herbivores to start");
-			GhostText ghostTextMaxSpeed = new GhostText(maxSpeedTF, "Default 9");
-			GhostText ghostTextMaxRad = new GhostText(maxRadTF, "Default 150");
-			GhostText ghostTextMaxEgg = new GhostText(maxEggTF, "Default 40000");
-			GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
-			GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
-			GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
-			
-			GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000");
-			GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
-			GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
-			GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
-			GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0");
-			GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy");
-			GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy");
-			GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0");
-			GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0");
-			
 			
 			gbc.gridx = 0;
 			gbc.gridy = 1;
@@ -906,6 +920,43 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			gbc.gridy = 21;
 			maximumEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(maximumEnergyTF, gbc);
+			
+			gbc.gridx = 0;
+			gbc.gridy = 24;
+			gbc.gridwidth = 2;
+			JPanel preloadedOptions = new JPanel();
+			preloadedOptions.setLayout(new GridBagLayout());
+			preloadedOptions.setPreferredSize(new Dimension(500, 75));
+			
+			Border blackline = BorderFactory.createLineBorder(Color.black);
+			Border border = BorderFactory.createTitledBorder(blackline, "Preloaded Options");
+			((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
+			preloadedOptions.setBorder(border);
+			
+			GridBagConstraints gbc2 = new GridBagConstraints();
+			
+			dawnOfTimeBtn.addActionListener(new MouseListener());
+			extinctionBtn.addActionListener(new MouseListener());
+			bouncebackBtn.addActionListener(new MouseListener());
+			quickEndBtn.addActionListener(new MouseListener());
+			
+			gbc2.gridx = 0;
+			gbc2.gridy = 0;
+			preloadedOptions.add(dawnOfTimeBtn, gbc2);
+			
+			gbc2.gridx = 1;
+			gbc2.insets = new Insets(0, 5, 0, 5);
+			preloadedOptions.add(extinctionBtn, gbc2);
+
+			gbc2.gridx = 2;
+			gbc2.insets = new Insets(0, 0, 0, 5);
+			preloadedOptions.add(bouncebackBtn, gbc2);
+
+			gbc2.gridx = 3;
+			gbc2.insets = new Insets(0, 0, 0, 0);
+			preloadedOptions.add(quickEndBtn, gbc2);
+			
+			add(preloadedOptions, gbc);
 
 			cancel.addActionListener(new MouseListener());
 			set.addActionListener(new MouseListener());
@@ -914,8 +965,9 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 			set.setPreferredSize(new Dimension(80, 30));
 
 			gbc.gridx = 0;
-			gbc.gridy = 24;
+			gbc.gridy = 25;
 			gbc.weighty = 0.3;
+			gbc.gridwidth = 1;
 			add(cancel, gbc);
 
 			gbc.gridx = 1;
@@ -924,13 +976,36 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 
 		/**
 		 * Read in user input if user "sets" stats
+		 * Loads pregenerated for simulations with expected outcomes
 		 */
 		class MouseListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == cancel) {
 					setVisible(false);
 					dispose();
-				} else if (e.getSource() == set) {
+				}
+				else if(e.getSource() == dawnOfTimeBtn){
+					carnivoresTF.setText("0");
+					herbivoresTF.setText("100");
+					foodSpawnTF.setText("8");
+					foodDecayTF.setText("0");
+				} 
+				else if(e.getSource() == extinctionBtn){
+					carnivoresTF.setText("10");
+					herbivoresTF.setText("2");
+					foodSpawnTF.setText("2");
+				} 
+				else if(e.getSource() == bouncebackBtn){
+					carnivoresTF.setText("10");
+					herbivoresTF.setText("3");;
+				} 
+				else if(e.getSource() == quickEndBtn){
+					carnivoresTF.setText("2");
+					herbivoresTF.setText("0");
+					energyDecayTF.setText("4");
+					maxEnergyTF.setText("4000");
+				} 
+				else if (e.getSource() == set) {
 					try {
 						startingCarnivores = Integer.parseInt(carnivoresTF.getText());
 					} catch (NumberFormatException ev) {
@@ -1358,11 +1433,11 @@ public class Main extends JFrame implements KeyListener, ActionListener {
 		private Color foregroundColor;
 		private final String ghostText;
 
-		protected GhostText(final JTextField textfield, String ghostText) {
+		protected GhostText(final JTextField textfield, String ghostText, Color ghostColor) {
 			super();
 			this.textfield = textfield;
 			this.ghostText = ghostText;
-			this.ghostColor = Color.LIGHT_GRAY;
+			this.ghostColor = ghostColor;
 			textfield.addFocusListener(this);
 			registerListeners();
 			updateState();

@@ -234,6 +234,8 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		drawArea.energyCheck();
 		drawArea.eatCheck();
 		if((finalOrg = drawArea.checkEnd()) != null && timeElapsed > 10){
+			Main.go.setEnabled(false);
+			render();
 			stop();
 		}
 		Main.statsPanel.updateStats();
