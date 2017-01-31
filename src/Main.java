@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -41,6 +42,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JToggleButton;
 import javax.swing.event.DocumentEvent;
@@ -1297,6 +1299,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	private JToggleButton addH;
 	private JToggleButton addE;
 	private JToggleButton addF;
+	private JLabel optLbl = new JLabel("Sandbox Mode");
 	static JToggleButton addBtn = new JToggleButton("Add (Click the draw area)");
 	JButton clear = new JButton("Clear Board");
 	JComponent[][] optionsGrid = null;
@@ -1304,6 +1307,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	public void createSandbox() {
 
+		Border border = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+		optLbl.setBorder(border);
+		optLbl.setFont(optLbl.getFont().deriveFont(20f));
+		optLbl.setHorizontalAlignment(JLabel.CENTER);
+		
 		addC = new JToggleButton("Add Carnivore",
 				new ImageIcon(DrawArea.cImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
 		addH = new JToggleButton("Add Herbivore",
@@ -1320,7 +1328,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		if (sandbox.isSelected()) {
 			s.setTitle("Sandbox Options");
 			s.addComponentListener(this);
-			s.setLayout(new GridBagLayout());
+			s.setLayout(new BorderLayout());
 			s.setSize(300, this.getHeight());
 			s.setVisible(true);
 			s.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -1333,12 +1341,13 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	public void addToSandbox() {
 		GridBagConstraints c = new GridBagConstraints();
+		s.getContentPane().removeAll();
 		JPanel cp = new JPanel(new GridBagLayout());
-
+		
 		c.insets = new Insets(2, 2, 2, 2);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridwidth = 2;
-		cp.add(new JLabel("Options"), c);
+		cp.add(optLbl, c);
 		c.gridy = 1;
 		cp.add(clear, c);
 		c.gridwidth = 1;
@@ -1357,8 +1366,10 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		cp.add(options, c);
 		c.gridy = 6;
 		cp.add(addBtn, c);
-		s.setContentPane(cp);
+		
+		s.add(cp, BorderLayout.NORTH);
 		s.revalidate();
+		s.repaint();
 	}
 
 	ActionListener sandboxListener = new ActionListener() {

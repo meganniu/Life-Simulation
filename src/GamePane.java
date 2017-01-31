@@ -380,35 +380,37 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-			int x = 2 * e.getX() + drawRegion.x;
-			int y = 2 * e.getY() + drawRegion.y;
-			
-			if(Main.addBtn.isSelected()){
-				if(sandbox.length==2)
-					DrawArea.food.add(new Food(new Point(x,y), (int) ((JSpinner)sandbox[1][0]).getValue()));
-				else if (sandbox.length == 14){
-					int[] values = new int[7];
-					for(int i = 1; i <= 13; i+=2){
-						values [i/2] = (int) ((JSpinner)sandbox[i][0]).getValue();
-					}
-					DrawArea.herbivores.add(new Herbivore(1, new Point(x, y), values[0], values[1], values[2], values[3], values[4], values[5], values[6]));
+		int x = 2 * e.getX() + drawRegion.x;
+		int y = 2 * e.getY() + drawRegion.y;
+
+		if (Main.addBtn.isSelected()) {
+			if (sandbox.length == 2)
+				DrawArea.food.add(new Food(new Point(x, y), (int) ((JSpinner) sandbox[1][0]).getValue()));
+			else if (sandbox.length == 14) {
+				int[] values = new int[7];
+				for (int i = 1; i <= 13; i += 2) {
+					values[i / 2] = (int) ((JSpinner) sandbox[i][0]).getValue();
 				}
-				else if (sandbox.length == 16){
-					int[] values = new int[8];
-					for(int i = 1; i <= 15; i+=2){
-						values [i/2] = (int) ((JSpinner)sandbox[i][0]).getValue();
-					}
-					DrawArea.carnivores.add(new Carnivore(1, new Point(x, y), (int)values[0], (int)values[1], (int)values[2], (int)values[3], (int)values[4], (double)values[5], (double)values[6], (long)values[7]));
+				DrawArea.herbivores.add(new Herbivore(1, new Point(x, y), values[0], values[1], values[2], values[3],
+						values[4], values[5], values[6]));
+			} else if (sandbox.length == 16) {
+				int[] values = new int[8];
+				for (int i = 1; i <= 15; i += 2) {
+					values[i / 2] = (int) ((JSpinner) sandbox[i][0]).getValue();
 				}
-				else if (sandbox.length == 15){
-					int[] values = new int[7];
-					for(int i = 1; i <= 13; i+=2){
-						values [i/2] = (int) ((JSpinner)sandbox[i][0]).getValue();
-					}
-					DrawArea.eggs.add(new Egg(1, new Point(x, y), (int)values[0], (int)values[1], (int)values[2], (int)values[3], (int)values[4], (double)values[5], (long)values[6]));
+				DrawArea.carnivores.add(new Carnivore(1, new Point(x, y), (int) values[0], (int) values[1],
+						(int) values[2], (int) values[3], (int) values[4], (double) values[5], (double) values[6],
+						(long) values[7]));
+			} else if (sandbox.length == 15) {
+				int[] values = new int[7];
+				for (int i = 1; i <= 13; i += 2) {
+					values[i / 2] = (int) ((JSpinner) sandbox[i][0]).getValue();
 				}
-				render();
+				DrawArea.eggs.add(new Egg(1, new Point(x, y), (int) values[0], (int) values[1], (int) values[2],
+						(int) values[3], (int) values[4], (double) values[5], (long) values[6]));
 			}
+			render();
+		}
 	}
 
 	@Override
@@ -528,8 +530,37 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 		return this.sandbox;
 	}
 
-	public ActionListener randomListener=new ActionListener(){@Override public void actionPerformed(ActionEvent e){int index=1;for(int i=1;i<=15;i+=2){if(e.getSource()==sandbox[i][1]){index=i;break;}}if(sandbox.length==14||sandbox.length==16){if(sandbox[index][0]instanceof JSpinner){
+	public ActionListener randomListener = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int index = 1;
+			for (int i = 1; i <= 15; i += 2) {
+				if (e.getSource() == sandbox[i][1]) {
+					index = i;
+					break;
+				}
+			}
+			if (sandbox.length == 14 || sandbox.length == 16) {
+				if (sandbox[index][0] instanceof JSpinner) {
 
-	JSpinner js=((JSpinner)sandbox[index][0]);if(index==1)js.setValue(Math.round(Math.random()*(361)*10)/10.0);else{SpinnerNumberModel nm=(SpinnerNumberModel)js.getModel();js.setValue((int)(Math.random()*((int)nm.getMaximum()-(int)nm.getMinimum()+1)+(int)nm.getMinimum()));}}}else{if(sandbox[index][0]instanceof JSpinner){JSpinner js=((JSpinner)sandbox[index][0]);SpinnerNumberModel nm=(SpinnerNumberModel)js.getModel();js.setValue((int)(Math.random()*((int)nm.getMaximum()-(int)nm.getMinimum()+1)+(int)nm.getMinimum()));}}}};
+					JSpinner js = ((JSpinner) sandbox[index][0]);
+					if (index == 1)
+						js.setValue(Math.round(Math.random() * (361) * 10) / 10.0);
+					else {
+						SpinnerNumberModel nm = (SpinnerNumberModel) js.getModel();
+						js.setValue((int) (Math.random() * ((int) nm.getMaximum() - (int) nm.getMinimum() + 1)
+								+ (int) nm.getMinimum()));
+					}
+				}
+			} else {
+				if (sandbox[index][0] instanceof JSpinner) {
+					JSpinner js = ((JSpinner) sandbox[index][0]);
+					SpinnerNumberModel nm = (SpinnerNumberModel) js.getModel();
+					js.setValue((int) (Math.random() * ((int) nm.getMaximum() - (int) nm.getMinimum() + 1)
+							+ (int) nm.getMinimum()));
+				}
+			}
+		}
+	};
 
 }
