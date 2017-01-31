@@ -252,6 +252,7 @@ public class GamePane extends Canvas implements MouseListener, Runnable {
 			stop();
 		}
 		Main.statsPanel.updateStats();
+		Main.overviewPnl.update();
 	}
 
 	/**

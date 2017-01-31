@@ -539,6 +539,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	static StatsPanel statsPanel = new StatsPanel();
 
 	/**
+	 * Panel on which to display over stats of simulation
+	 */
+	static OverviewPanel overviewPnl = new OverviewPanel();
+	
+	/**
 	 * Main constructor
 	 */
 	public Main() {
@@ -1261,21 +1266,23 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		c2.gridx = 1;
 		controlPanel.add(down, c2);
 
-		addCarnivore.addActionListener(this);
-		addHerbivore.addActionListener(this);
-
+		//addCarnivore.addActionListener(this);
+		//addHerbivore.addActionListener(this);
+		
 		JPanel sidePanel = new JPanel();
 		sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.Y_AXIS));
 
 		go.setAlignmentX(Component.CENTER_ALIGNMENT);
 		controlPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
-		addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
+		overviewPnl.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//addCarnivore.setAlignmentX(Component.CENTER_ALIGNMENT);
+		//addHerbivore.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		sidePanel.add(go);
 		sidePanel.add(controlPanel);
-		sidePanel.add(addCarnivore);
-		sidePanel.add(addHerbivore);
+		sidePanel.add(overviewPnl);
+		//sidePanel.add(addCarnivore);
+		//sidePanel.add(addHerbivore);
 
 		gbc.gridheight = 1;
 		gbc.gridx = 0;
