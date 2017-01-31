@@ -1217,7 +1217,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	 * Get user preferences
 	 */
 	public void getPreferences() {
-		System.out.println(settingsOpen);
 		if (!settingsOpen) {
 			getPreferences.setVisible(true);
 			settingsOpen = true;
@@ -1403,7 +1402,6 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 				options = new JPanel();
 				addToSandbox();
 			} else if (src instanceof JToggleButton) {
-				System.out.println("hi1");
 				addBtn.setEnabled(true);
 				addBtn.setSelected(false);
 				deselectButtons((JToggleButton) src);
