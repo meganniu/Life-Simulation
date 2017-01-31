@@ -52,12 +52,12 @@ import javafx.scene.media.AudioClip;
  * Driver class of simulation
  */
 public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener {
-	
+
 	/**
 	 * displayed when simulation starts
 	 */
 	JPanel gameScreen = new JPanel(new GridBagLayout());
-	
+
 	/**
 	 * displayed when program begins, before simulation
 	 */
@@ -68,34 +68,32 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	 */
 	JFrame s = new JFrame();
 
-	
 	/**
 	 * displayed when instructions requested
 	 */
 	InstructionScreen instructionScreen = new InstructionScreen();
-	
+
 	/**
 	 * toggles sandbox mode
 	 */
 	JToggleButton sandbox = new JToggleButton("Sandbox Mode");
-	
+
 	/**
 	 * displayed when user wished to set beginning stats
 	 */
 	GetPreferences getPreferences = new GetPreferences();
 
-	
 	/**
 	 * if the simulation is running
 	 */
 	boolean gameStatus = false;
 	boolean settingsOpen = false;
-	
+
 	/**
 	 * if user wishes to add a carnivore
 	 */
 	static boolean addingCarnivore = false;
-	
+
 	/**
 	 * if user wishes to add a herbivore
 	 */
@@ -105,57 +103,58 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	 * true to start sim, false to pause sim
 	 */
 	boolean startSim;
-	
+
 	/**
 	 * width and height of display area for simulation graphics
 	 */
 	private static int drawWidth = 600, drawHeight = 600;
-	
+
 	/**
 	 * chasing time of organisms
 	 */
 	public static int chaseCD = 4000;
-	
+
 	/**
 	 * rate at which food spawns
 	 */
 	public static int foodSpawnRate = 3;
-	
+
 	/**
 	 * rate at which food decays
 	 */
 	public static double foodDecayRate = 1.0;
-	
+
 	/**
 	 * rate at which energy decreases
 	 */
 	public static double energyDecayRate = 1.0;
-	
+
 	/**
 	 * minimum energy required
 	 */
 	public static double energyReq = 6000.0;
-	
+
 	/**
 	 * default energy of a newborn
 	 */
 	public static double newbornEnergy = 4000.0;
-	
+
 	/**
 	 * maximum energy of an organism
 	 */
 	public static double maximumEnergy = 15000.0;
-	
+
 	/**
 	 * hatch time of an egg
 	 */
 	public static long hatchTime = 10000;
-	
+
 	/**
-	 * GamePane for controlling the passage of ticks and updating of simulation graphics
+	 * GamePane for controlling the passage of ticks and updating of simulation
+	 * graphics
 	 */
 	GamePane gamePane;
-	
+
 	/**
 	 * control panel to move around simulation graphics
 	 */
@@ -163,19 +162,19 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	JButton right = new JButton(">");
 	JButton down = new JButton("v");
 	JButton left = new JButton("<");
-	
+
 	/**
-	 * start button for simulation
-	 * switched to pause button when simulation is running
+	 * start button for simulation switched to pause button when simulation is
+	 * running
 	 */
 	static JButton go = new JButton("Start");
 	static JButton startBtn = new JButton("Start");
-	
+
 	/**
 	 * button to add carnivore
 	 */
 	static JButton addCarnivore = new JButton("Add Carnivore");
-	
+
 	/**
 	 * button to add herbivore
 	 */
@@ -191,7 +190,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	int startMinEgg = 4000, startMaxEgg = 20000;
 	double startMinEnergy = 6000.0, startMaxEnergy = 9000.0;
 	double startMinMetabolism = 80.0, startMaxMetabolism = 120.0;
-	double startMinFood = 200.0, startMaxFood = 800.0;
+	double startMinFood = 200.0, startMaxFood = 2000.0;
 	long chaseLength = 15000;
 
 	/**
@@ -399,7 +398,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 		/**
 		 * Detects mouse clicks and loads different screens accordingly
-		 */		
+		 */
 		public void mousePressed(MouseEvent e) {
 			if (r1.contains(e.getPoint()))
 				generateGame();
@@ -483,7 +482,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			// TODO Auto-generated method stub
 
 		}
-		
+
 		/**
 		 * Leave instructions if mouse is pressed
 		 */
@@ -523,7 +522,9 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 		/**
 		 * Scroll down instructions when mouse is moved
-		 * @param shifty to start display of instruction image in respect to y axis
+		 * 
+		 * @param shifty
+		 *            to start display of instruction image in respect to y axis
 		 */
 		public void setShiftY(int shifty) {
 			this.shifty = shifty;
@@ -531,6 +532,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		}
 
 	}
+
 	/**
 	 * Panel on which to display stats of objects
 	 */
@@ -562,7 +564,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	}
 
 	/**
-	 * Receive user inputs to scroll across simulation drawing 
+	 * Receive user inputs to scroll across simulation drawing
 	 */
 	public void actionPerformed(ActionEvent e) {
 		if (gameStatus) {
@@ -594,21 +596,19 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			}
 			if (e.getSource() == addCarnivore) {
 				addingCarnivore = !addingCarnivore;
-				if(addingCarnivore){
+				if (addingCarnivore) {
 					addHerbivore.setEnabled(false);
 					addingHerbivore = false;
-				}
-				else{
+				} else {
 					addHerbivore.setEnabled(true);
 				}
 			}
 			if (e.getSource() == addHerbivore) {
 				addingHerbivore = !addingHerbivore;
-				if(addingHerbivore){
+				if (addingHerbivore) {
 					addCarnivore.setEnabled(false);
 					addingCarnivore = false;
-				}
-				else{
+				} else {
 					addCarnivore.setEnabled(true);
 				}
 			}
@@ -620,7 +620,9 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	/**
 	 * Display instruction screen
-	 * @param shifty section of instructions to display from
+	 * 
+	 * @param shifty
+	 *            section of instructions to display from
 	 */
 	public void instructions(int shifty) {
 		instructionScreen.setShiftY(shifty);
@@ -644,7 +646,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		 * set beginning stats
 		 */
 		JButton set = new JButton("Set");
-		
+
 		/**
 		 * cancel begining stats
 		 */
@@ -729,17 +731,18 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		GhostText ghostTextMaxEnergy = new GhostText(maxEnergyTF, "Default 9000.0");
 		GhostText ghostTextMaxMetabolism = new GhostText(maxMetabolismTF, "Default 120.0");
 		GhostText ghostTextMaxFood = new GhostText(maxFoodTF, "Default 800.0");
-		
+
 		GhostText ghostTextChase = new GhostText(chaseTF, "Default 15000, range 5000 - 20000");
 		GhostText ghostTextChaseCd = new GhostText(chaseCdTF, "Default 4000, range 2000 - 6000");
 		GhostText ghostTextFoodSpawn = new GhostText(foodSpawnTF, "Default 3, range 0 - 9");
 		GhostText ghostTextFoodDecay = new GhostText(foodDecayTF, "Default 1.0, range 0.0 - 4.0");
 		GhostText ghostTextEnergyDecay = new GhostText(energyDecayTF, "Default 1.0, range 0.0 - 4.0");
 		GhostText ghostTextEggReq = new GhostText(eggReqTF, "Default 6000.0, range 2000.0 - Maximum Energy");
-		GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF, "Default 4000.0, range 0.0 - Maximum Energy");
+		GhostText ghostTextEggHatchEnergy = new GhostText(eggHatchEnergyTF,
+				"Default 4000.0, range 0.0 - Maximum Energy");
 		GhostText ghostTextMaximumEnergy = new GhostText(maximumEnergyTF, "Default 15000.0, range 2000.0 - 30000.0");
 		GhostText ghostTextEggHatch = new GhostText(eggHatchTF, "Default 10000.0, range 2000.0 - 30000.0");
-		
+
 		/**
 		 * buttons for preloaded stats
 		 */
@@ -747,7 +750,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		JButton extinctionBtn = new JButton("Extinction");
 		JButton bouncebackBtn = new JButton("Bouncback");
 		JButton quickEndBtn = new JButton("Quick End");
-		
+
 		/**
 		 * GetPreferences constructor
 		 */
@@ -851,7 +854,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			gbc.fill = GridBagConstraints.NONE;
 
 			gbc.anchor = GridBagConstraints.PAGE_START;
-			
+
 			GhostText ghostTextC = new GhostText(carnivoresTF, "Carnivores to start");
 			GhostText ghostTextMinSpeed = new GhostText(minSpeedTF, "Default 2");
 			GhostText ghostTextMinRad = new GhostText(minRadTF, "Default 80");
@@ -976,30 +979,30 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			gbc.gridy = 21;
 			maximumEnergyTF.setPreferredSize(new Dimension(300, 20));
 			add(maximumEnergyTF, gbc);
-			
+
 			gbc.gridx = 0;
 			gbc.gridy = 24;
 			gbc.gridwidth = 2;
 			JPanel preloadedOptions = new JPanel();
 			preloadedOptions.setLayout(new GridBagLayout());
 			preloadedOptions.setPreferredSize(new Dimension(500, 75));
-			
+
 			Border blackline = BorderFactory.createLineBorder(Color.black);
 			Border border = BorderFactory.createTitledBorder(blackline, "Preloaded Options");
 			((TitledBorder) border).setTitleJustification(TitledBorder.CENTER);
 			preloadedOptions.setBorder(border);
-			
+
 			GridBagConstraints gbc2 = new GridBagConstraints();
-			
+
 			dawnOfTimeBtn.addActionListener(new MouseListener());
 			extinctionBtn.addActionListener(new MouseListener());
 			bouncebackBtn.addActionListener(new MouseListener());
 			quickEndBtn.addActionListener(new MouseListener());
-			
+
 			gbc2.gridx = 0;
 			gbc2.gridy = 0;
 			preloadedOptions.add(dawnOfTimeBtn, gbc2);
-			
+
 			gbc2.gridx = 1;
 			gbc2.insets = new Insets(0, 5, 0, 5);
 			preloadedOptions.add(extinctionBtn, gbc2);
@@ -1011,7 +1014,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			gbc2.gridx = 3;
 			gbc2.insets = new Insets(0, 0, 0, 0);
 			preloadedOptions.add(quickEndBtn, gbc2);
-			
+
 			add(preloadedOptions, gbc);
 
 			cancel.addActionListener(new MouseListener());
@@ -1031,37 +1034,33 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		}
 
 		/**
-		 * Read in user input if user "sets" stats
-		 * Loads pregenerated for simulations with expected outcomes
+		 * Read in user input if user "sets" stats Loads pregenerated for
+		 * simulations with expected outcomes
 		 */
 		class MouseListener implements ActionListener {
 			public void actionPerformed(ActionEvent e) {
 				if (e.getSource() == cancel) {
 					setVisible(false);
 					dispose();
-				}
-				else if(e.getSource() == dawnOfTimeBtn){
+				} else if (e.getSource() == dawnOfTimeBtn) {
 					carnivoresTF.setText("0");
 					herbivoresTF.setText("100");
 					foodSpawnTF.setText("8");
 					foodDecayTF.setText("0");
-				} 
-				else if(e.getSource() == extinctionBtn){
+				} else if (e.getSource() == extinctionBtn) {
 					carnivoresTF.setText("10");
 					herbivoresTF.setText("2");
 					foodSpawnTF.setText("2");
-				} 
-				else if(e.getSource() == bouncebackBtn){
+				} else if (e.getSource() == bouncebackBtn) {
 					carnivoresTF.setText("10");
-					herbivoresTF.setText("3");;
-				} 
-				else if(e.getSource() == quickEndBtn){
+					herbivoresTF.setText("3");
+					;
+				} else if (e.getSource() == quickEndBtn) {
 					carnivoresTF.setText("2");
 					herbivoresTF.setText("0");
 					energyDecayTF.setText("4");
 					maxEnergyTF.setText("4000");
-				} 
-				else if (e.getSource() == set) {
+				} else if (e.getSource() == set) {
 					try {
 						startingCarnivores = Integer.parseInt(carnivoresTF.getText());
 					} catch (NumberFormatException ev) {
@@ -1208,7 +1207,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	}
 
 	/**
-	 * Get user preferences 
+	 * Get user preferences
 	 */
 	public void getPreferences() {
 		System.out.println(settingsOpen);
@@ -1282,7 +1281,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 		gameScreen.add(sidePanel, gbc);
-		
+
 		addCarnivore.setIcon(new ImageIcon(DrawArea.cImg));
 		addHerbivore.setIcon(new ImageIcon(DrawArea.hImg));
 
@@ -1294,30 +1293,31 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		createSandbox();
 	}
 
-	static JToggleButton addC;
-	static JToggleButton addH;
-	static JToggleButton addE;
-	static JToggleButton addF;
+	private JToggleButton addC;
+	private JToggleButton addH;
+	private JToggleButton addE;
+	private JToggleButton addF;
+	static JToggleButton addBtn = new JToggleButton("Add (Click the draw area)");
 	JButton clear = new JButton("Clear Board");
 	JComponent[][] optionsGrid = null;
 	JPanel options = new JPanel();
 
 	public void createSandbox() {
-		
-		addC = new JToggleButton("Add Carnivore", new ImageIcon(DrawArea.cImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
-		addH = new JToggleButton("Add Herbivore",new ImageIcon(DrawArea.hImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
-		addE = new JToggleButton("Add Egg",new ImageIcon(DrawArea.eImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
-		addF = new JToggleButton("Add Food",new ImageIcon(DrawArea.fImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
-		
-		 
-		
+
+		addC = new JToggleButton("Add Carnivore",
+				new ImageIcon(DrawArea.cImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addH = new JToggleButton("Add Herbivore",
+				new ImageIcon(DrawArea.hImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addE = new JToggleButton("Add Egg", new ImageIcon(DrawArea.eImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+		addF = new JToggleButton("Add Food", new ImageIcon(DrawArea.fImg.getScaledInstance(16, 16, Image.SCALE_FAST)));
+
 		addC.addActionListener(sandboxListener);
 		addH.addActionListener(sandboxListener);
 		addE.addActionListener(sandboxListener);
 		addF.addActionListener(sandboxListener);
 		clear.addActionListener(sandboxListener);
-		
-		if (!sandbox.isSelected()) {
+
+		if (sandbox.isSelected()) {
 			s.setTitle("Sandbox Options");
 			s.addComponentListener(this);
 			s.setLayout(new GridBagLayout());
@@ -1326,38 +1326,49 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 			s.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			s.setLocation(this.getX() + this.getWidth(), this.getY());
 
-			GridBagConstraints c = new GridBagConstraints();
-
-			c.insets = new Insets(2, 2, 2, 2);
-			c.fill = GridBagConstraints.BOTH;
-			c.gridwidth = 2;
-			s.add(new JLabel("Options"), c);
-			c.gridy=1;
-			s.add(clear, c);
-			c.gridwidth=1;
-			c.gridy = 2;
-			s.add(addC, c);
-			c.gridx=1;
-			s.add(addH, c);
-			c.gridy = 4;
-			c.gridx=0;
-			s.add(addE, c);
-			c.gridx=1;
-			s.add(addF, c);
-			c.gridwidth=2;
-			c.gridy=5;
-			s.add(options, c);
-			
+			addToSandbox();
+			addBtn.setEnabled(false);
 		}
+	}
+
+	public void addToSandbox() {
+		GridBagConstraints c = new GridBagConstraints();
+		JPanel cp = new JPanel(new GridBagLayout());
+
+		c.insets = new Insets(2, 2, 2, 2);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridwidth = 2;
+		cp.add(new JLabel("Options"), c);
+		c.gridy = 1;
+		cp.add(clear, c);
+		c.gridwidth = 1;
+		c.gridy = 2;
+		cp.add(addC, c);
+		c.gridx = 1;
+		cp.add(addH, c);
+		c.gridy = 4;
+		c.gridx = 0;
+		cp.add(addE, c);
+		c.gridx = 1;
+		cp.add(addF, c);
+		c.gridwidth = 2;
+		c.gridy = 5;
+		c.gridx = 0;
+		cp.add(options, c);
+		c.gridy = 6;
+		cp.add(addBtn, c);
+		s.setContentPane(cp);
+		s.revalidate();
 	}
 
 	ActionListener sandboxListener = new ActionListener() {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			GridBagConstraints c = new GridBagConstraints();
 			Object src = e.getSource();
-			
-			if(e.getSource() == clear){
+
+			if (e.getSource() == clear) {
 				DrawArea.herbivores.clear();
 				DrawArea.carnivores.clear();
 				DrawArea.food.clear();
@@ -1365,31 +1376,28 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 				gamePane.render();
 				return;
 			}
-			
+
 			if (!addC.isSelected() && !addH.isSelected() && !addE.isSelected() && !addF.isSelected()) {
-				s.remove(options);
-			}
-			if (src instanceof JToggleButton) {
-				
-				GridBagConstraints c = new GridBagConstraints();
-				
+				addBtn.setSelected(false);
+				addBtn.setEnabled(false);
+				options = new JPanel();
+				addToSandbox();
+			} else if (src instanceof JToggleButton) {
+				System.out.println("hi1");
+				addBtn.setEnabled(true);
+				addBtn.setSelected(false);
 				deselectButtons((JToggleButton) src);
 				optionsGrid = gamePane.generatePanel(((JToggleButton) src).getText());
-				s.remove(options);
 				options = new JPanel(new GridLayout(optionsGrid.length, optionsGrid[0].length));
-				for(int i = 0; i < optionsGrid.length; i++)
-					for(int j = 0; j < optionsGrid[0].length; j++){
-						options.add(optionsGrid[i][j]);
-						if(i%2==1 && j==1 && optionsGrid[i][j] instanceof JButton){
+				for (int i = 0; i < optionsGrid.length; i++)
+					for (int j = 0; j < optionsGrid[0].length; j++) {
+						if (optionsGrid[i][j] instanceof JComponent)
+							options.add(optionsGrid[i][j]);
+						if (i % 2 == 1 && j == 1 && optionsGrid[i][j] instanceof JButton) {
 							((JButton) optionsGrid[i][j]).addActionListener(gamePane.randomListener);
 						}
 					}
-				c.insets = new Insets(2, 2, 2, 2);
-				c.fill = GridBagConstraints.BOTH;
-				c.gridwidth=2;
-				c.gridy=5;
-				s.add(options, c);
-				s.revalidate();
+				addToSandbox();
 			}
 		}
 	};
@@ -1484,8 +1492,8 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 		if (startMinFood < 200.0)
 			startMinFood = 200.0;
-		if (startMaxFood > 800.0)
-			startMaxFood = 800.0;
+		if (startMaxFood > 2000.0)
+			startMaxFood = 2000.0;
 
 		if (chaseLength < 5000)
 			chaseLength = 5000;
@@ -1578,8 +1586,8 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 	}
 
 	/**
-	 * GhostText implemented in textfields of preferences menu
-	 * Code taken from http://stackoverflow.com/questions/10506789/how-to-display-faint-gray-ghost-text-in-a-jtextfield
+	 * GhostText implemented in textfields of preferences menu Code taken from
+	 * http://stackoverflow.com/questions/10506789/how-to-display-faint-gray-ghost-text-in-a-jtextfield
 	 */
 	class GhostText implements FocusListener, DocumentListener, PropertyChangeListener {
 		private final JTextField textfield;
