@@ -32,7 +32,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -41,10 +40,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JToggleButton;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -53,7 +52,7 @@ import javafx.scene.media.AudioClip;
 /**
  * Driver class of simulation
  */
-public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener {
+public class Main extends JFrame implements KeyListener, ActionListener, ComponentListener, WindowListener {
 
 	/**
 	 * displayed when simulation starts
@@ -547,6 +546,7 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 		addKeyListener(this);
 		addComponentListener(this);
+		addWindowListener(this);
 		setFocusable(true);
 		this.requestFocusInWindow();
 
@@ -1328,9 +1328,11 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 		if (sandbox.isSelected()) {
 			s.setTitle("Sandbox Options");
 			s.addComponentListener(this);
+			s.addWindowListener(this);
 			s.setLayout(new BorderLayout());
 			s.setSize(300, this.getHeight());
 			s.setVisible(true);
+			s.setResizable(false);
 			s.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			s.setLocation(this.getX() + this.getWidth(), this.getY());
 
@@ -1718,7 +1720,56 @@ public class Main extends JFrame implements KeyListener, ActionListener, Compone
 
 	@Override
 	public void componentShown(ComponentEvent e) {
-		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		if (e.getSource() == this) {
+			s.setState(JFrame.NORMAL);
+		} else {
+			this.setState(JFrame.NORMAL);
+		}
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		if (e.getSource() == this) {
+			s.setState(JFrame.ICONIFIED);
+		} else {
+			this.setState(JFrame.ICONIFIED);
+		}
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
